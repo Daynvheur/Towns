@@ -71,7 +71,7 @@ public class TerrainManager {
                 if (alTerrains == null) {
                     alTerrains = new ArrayList<Integer>();
                 }
-                alTerrains.add(new Integer(terrainList.get(key).getTerrainID()));
+                alTerrains.add(Integer.valueOf(terrainList.get(key).getTerrainID()));
 
                 terrainGroups.put(group, alTerrains);
             }
@@ -104,7 +104,7 @@ public class TerrainManager {
             if (tmi.getLadderItem() != null) {
                 // El item tiene que existir
                 if (ItemManager.getItem(tmi.getLadderItem()) == null) {
-                    Log.log(Log.LEVEL_ERROR, Messages.getString("TerrainManager.1") + tmi.getLadderItem() + "]", "TerrainManager"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+                    Log.error(Messages.getString("TerrainManager.1") + tmi.getLadderItem() + "]", "TerrainManager"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
                     Game.exit();
                 }
             }
@@ -168,7 +168,7 @@ public class TerrainManager {
             Document doc = UtilsXML.loadXMLFile(sXMLName); //$NON-NLS-1$
 
 			// Tenemos el documento XML parseado
-            // Lo recorremos entero y vamos añadiendo los terrenos (TerrainManagerItem) a la hash
+            // Lo recorremos entero y vamos aÃ±adiendo los terrenos (TerrainManagerItem) a la hash
             NodeList nodeList = doc.getDocumentElement().getChildNodes();
             Node node;
             TerrainManagerItem item;
@@ -256,12 +256,12 @@ public class TerrainManager {
                         item.setBlocky(UtilsXML.getChildValue(node.getChildNodes(), "blocky")); //$NON-NLS-1$
                     }
 
-                    // Lo añadimos a la hash
+                    // Lo aÃ±adimos a la hash
                     terrainList.put(sIniHeader, item);
                 }
             }
         } catch (Exception e) {
-            Log.log(Log.LEVEL_ERROR, Messages.getString("TerrainManager.0") + e.toString() + "]", "TerrainManager"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+            Log.error(Messages.getString("TerrainManager.0") + e.toString() + "]", "TerrainManager"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
             Game.exit();
         }
     }

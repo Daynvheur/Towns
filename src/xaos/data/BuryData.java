@@ -18,6 +18,7 @@ import xaos.utils.Messages;
 import xaos.utils.Point3DShort;
 import xaos.utils.UtilsIniHeaders;
 
+@SuppressWarnings("unchecked")
 public class BuryData implements Externalizable {
 
     private static final long serialVersionUID = 1902280084956466209L;
@@ -29,8 +30,8 @@ public class BuryData implements Externalizable {
     public static final String EMPTY = "_EMPTY";
 
     private int version;
-    private int heightMin; // Altura mínima
-    private int height; // Altura (SÓLO SE ACTUALIZA CUANDO SE GENERA EL BURY EN UN NUEVO MAPA, NO VIENE DE SERIE, YA QUE DEPENDE DE LO QUE HAYA EN EL MAPA)
+    private int heightMin; // Altura mÃ­nima
+    private int height; // Altura (SÃ“LO SE ACTUALIZA CUANDO SE GENERA EL BURY EN UN NUEVO MAPA, NO VIENE DE SERIE, YA QUE DEPENDE DE LO QUE HAYA EN EL MAPA)
     private HashMap<Point3DShort, Integer> hash; // Hash por cada punto del bury con su numeric iniHeader
     private HashMap<Point3DShort, ArrayList<String>> hashTexts; // Hash por cada punto del bury con los textos de item (si tiene)
 
@@ -156,7 +157,7 @@ public class BuryData implements Externalizable {
                                             break;
                                         }
 
-                                        // Si llega aquí es que hay que crear un agujero
+                                        // Si llega aquÃ­ es que hay que crear un agujero
                                         oHash.put(Point3DShort.getPoolInstance(x, y, zWall), iEmptyInt);
                                     }
                                 }
@@ -192,7 +193,7 @@ public class BuryData implements Externalizable {
                     // Existe
                     hash.put(p3ds, UtilsIniHeaders.getIntIniHeader(sItem));
                 } else {
-                    // Item que no existe (quizá porque es de un mod)
+                    // Item que no existe (quizÃ¡ porque es de un mod)
                     hash.clear();
                     hash = null;
                     throw new IOException(Messages.getString("BuryData.0") + " [" + sItem + "]"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$

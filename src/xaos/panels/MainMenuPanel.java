@@ -5,9 +5,9 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.Calendar;
 
-import org.lwjgl.input.Keyboard;
-import org.lwjgl.input.Mouse;
-import org.lwjgl.opengl.Display;
+import xaos.utils.KeyAdapter;
+import xaos.utils.GLFWWindow;
+import xaos.utils.GLFWWindow;
 import org.lwjgl.opengl.GL11;
 import xaos.property.PropertyFile;
 
@@ -78,14 +78,14 @@ public final class MainMenuPanel implements Runnable {
 
         TextureData textureSMPLogo = UtilsGL.loadTexture(Towns.getPropertiesString(PropertyFile.PROPERTY_FILE_GRAPHICS, "SMP_LOGO_FILE"), GL11.GL_MODULATE); //$NON-NLS-1$
         if (textureSMPLogo == null) {
-            Log.log(Log.LEVEL_ERROR, Messages.getString("MainMenuPanel.21"), getClass().getName()); //$NON-NLS-1$
+            Log.error(Messages.getString("MainMenuPanel.21"), getClass().getName()); //$NON-NLS-1$
             Game.exit();
         }
         TEXTURE_SMP_LOGO_ID = textureSMPLogo.getTextureID();
 
         TextureData textureLoading = UtilsGL.loadTexture(Towns.getPropertiesString(PropertyFile.PROPERTY_FILE_GRAPHICS, "LOADING_FILE"), GL11.GL_REPLACE); //$NON-NLS-1$
         if (textureLoading == null) {
-            Log.log(Log.LEVEL_ERROR, Messages.getString("MainMenuPanel.24"), getClass().getName()); //$NON-NLS-1$
+            Log.error(Messages.getString("MainMenuPanel.24"), getClass().getName()); //$NON-NLS-1$
             Game.exit();
         }
         TEXTURE_LOADING_ID = textureLoading.getTextureID();
@@ -95,7 +95,7 @@ public final class MainMenuPanel implements Runnable {
 
         textureLoading = UtilsGL.loadTexture(Towns.getPropertiesString(PropertyFile.PROPERTY_FILE_GRAPHICS, "TOWNS_LOGO_FILE"), GL11.GL_REPLACE); //$NON-NLS-1$ //$NON-NLS-2$
         if (textureLoading == null) {
-            Log.log(Log.LEVEL_ERROR, Messages.getString("MainMenuPanel.25"), getClass().getName()); //$NON-NLS-1$
+            Log.error(Messages.getString("MainMenuPanel.25"), getClass().getName()); //$NON-NLS-1$
             Game.exit();
         }
 
@@ -123,7 +123,7 @@ public final class MainMenuPanel implements Runnable {
     public void loadMenuTexture(boolean bUnload) {
         final TextureData textureMainMenu = UtilsGL.loadTexture(Towns.getPropertiesString(PropertyFile.PROPERTY_FILE_GRAPHICS, "MAINMENU_BG_FILE"), GL11.GL_REPLACE, true); //$NON-NLS-1$
         if (textureMainMenu == null) {
-            Log.log(Log.LEVEL_ERROR, Messages.getString("MainMenuPanel.0"), getClass().getName()); //$NON-NLS-1$
+            Log.error(Messages.getString("MainMenuPanel.0"), getClass().getName()); //$NON-NLS-1$
             Game.exit();
         }
         TEXTURE_MAIN_MENU_ID = textureMainMenu.getTextureID(); //$NON-NLS-1$ //$NON-NLS-2$
@@ -187,7 +187,7 @@ public final class MainMenuPanel implements Runnable {
                     String missionName = alCampaigns.get(i).getMissions().get(j).getName();
                     String sMissionID = alCampaigns.get(i).getMissions().get(j).getId();
 
-                    // Añadimos la opción de bajar burieds
+                    // AÃ±adimos la opciÃ³n de bajar burieds
                     if (Game.isAllowBury() && alCampaigns.get(i).getMissions().get(j).isAllowBury()) {
                         SmartMenu loadBurieds = new SmartMenu(SmartMenu.TYPE_MENU, missionName, campaign, null, null, null, null, textColor);
                         loadBurieds.setTrasparency(true);
@@ -291,7 +291,7 @@ public final class MainMenuPanel implements Runnable {
 
                 // Load game
                 menuLoad.addItem(new SmartMenu(SmartMenu.TYPE_ITEM, Messages.getString("MainMenuPanel.40") + Utils.removeExtension(fAux.getName()) + sDate, null, CommandPanel.COMMAND_MM_CONTINUEGAME, fAux.getName(), null, null, textColor)); //$NON-NLS-1$
-                // Delete game (con su submenú de confirmación)
+                // Delete game (con su submenÃº de confirmaciÃ³n)
                 SmartMenu menuDelete = new SmartMenu(SmartMenu.TYPE_MENU, Messages.getString("MainMenuPanel.49") + Utils.removeExtension(fAux.getName()) + sDate, menuLoad, null, null, null, null, Color.RED); //$NON-NLS-1$
                 menuDelete.setTrasparency(mainMenu.isTrasparency());
                 menuDelete.setBorderColor(borderColor);
@@ -411,6 +411,36 @@ public final class MainMenuPanel implements Runnable {
         menuAux.setBorderColor(borderColor);
         menuOptionsGraphics.addItem(menuAux);
         menuOptionsGraphics.addItem(new SmartMenu(SmartMenu.TYPE_TEXT, null, null, null, null));
+
+        // VSync toggle
+        menuAux = new SmartMenu(SmartMenu.TYPE_ITEM, Messages.getString("MainMenuPanel.79"), null, CommandPanel.COMMAND_MM_TOGGLE_VSYNC, null, null, null, textColor); //$NON-NLS-1$
+        menuAux.setDynamic(true);
+        menuAux.setBorderColor(borderColor);
+        menuOptionsGraphics.addItem(menuAux);
+
+        // FPS Cap dropdown (cascading submenu, parent label updates dynamically)
+        SmartMenu menuFpsCap = new SmartMenu(SmartMenu.TYPE_MENU, Messages.getString("MainMenuPanel.80"), menuOptionsGraphics, null, null, null, null, textColor); //$NON-NLS-1$
+        menuFpsCap.setTrasparency(mainMenu.isTrasparency());
+        menuFpsCap.setBorderColor(borderColor);
+        menuFpsCap.setDynamic(true);
+        menuFpsCap.addItem(new SmartMenu(SmartMenu.TYPE_TEXT, Messages.getString("MainMenuPanel.81"), null, null, null, null)); //$NON-NLS-1$
+        menuFpsCap.addItem(new SmartMenu(SmartMenu.TYPE_TEXT, null, null, null, null, null));
+        int[] fpsValues = {30, 60, 90, 120, 144, 165, 240};
+        for (int v : fpsValues) {
+            SmartMenu fpsItem = new SmartMenu(SmartMenu.TYPE_ITEM, Integer.toString(v), null, CommandPanel.COMMAND_MM_SET_FPS_CAP, Integer.toString(v), null, null, textColor);
+            fpsItem.setBorderColor(borderColor);
+            menuFpsCap.addItem(fpsItem);
+        }
+        SmartMenu fpsUnlimited = new SmartMenu(SmartMenu.TYPE_ITEM, Messages.getString("Utils.19"), null, CommandPanel.COMMAND_MM_SET_FPS_CAP, "0", null, null, textColor); //$NON-NLS-1$ //$NON-NLS-2$
+        fpsUnlimited.setBorderColor(borderColor);
+        menuFpsCap.addItem(fpsUnlimited);
+        menuFpsCap.addItem(new SmartMenu(SmartMenu.TYPE_TEXT, null, null, null, null));
+        SmartMenu fpsBack = new SmartMenu(SmartMenu.TYPE_ITEM, Messages.getString("MainMenuPanel.7"), null, CommandPanel.COMMAND_BACK, null, null, null, textColor); //$NON-NLS-1$
+        fpsBack.setBorderColor(borderColor);
+        menuFpsCap.addItem(fpsBack);
+        menuOptionsGraphics.addItem(menuFpsCap);
+
+        menuOptionsGraphics.addItem(new SmartMenu(SmartMenu.TYPE_TEXT, null, null, null, null));
         menuAux = new SmartMenu(SmartMenu.TYPE_ITEM, Messages.getString("MainMenuPanel.7"), null, CommandPanel.COMMAND_BACK, null, null, null, textColor); //$NON-NLS-1$
         menuAux.setBorderColor(borderColor);
         menuOptionsGraphics.addItem(menuAux);
@@ -512,51 +542,51 @@ public final class MainMenuPanel implements Runnable {
         menuOptionsControls.addItem(new SmartMenu(SmartMenu.TYPE_TEXT, null, null, null, null, null));
 
         menuOptionsControls.addItem(new SmartMenu(SmartMenu.TYPE_TEXT, Messages.getString("MainMenuPanel.43"), null, null, null, null, null, creditsColor)); //$NON-NLS-1$
-        menuOptionsControls.addItem(createKeyboardMenu(UtilsKeyboard.FN_UP, textColor, borderColor));
-        menuOptionsControls.addItem(createKeyboardMenu(UtilsKeyboard.FN_DOWN, textColor, borderColor));
-        menuOptionsControls.addItem(createKeyboardMenu(UtilsKeyboard.FN_LEFT, textColor, borderColor));
-        menuOptionsControls.addItem(createKeyboardMenu(UtilsKeyboard.FN_RIGHT, textColor, borderColor));
-        menuOptionsControls.addItem(createKeyboardMenu(UtilsKeyboard.FN_LEVEL_UP, textColor, borderColor));
-        menuOptionsControls.addItem(createKeyboardMenu(UtilsKeyboard.FN_LEVEL_DOWN, textColor, borderColor));
+        menuOptionsControls.addItem(createKeyboardMenu(KeyAdapter.FN_UP, textColor, borderColor));
+        menuOptionsControls.addItem(createKeyboardMenu(KeyAdapter.FN_DOWN, textColor, borderColor));
+        menuOptionsControls.addItem(createKeyboardMenu(KeyAdapter.FN_LEFT, textColor, borderColor));
+        menuOptionsControls.addItem(createKeyboardMenu(KeyAdapter.FN_RIGHT, textColor, borderColor));
+        menuOptionsControls.addItem(createKeyboardMenu(KeyAdapter.FN_LEVEL_UP, textColor, borderColor));
+        menuOptionsControls.addItem(createKeyboardMenu(KeyAdapter.FN_LEVEL_DOWN, textColor, borderColor));
         menuOptionsControls.addItem(new SmartMenu(SmartMenu.TYPE_TEXT, null, null, null, null, null));
         menuOptionsControls.addItem(new SmartMenu(SmartMenu.TYPE_TEXT, Messages.getString("MainMenuPanel.44"), null, null, null, null, null, creditsColor)); //$NON-NLS-1$
-        menuOptionsControls.addItem(createKeyboardMenu(UtilsKeyboard.FN_SHOW_MISSION, textColor, borderColor));
-        menuOptionsControls.addItem(createKeyboardMenu(UtilsKeyboard.FN_SHOW_STOCK, textColor, borderColor));
-        menuOptionsControls.addItem(createKeyboardMenu(UtilsKeyboard.FN_SHOW_PRIORITIES, textColor, borderColor));
-        menuOptionsControls.addItem(createKeyboardMenu(UtilsKeyboard.FN_SHOW_TRADE, textColor, borderColor));
+        menuOptionsControls.addItem(createKeyboardMenu(KeyAdapter.FN_SHOW_MISSION, textColor, borderColor));
+        menuOptionsControls.addItem(createKeyboardMenu(KeyAdapter.FN_SHOW_STOCK, textColor, borderColor));
+        menuOptionsControls.addItem(createKeyboardMenu(KeyAdapter.FN_SHOW_PRIORITIES, textColor, borderColor));
+        menuOptionsControls.addItem(createKeyboardMenu(KeyAdapter.FN_SHOW_TRADE, textColor, borderColor));
         menuOptionsControls.addItem(new SmartMenu(SmartMenu.TYPE_TEXT, null, null, null, null, null));
         menuOptionsControls.addItem(new SmartMenu(SmartMenu.TYPE_TEXT, Messages.getString("MainMenuPanel.45"), null, null, null, null, null, creditsColor)); //$NON-NLS-1$
-        menuOptionsControls.addItem(createKeyboardMenu(UtilsKeyboard.FN_NEXT_CITIZEN, textColor, borderColor));
-        menuOptionsControls.addItem(createKeyboardMenu(UtilsKeyboard.FN_PREVIOUS_CITIZEN, textColor, borderColor));
-        menuOptionsControls.addItem(createKeyboardMenu(UtilsKeyboard.FN_NEXT_SOLDIER, textColor, borderColor));
-        menuOptionsControls.addItem(createKeyboardMenu(UtilsKeyboard.FN_PREVIOUS_SOLDIER, textColor, borderColor));
-        menuOptionsControls.addItem(createKeyboardMenu(UtilsKeyboard.FN_NEXT_HERO, textColor, borderColor));
-        menuOptionsControls.addItem(createKeyboardMenu(UtilsKeyboard.FN_PREVIOUS_HERO, textColor, borderColor));
+        menuOptionsControls.addItem(createKeyboardMenu(KeyAdapter.FN_NEXT_CITIZEN, textColor, borderColor));
+        menuOptionsControls.addItem(createKeyboardMenu(KeyAdapter.FN_PREVIOUS_CITIZEN, textColor, borderColor));
+        menuOptionsControls.addItem(createKeyboardMenu(KeyAdapter.FN_NEXT_SOLDIER, textColor, borderColor));
+        menuOptionsControls.addItem(createKeyboardMenu(KeyAdapter.FN_PREVIOUS_SOLDIER, textColor, borderColor));
+        menuOptionsControls.addItem(createKeyboardMenu(KeyAdapter.FN_NEXT_HERO, textColor, borderColor));
+        menuOptionsControls.addItem(createKeyboardMenu(KeyAdapter.FN_PREVIOUS_HERO, textColor, borderColor));
         menuOptionsControls.addItem(new SmartMenu(SmartMenu.TYPE_TEXT, null, null, null, null, null));
         menuOptionsControls.addItem(new SmartMenu(SmartMenu.TYPE_TEXT, Messages.getString("MainMenuPanel.46"), null, null, null, null, null, creditsColor)); //$NON-NLS-1$
-        menuOptionsControls.addItem(createKeyboardMenu(UtilsKeyboard.FN_TOGGLE_FULLSCREEN, textColor, borderColor));
-        menuOptionsControls.addItem(createKeyboardMenu(UtilsKeyboard.FN_TOGGLE_FLAT_MOUSE, textColor, borderColor));
-        menuOptionsControls.addItem(createKeyboardMenu(UtilsKeyboard.FN_TOGGLE_3D_MOUSE, textColor, borderColor));
-        menuOptionsControls.addItem(createKeyboardMenu(UtilsKeyboard.FN_TOGGLE_GRID, textColor, borderColor));
-        menuOptionsControls.addItem(createKeyboardMenu(UtilsKeyboard.FN_TOGGLE_MINIBLOCKS, textColor, borderColor));
-        menuOptionsControls.addItem(createKeyboardMenu(UtilsKeyboard.FN_TOGGLE_HIDE_UI, textColor, borderColor));
-        menuOptionsControls.addItem(createKeyboardMenu(UtilsKeyboard.FN_TOGGLE_ITEM_BUILD_FACE, textColor, borderColor));
-        menuOptionsControls.addItem(createKeyboardMenu(UtilsKeyboard.FN_PAUSE, textColor, borderColor));
-        menuOptionsControls.addItem(createKeyboardMenu(UtilsKeyboard.FN_SPEED_UP, textColor, borderColor));
-        menuOptionsControls.addItem(createKeyboardMenu(UtilsKeyboard.FN_SPEED_DOWN, textColor, borderColor));
-        menuOptionsControls.addItem(createKeyboardMenu(UtilsKeyboard.FN_SCREENSHOT, textColor, borderColor));
+        menuOptionsControls.addItem(createKeyboardMenu(KeyAdapter.FN_TOGGLE_FULLSCREEN, textColor, borderColor));
+        menuOptionsControls.addItem(createKeyboardMenu(KeyAdapter.FN_TOGGLE_FLAT_MOUSE, textColor, borderColor));
+        menuOptionsControls.addItem(createKeyboardMenu(KeyAdapter.FN_TOGGLE_3D_MOUSE, textColor, borderColor));
+        menuOptionsControls.addItem(createKeyboardMenu(KeyAdapter.FN_TOGGLE_GRID, textColor, borderColor));
+        menuOptionsControls.addItem(createKeyboardMenu(KeyAdapter.FN_TOGGLE_MINIBLOCKS, textColor, borderColor));
+        menuOptionsControls.addItem(createKeyboardMenu(KeyAdapter.FN_TOGGLE_HIDE_UI, textColor, borderColor));
+        menuOptionsControls.addItem(createKeyboardMenu(KeyAdapter.FN_TOGGLE_ITEM_BUILD_FACE, textColor, borderColor));
+        menuOptionsControls.addItem(createKeyboardMenu(KeyAdapter.FN_PAUSE, textColor, borderColor));
+        menuOptionsControls.addItem(createKeyboardMenu(KeyAdapter.FN_SPEED_UP, textColor, borderColor));
+        menuOptionsControls.addItem(createKeyboardMenu(KeyAdapter.FN_SPEED_DOWN, textColor, borderColor));
+        menuOptionsControls.addItem(createKeyboardMenu(KeyAdapter.FN_SCREENSHOT, textColor, borderColor));
         menuOptionsControls.addItem(new SmartMenu(SmartMenu.TYPE_TEXT, null, null, null, null, null));
         menuOptionsControls.addItem(new SmartMenu(SmartMenu.TYPE_TEXT, Messages.getString("MainMenuPanel.61"), null, null, null, null, null, creditsColor)); //$NON-NLS-1$
-        menuOptionsControls.addItem(createKeyboardMenu(UtilsKeyboard.FN_BOT_1, textColor, borderColor));
-        menuOptionsControls.addItem(createKeyboardMenu(UtilsKeyboard.FN_BOT_2, textColor, borderColor));
-        menuOptionsControls.addItem(createKeyboardMenu(UtilsKeyboard.FN_BOT_3, textColor, borderColor));
-        menuOptionsControls.addItem(createKeyboardMenu(UtilsKeyboard.FN_BOT_4, textColor, borderColor));
-        menuOptionsControls.addItem(createKeyboardMenu(UtilsKeyboard.FN_BOT_5, textColor, borderColor));
-        menuOptionsControls.addItem(createKeyboardMenu(UtilsKeyboard.FN_BOT_6, textColor, borderColor));
-        menuOptionsControls.addItem(createKeyboardMenu(UtilsKeyboard.FN_BOT_7, textColor, borderColor));
-        menuOptionsControls.addItem(createKeyboardMenu(UtilsKeyboard.FN_BOT_8, textColor, borderColor));
-        menuOptionsControls.addItem(createKeyboardMenu(UtilsKeyboard.FN_BOT_9, textColor, borderColor));
-        menuOptionsControls.addItem(createKeyboardMenu(UtilsKeyboard.FN_BOT_10, textColor, borderColor));
+        menuOptionsControls.addItem(createKeyboardMenu(KeyAdapter.FN_BOT_1, textColor, borderColor));
+        menuOptionsControls.addItem(createKeyboardMenu(KeyAdapter.FN_BOT_2, textColor, borderColor));
+        menuOptionsControls.addItem(createKeyboardMenu(KeyAdapter.FN_BOT_3, textColor, borderColor));
+        menuOptionsControls.addItem(createKeyboardMenu(KeyAdapter.FN_BOT_4, textColor, borderColor));
+        menuOptionsControls.addItem(createKeyboardMenu(KeyAdapter.FN_BOT_5, textColor, borderColor));
+        menuOptionsControls.addItem(createKeyboardMenu(KeyAdapter.FN_BOT_6, textColor, borderColor));
+        menuOptionsControls.addItem(createKeyboardMenu(KeyAdapter.FN_BOT_7, textColor, borderColor));
+        menuOptionsControls.addItem(createKeyboardMenu(KeyAdapter.FN_BOT_8, textColor, borderColor));
+        menuOptionsControls.addItem(createKeyboardMenu(KeyAdapter.FN_BOT_9, textColor, borderColor));
+        menuOptionsControls.addItem(createKeyboardMenu(KeyAdapter.FN_BOT_10, textColor, borderColor));
 
         menuOptionsControls.addItem(new SmartMenu(SmartMenu.TYPE_TEXT, null, null, null, null));
         menuAux = new SmartMenu(SmartMenu.TYPE_ITEM, Messages.getString("MainMenuPanel.7"), null, CommandPanel.COMMAND_BACK, null, null, null, textColor); //$NON-NLS-1$
@@ -598,7 +628,7 @@ public final class MainMenuPanel implements Runnable {
                 if (ld.mod == null || Game.getModsLoaded() == null) {
                     menuAux = new SmartMenu(SmartMenu.TYPE_ITEM, ld.name, null, CommandPanel.COMMAND_CHANGE_LANGUAGE, ld.language, ld.country, null, textColor);
                 } else {
-                    // Buscamos el índice del mod
+                    // Buscamos el Ã­ndice del mod
                     int iModIndex = -1;
                     for (int m = 0; m < Game.getModsLoaded().size(); m++) {
                         if (Game.getModsLoaded().get(m).equals(ld.mod)) {
@@ -722,7 +752,7 @@ public final class MainMenuPanel implements Runnable {
     }
 
     public SmartMenu createKeyboardMenu(int iFN, Color textColor, ColorGL borderColor) {
-        SmartMenu menuAux = new SmartMenu(SmartMenu.TYPE_ITEM, UtilsKeyboard.getFNHumanString(iFN) + UtilsKeyboard.getTooltip(iFN), null, CommandPanel.COMMAND_CHANGE_HOTKEY, Integer.toString(iFN), null, null, textColor);
+        SmartMenu menuAux = new SmartMenu(SmartMenu.TYPE_ITEM, KeyAdapter.getFNHumanString(iFN) + KeyAdapter.getTooltip(iFN), null, CommandPanel.COMMAND_CHANGE_HOTKEY, Integer.toString(iFN), null, null, textColor);
         menuAux.setBorderColor(borderColor);
         return menuAux;
     }
@@ -747,7 +777,7 @@ public final class MainMenuPanel implements Runnable {
     public void setSettingHotkey(boolean settingHotkey, int iFN) {
         if (settingHotkey) {
             this.settingHotkey = 1;
-            new TypingPanel(renderWidth, renderHeight, Messages.getString("MainMenuPanel.48") + UtilsKeyboard.getFNHumanString(iFN) + ((UtilsKeyboard.getKey(iFN, 0) == Keyboard.KEY_NONE) ? "" : Messages.getString("MainMenuPanel.50") + Keyboard.getKeyName(UtilsKeyboard.getKey(iFN, 0)) + ")"), new String(), TypingPanel.TYPE_REDEFINE_KEYS, iFN); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
+            new TypingPanel(renderWidth, renderHeight, Messages.getString("MainMenuPanel.48") + KeyAdapter.getFNHumanString(iFN) + ((KeyAdapter.getKey(iFN, 0) == KeyAdapter.KEY_NONE) ? "" : Messages.getString("MainMenuPanel.50") + KeyAdapter.getKeyName(KeyAdapter.getKey(iFN, 0)) + ")"), new String(), TypingPanel.TYPE_REDEFINE_KEYS, iFN); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
         } else {
             this.settingHotkey = 0;
             // El panel se cierra, cambiamos los textos de todos los menus COMMAND_CHANGE_HOTKEY
@@ -769,7 +799,7 @@ public final class MainMenuPanel implements Runnable {
 
     /**
      * Cambia los textos de todos los menus COMMAND_CHANGE_HOTKEY Se llama
-     * después deredifinir alguna tecla.
+     * despuÃ©s deredifinir alguna tecla.
      *
      */
     private void checkChangeHotkeyMenusText(SmartMenu sm) {
@@ -780,7 +810,7 @@ public final class MainMenuPanel implements Runnable {
         } else if (sm.getType() == SmartMenu.TYPE_ITEM && sm.getCommand() != null && sm.getCommand().equals(CommandPanel.COMMAND_CHANGE_HOTKEY)) {
             // Bingo, cambiamos el texto
             int iFN = Integer.parseInt(sm.getParameter());
-            sm.setName(UtilsKeyboard.getFNHumanString(iFN) + UtilsKeyboard.getTooltip(iFN));
+            sm.setName(KeyAdapter.getFNHumanString(iFN) + KeyAdapter.getTooltip(iFN));
         }
     }
 
@@ -839,7 +869,7 @@ public final class MainMenuPanel implements Runnable {
             UtilsGL.drawTexture(centerX - imageLoadingWidth / 2, centerY + 10, centerX + imageLoadingWidth / 2, centerY + 10 + imageLoadingHeight, 0, 0, 1, 1);
             UtilsGL.glEnd();
 
-            // Si hay texto de loading lo pintamos también
+            // Si hay texto de loading lo pintamos tambiÃ©n
             String sLoadingText = getLoadingText();
             if (sLoadingText.length() > 0) {
                 bTextureFontLoaded = true;
@@ -852,7 +882,7 @@ public final class MainMenuPanel implements Runnable {
             }
         }
 
-        // Versión del juego abajo a la derecha
+        // VersiÃ³n del juego abajo a la derecha
         if (!bTextureFontLoaded) {
             GL11.glBindTexture(GL11.GL_TEXTURE_2D, Game.TEXTURE_FONT_ID);
             GL11.glTexEnvf(GL11.GL_TEXTURE_ENV, GL11.GL_TEXTURE_ENV_MODE, GL11.GL_MODULATE);
@@ -871,19 +901,19 @@ public final class MainMenuPanel implements Runnable {
         UtilsGL.glEnd();
 
         if (!loadingGame && !isSettingSavegameName() && !isSettingHotkey() && !isSettingNewServer()) {
-            // Pintamos el menú
+            // Pintamos el menÃº
             menu.render();
         }
 
         if (isSettingSavegameName() || isSettingHotkey() || isSettingNewServer()) {
-            int mouseX = Mouse.getEventX();
-            int mouseY = UtilsGL.getHeight() - Mouse.getEventY() - 1;
+            int mouseX = GLFWWindow.getEventX();
+            int mouseY = UtilsGL.getHeight() - GLFWWindow.getEventY() - 1;
             TypingPanel.render(mouseX, mouseY);
         }
     }
 
     /**
-     * Método que se llama cuando pulse con el ratón.
+     * MÃ©todo que se llama cuando pulse con el ratÃ³n.
      *
      * @param x Coordenada X
      * @param y Coordenada Y
@@ -894,7 +924,7 @@ public final class MainMenuPanel implements Runnable {
         } else {
             if (mouseButton == 0) {
                 if (isSettingSavegameName()) {
-                    // Ha pulsado en algún sitio mientras el panel de savegame name está abierto
+                    // Ha pulsado en algÃºn sitio mientras el panel de savegame name estÃ¡ abierto
                     int iMousePanel = TypingPanel.whereIsMouse(x, y);
                     if (iMousePanel == UIPanel.MOUSE_TYPING_PANEL_CLOSE) {
                         // Cerramos
@@ -902,20 +932,20 @@ public final class MainMenuPanel implements Runnable {
                     } else if (iMousePanel == UIPanel.MOUSE_TYPING_PANEL_CONFIRM) {
                         if (TypingPanel.getNewText() != null && TypingPanel.getNewText().length() > 0) {
                             // Confirmamos y empieza la partida
-                            if (!Utils.existsSavegame(TypingPanel.getNewText())) { // Sólo si no existe en disco previamente
+                            if (!Utils.existsSavegame(TypingPanel.getNewText())) { // SÃ³lo si no existe en disco previamente
                                 startGame(TypingPanel.getNewText());
                             }
                         }
                     }
                 } else if (isSettingHotkey()) {
-                    // Ha pulsado en algún sitio mientras el panel de hotkeys está abierto
+                    // Ha pulsado en algÃºn sitio mientras el panel de hotkeys estÃ¡ abierto
                     int iMousePanel = TypingPanel.whereIsMouse(x, y);
                     if (iMousePanel == UIPanel.MOUSE_TYPING_PANEL_CLOSE) {
                         // Cerramos
                         setSettingHotkey(false, 0);
                     }
                 } else if (isSettingNewServer()) {
-                    // Ha pulsado en algún sitio mientras el panel de new server está abierto
+                    // Ha pulsado en algÃºn sitio mientras el panel de new server estÃ¡ abierto
                     int iMousePanel = TypingPanel.whereIsMouse(x, y);
                     if (iMousePanel == UIPanel.MOUSE_TYPING_PANEL_CLOSE) {
                         // Cerramos
@@ -938,7 +968,7 @@ public final class MainMenuPanel implements Runnable {
     }
 
     /**
-     * Método llamado al pulsar una tecla cuando estamos en el main menu
+     * MÃ©todo llamado al pulsar una tecla cuando estamos en el main menu
      *
      * @param iKey
      */
@@ -947,7 +977,7 @@ public final class MainMenuPanel implements Runnable {
             if (TypingPanel.keyPressed(iKey)) {
                 // Ya ha acabado (o ha pulsado ESC)
                 if (TypingPanel.getNewText() != null && TypingPanel.getNewText().length() > 0) {
-                    // Todo ok, toca empezar la partida (sólo si la partida no existe previamente en disco)
+                    // Todo ok, toca empezar la partida (sÃ³lo si la partida no existe previamente en disco)
                     if (!Utils.existsSavegame(TypingPanel.getNewText())) {
                         startGame(TypingPanel.getNewText());
                     }
@@ -961,23 +991,23 @@ public final class MainMenuPanel implements Runnable {
                 if (TypingPanel.getNewText() != null && TypingPanel.getNewText().length() > 0) {
                     // Key pulsada, la seteamos y saltamos a la siguiente (si hace falta)
                     if (settingHotkey == 1) {
-                        UtilsKeyboard.redefineKey(0, TypingPanel.TYPING_PARAMETER, Integer.parseInt(TypingPanel.getNewText()));
+                        KeyAdapter.redefineKey(0, TypingPanel.TYPING_PARAMETER, Integer.parseInt(TypingPanel.getNewText()));
                         settingHotkey = 2;
-                        TypingPanel.setTitle(Messages.getString("MainMenuPanel.52") + UtilsKeyboard.getFNHumanString(TypingPanel.TYPING_PARAMETER) + ((UtilsKeyboard.getKey(TypingPanel.TYPING_PARAMETER, 0) == Keyboard.KEY_NONE) ? "" : Messages.getString("MainMenuPanel.50") + Keyboard.getKeyName(UtilsKeyboard.getKey(TypingPanel.TYPING_PARAMETER, 1)) + ")")); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
+                        TypingPanel.setTitle(Messages.getString("MainMenuPanel.52") + KeyAdapter.getFNHumanString(TypingPanel.TYPING_PARAMETER) + ((KeyAdapter.getKey(TypingPanel.TYPING_PARAMETER, 0) == KeyAdapter.KEY_NONE) ? "" : Messages.getString("MainMenuPanel.50") + KeyAdapter.getKeyName(KeyAdapter.getKey(TypingPanel.TYPING_PARAMETER, 1)) + ")")); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
                         TypingPanel.setNewText(new String());
                     } else {
                         // Key 2
-                        UtilsKeyboard.redefineKey(1, TypingPanel.TYPING_PARAMETER, Integer.parseInt(TypingPanel.getNewText()));
+                        KeyAdapter.redefineKey(1, TypingPanel.TYPING_PARAMETER, Integer.parseInt(TypingPanel.getNewText()));
                         setSettingHotkey(false, 0);
                     }
                 } else {
                     // Ha pulsado ESC, borramos hotkeys
                     if (settingHotkey == 1) {
-                        UtilsKeyboard.redefineKey(0, TypingPanel.TYPING_PARAMETER, Keyboard.KEY_NONE);
-                        UtilsKeyboard.redefineKey(1, TypingPanel.TYPING_PARAMETER, Keyboard.KEY_NONE);
+                        KeyAdapter.redefineKey(0, TypingPanel.TYPING_PARAMETER, KeyAdapter.KEY_NONE);
+                        KeyAdapter.redefineKey(1, TypingPanel.TYPING_PARAMETER, KeyAdapter.KEY_NONE);
                     } else {
                         // Key 2
-                        UtilsKeyboard.redefineKey(1, TypingPanel.TYPING_PARAMETER, Keyboard.KEY_NONE);
+                        KeyAdapter.redefineKey(1, TypingPanel.TYPING_PARAMETER, KeyAdapter.KEY_NONE);
                     }
 
                     setSettingHotkey(false, 0);
@@ -1018,8 +1048,8 @@ public final class MainMenuPanel implements Runnable {
             if (isActive()) {
                 Game.getPanelMainMenu().render();
                 // Updateamos la pantalla / ventana
-                Display.update();
-                Display.sync(Game.FPS_MAINMENU); // Para "capear" a 30 fps
+                GLFWWindow.update();
+                GLFWWindow.sync(Game.FPS_MAINMENU); // Para "capear" a 30 fps
                 GL11.glClear(GL11.GL_COLOR_BUFFER_BIT | GL11.GL_DEPTH_BUFFER_BIT | GL11.GL_ACCUM_BUFFER_BIT | GL11.GL_STENCIL_BUFFER_BIT);
             }
         }

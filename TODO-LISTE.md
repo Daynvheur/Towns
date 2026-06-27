@@ -168,3 +168,162 @@ Voici une liste des forks pertinents, classés par ordre de pertinence et d'avan
 - **Branches** : Chaque point d'amélioration fera l'objet d'une branche dédiée.
 - **Priorisation** : Les tâches seront traitées selon une priorisation arbitraire définie par l'utilisateur.
 - **Collaboration** : Les agents conversationnels peuvent utiliser ce fichier comme référence pour les futures sessions de travail.
+
+## Modifications Récentes
+
+### Passage en LWJGL 3
+
+- Migration de l'ancien système graphique vers LWJGL 3 pour une meilleure compatibilité et performance.
+- Mise à jour des dépendances et adaptation du code existant.
+
+### Ajout de Placeholders PNG et FNT
+
+- Ajout de fichiers placeholder au format PNG pour les textures et icônes.
+- Ajout de fichiers de police au format FNT pour le rendu de texte.
+- Ces fichiers servent de base pour le développement futur de l'interface utilisateur.
+
+### Intégration des Forks Distants
+
+#### Feder-Towns (Sécurité XXE)
+- **Commit 56ba65f** : Hardening de la parsing XML pour prévenir les attaques XXE
+  - `UtilsXML.java` : Ajout de la méthode `newHardenedDocumentBuilderFactory()` avec désactivation des entités externes
+  - `SmartMenu.java` : Ajout des mêmes protections XXE dans `readXMLMenu()`
+- **Commit a4f43cc** : Désactivation des vérifications en ligne
+  - `UtilsServer.java` : Méthodes `getServerName()` et `getBuriedTown()` retournent `null` directement (serveurs townsmods.net injoignables)
+- **Fichiers XML** : Tous identiques au repo local (aucune modification de contenu)
+
+#### TownsRebuilt (Optimisations - Incompatibles)
+- Architecture incompatible avec le codebase actuel (utilise `DisplayManager`, `InputState`, `KeyMapper`, `perf.*`)
+- Seules des micro-optimisations isolées pourraient être intégrées ultérieurement :
+  - Caches de getter (HappinessCache, getCheckLOSCounter, getEffects)
+  - Throttling d'animation (30 FPS cadence)
+  - MiniMapPanel event-driven
+- **Décision** : Non intégré pour le moment en raison de l'incompatibilité architecturale
+
+#### Towns-Buried
+- Fichiers XML identiques au repo local
+- Aucune modification de code détectée
+
+#### Towns-Mia (Refactorings)
+- Fichiers XML différents uniquement par l'indentation (espaces vs tabs)
+- Refactorings de code (switch/case, logging, enums) non encore intégrés
+- **À faire** : Examiner les commits individuels pour extraction de modifications isolées
+
+#### Towns-Mia (Conversion Log.log → Log.xxx) ✅
+- **43 fichiers convertis** : Remplacement de `Log.log(Log.LEVEL.ERROR, ...)` → `Log.error(...)` et `Log.log(Log.LEVEL.DEBUG, ...)` → `Log.debug(...)`
+- **Fichiers concernés** : Towns.java, ActionManager.java, CaravanManager.java, EventManager.java, GodManager.java, TaskManager.java, LivingEntity.java, Citizen.java, Hero.java, Utils.java, UtilsGL.java, et 30 autres
+- **Méthode** : Script Python `convert_log_calls.py` avec gestion des parenthèses imbriquées
+- **Statut** : ✅ Compilation réussie (180 fichiers sources)
+
+#### Towns-german (Traduction)
+- Fichier `messages_de_DE.properties` déjà intégré (740 lignes)
+- Traduction allemande complète des messages
+
+### Refactoring TASK→TYPE (Enum)
+
+- Migration des constantes `Task.TASK_XXX` (int) vers l'enum `Task.TYPE.XXX`
+- **Fichier `Task.java`** :
+  - Création de l'enum `TYPE` avec toutes les valeurs de tâches
+  - Ajout des constantes `TASK_XXX` dépréciées pour la compatibilité
+  - Ajout des méthodes `getType()`, `setType(TYPE)`, `typeFromInt(int)`
+  - Ajout du constructeur `Task(TYPE)`
+  - Ajout des constantes `TASK_EQUIPING` (111) et `TASK_LEAVING` (112)
+- **Fichiers mis à jour** :
+  - `TaskManager.java` : Remplacement `Task.TASK_XXX` → `Task.TASK_XXX` (compatibilité)
+  - `Game.java`, `World.java`, `CommandPanel.java`, `MainPanel.java`, `Cell.java`
+  - `Citizen.java`, `LivingEntity.java`, `Hero.java`
+  - `CaravanData.java`, `HeroData.java`
+- **Compatibilité** : Les constantes `TASK_XXX` restent disponibles pour les comparaisons int
+- **Statut** : ✅ Compilation réussie
+
+### Intégration Towns-Mia (Refactorings)
+
+#### Fix de crash (int → Integer)
+- **`Tile.java`** : Changement `private int iID` → `private Integer iID`
+- **`TaskManagerItem.java`** : Changement `removeCitizen(int)` → `removeCitizen(Integer)`
+- **Objectif** : Éviter un crash lié au boxing/unboxing
+
+#### Méthodes World.getCitizens() et World.getSoldiers()
+- **`World.java`** : Ajout des méthodes utilitaires `getCitizens()` et `getSoldiers()` retournant des `ArrayList<Citizen>`
+- **`TaskManager.java`** : Simplification des boucles `for (var citizen : World.getCitizens())` au lieu de `for (int i = 0; i < citizens.size(); i++)`
+- **Statut** : ✅ Compilation réussie
+
+#### Refactoring HotPoint (getHotPoint → getPoint)
+- **`HotPoint.java`** : Renommage du champ `hotPoint` en `point`, avec getters/setters correspondants
+- **`Task.java`**, **`TaskManager.java`**, **`Citizen.java`** : Mise à jour de tous les appels `getHotPoint()` → `getPoint()`
+- **Objectif** : Clarifier le nommage (`a.getHotPoint().getHotPoint()` → `a.getHotPoint().getPoint()`)
+- **Statut** : ✅ Compilation réussie
+
+#### Création de TaskUtil.java
+- **`TaskUtil.java`** : Nouveau fichier contenant des méthodes utilitaires statiques pour les tâches :
+  - `itemInUse(Item)` : Vérifie si un item est en usage par un aldeano
+  - `cancelTask()`, `checkCancelActions()`, `checkCancelTask()` : Gestion des annulations
+  - `getQueueSItem()` : Récupère l'item en cours de création dans une queue
+- **Statut** : ✅ Compilation réussie
+
+#### Optimisations TaskManager (commit 239107b)
+- **`getNumCitizens()`** et **`getNumCitizensHaul()`** : Remplacement des boucles `while` avec `Iterator` par des boucles `for-each` avec `var`
+- **`getClosestCitizen()`** : Renommage du paramètre `alCits` en `citizens`, utilisation de `citizens.getFirst()` au lieu de `citizens.get(0)`
+- **`setHotPointFinished()`** : Surcharge de la méthode pour accepter soit un index soit un `HotPoint` directement
+- **Ajout du commentaire** : `// Synchronized variables cant be final due to Externalizable`
+- **Statut** : ✅ Compilation réussie
+
+### Cleanup Massif (commit 146e805 - More Code Cleanup)
+
+- **115 fichiers modifiés** : Nettoyage systématique du codebase
+- **Principales transformations** :
+  - `ArrayList<Type>` → `ArrayList<>()` (diamond operator)
+  - `.length() > 0` → `.isEmpty()`
+  - `.indexOf("str") != -1` → `.contains("str")`
+  - Boucles `for (int i...)` → boucles `for-each` avec `var`
+  - Ajout de `import java.nio.file.FileSystems` pour `FileSystems.getDefault().getSeparator()`
+- **Fichiers impactés** : Tous les modules (Towns, actions, campaign, caravans, data, dungeons, effects, events, generator, gods, main, panels, property, skills, stockpiles, tasks, tiles, utils, zones)
+- **Statut** : ✅ Compilation réussie (180 fichiers sources)
+
+### Micro-optimisation TownsRebuilt (Cache getCheckLOSCounter)
+
+- **`LivingEntity.java`** : Cache le résultat de `getCheckLOSCounter() == 0` dans une variable `final boolean losReady` après le bloc de reset
+- **Impact** : Élimine 3 appels redondants à `getCheckLOSCounter()` dans le bloc LOS/focus/hero
+- **Sécurité** : Vérifié qu'aucun writer de `checkLOSCounter` n'existe dans les code paths accessibles après le reset
+- **Statut** : ✅ Compilation réussie
+
+### Cleanup des Warnings de Compilation
+
+- **Warnings de dépréciation** : Ajout de `@SuppressWarnings("deprecation")` sur 10 fichiers utilisant les constantes `Task.TASK_XXX` dépréciées pour la compatibilité ascendante
+  - `MainPanel.java`, `CommandPanel.java`, `StockpileTempData.java`, `Messages.java`
+  - `TaskManager.java`, `LivingEntity.java`, `World.java`, `Cell.java`, `Citizen.java`, `CaravanData.java`, `Game.java`
+- **Warnings unchecked cast** : Ajout de `@SuppressWarnings({"deprecation", "unchecked"})` sur les fichiers avec casts dans `readExternal()` (Externalizable)
+  - `Item.java`, `LivingEntity.java`, `LivingEntityData.java`, `Cell.java`, `SmartMenu.java`, `World.java`
+  - `CitizenGroups.java`, `SoldierGroups.java`, `CaravanData.java`, `Projectile.java`, `Building.java`
+  - `Container.java`, `Stockpile.java`, `BuryData.java`, `Zone.java`, `TaskManager.java`, `Task.java`
+  - `Action.java`, `HotPoint.java`, `TaskManagerItem.java`, `Type.java`, `SoldierGroupData.java`
+  - `CitizenGroupData.java`, `MessagesPanel.java`, `MissionData.java`, `TutorialFlow.java`, `Game.java`
+- **Statut** : ✅ Compilation réussie sans aucun warning (180 fichiers sources)
+
+### Correction du Curseur Inversé (Mirroir Vertical)
+
+- **Problème** : Double-inversion des coordonnées Y causant un curseur en mirroir vertical
+- **Cause** : `GLFWWindow.getY()` retourne déjà `height - mouseY - 1` (origine bas-gauche), mais `MainPanel.java:411` et `Game.java:1786` appliquaient une inversion supplémentaire
+- **Correction** :
+  - `MainPanel.java:411` : `renderHeight - GLFWWindow.getY() - 1` → `GLFWWindow.getY()`
+  - `Game.java:1786` : `UtilsGL.getHeight() - GLFWWindow.getEventY() - 1` → `GLFWWindow.getEventY()`
+- **Statut** : ✅ Correction appliquée
+
+### Correction du Freeze lors de l'Interaction Souris
+
+- **Problème** : L'application freeze lors d'un clic souris
+- **Cause** : `mouseEventAvailable` n'était jamais remis à `false`, la boucle `while (GLFWWindow.next())` tournait en boucle infinie
+- **Correction** :
+  - `GLFWWindow.java:323` : `next()` consomme maintenant l'événement en remettant `mouseEventAvailable` à `false` après chaque appel
+  - `GLFWWindow.java:347` : `resetMouseEvent()` rendu public pour nettoyage explicite
+  - `Game.java:1871` : Appel de `GLFWWindow.resetMouseEvent()` à la fin de `checkMouseEvents()`
+- **Statut** : ✅ Correction appliquée
+
+### Améliorations de search_replace.py
+
+- **Nouvelles options** :
+  - `--all` : Force le remplacement même si le texte recherché n'est pas trouvé (insertion)
+  - `--glob <pattern>` : Applique le remplacement sur tous les fichiers correspondant au pattern (ex: `src/**/*.java`)
+- **Statut** : ✅ Fonctionnalités ajoutées et documentées
+
+## Modifications à Venir

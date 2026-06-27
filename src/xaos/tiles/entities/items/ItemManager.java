@@ -54,8 +54,8 @@ public class ItemManager {
             // De paso rellenamos la lista de mini items (_block)
             // Y de paso comprobamos los habitatGroup y rellenamos los habitat que toquen
             // Y DE PASO los buryItem
-            // Y DE PASO añadimos los types
-            // Y DE PASO añadimos los maxAgeTerrain
+            // Y DE PASO aÃ±adimos los types
+            // Y DE PASO aÃ±adimos los maxAgeTerrain
             miniItemList = new HashMap<String, Tile>();
             Iterator<ItemManagerItem> itItems = itemList.values().iterator();
             ItemManagerItem imi;
@@ -64,7 +64,7 @@ public class ItemManager {
                 // maxAgeItem
                 if (imi.getMaxAgeItem() != null && imi.getMaxAgeItem().length() > 0) {
                     if (itemList.get(imi.getMaxAgeItem()) == null) {
-                        Log.log(Log.LEVEL_ERROR, Messages.getString("ItemManager.1") + imi.getMaxAgeItem() + "]", "ItemManager"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+                        Log.error(Messages.getString("ItemManager.1") + imi.getMaxAgeItem() + "]", "ItemManager"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
                         Game.exit();
                     }
                 }
@@ -73,7 +73,7 @@ public class ItemManager {
                 if (imi.getBuryItem() != null && imi.getBuryItem().size() > 0) {
                     for (int i = 0; i < imi.getBuryItem().size(); i++) {
                         if (itemList.get(imi.getBuryItem().get(i)) == null) {
-                            Log.log(Log.LEVEL_ERROR, Messages.getString("ItemManager.3") + " [" + imi.getBuryItem().get(i) + "]", "ItemManager"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
+                            Log.error(Messages.getString("ItemManager.3") + " [" + imi.getBuryItem().get(i) + "]", "ItemManager"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
                             Game.exit();
                         }
                     }
@@ -91,7 +91,7 @@ public class ItemManager {
                 if (imi.getHabitatAsString() != null) {
                     for (int i = 0; i < imi.getHabitatAsString().size(); i++) {
                         if (!habitat.contains(imi.getHabitatAsString().get(i))) {
-                            habitat.add(new Integer(TerrainManager.getItem(imi.getHabitatAsString().get(i)).getTerrainID()));
+                            habitat.add(Integer.valueOf(TerrainManager.getItem(imi.getHabitatAsString().get(i)).getTerrainID()));
                             //getHabitat ().add (habitat.get (i));
                         }
                     }
@@ -112,7 +112,7 @@ public class ItemManager {
                 // maxAgeTerrain
                 if (imi.getMaxAgeTerrain() != null && imi.getMaxAgeTerrain().length() > 0) {
                 	if (TerrainManager.getItem (imi.getMaxAgeTerrain ()) == null) {
-                        Log.log (Log.LEVEL_ERROR, Messages.getString("ItemManager.2") + " [" + imi.getMaxAgeTerrain () + "]", "ItemManager"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
+                        Log.log (Log.LEVEL.ERROR, Messages.getString("ItemManager.2") + " [" + imi.getMaxAgeTerrain () + "]", "ItemManager"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
                         Game.exit();
                     }
                 }
@@ -159,7 +159,7 @@ public class ItemManager {
 
         ArrayList<ItemManagerItem> alReturn = new ArrayList<ItemManagerItem>();
 
-        // Recorremos todos los items buscando el que tenga building = "parámetro pasado"
+        // Recorremos todos los items buscando el que tenga building = "parÃ¡metro pasado"
         Iterator<String> it = itemList.keySet().iterator();
         ItemManagerItem imi;
         while (it.hasNext()) {
@@ -243,7 +243,7 @@ public class ItemManager {
     }
 
     /**
-     * Devuelve un item a random a partir de un nivel mínimo y máximo o null si
+     * Devuelve un item a random a partir de un nivel mÃ­nimo y mÃ¡ximo o null si
      * no encuentra Items de level 0 no se devuelven
      *
      * @param level Nivel
@@ -316,7 +316,7 @@ public class ItemManager {
             Document doc = UtilsXML.loadXMLFile(sXMLName);
 
 			// Tenemos el documento XML parseado
-            // Lo recorremos entero y vamos añadiendo los items (ItemManagerItem) a la hash
+            // Lo recorremos entero y vamos aÃ±adiendo los items (ItemManagerItem) a la hash
             NodeList nodeList = doc.getDocumentElement().getChildNodes();
             Node node;
             ItemManagerItem item;
@@ -340,7 +340,7 @@ public class ItemManager {
 
                     boolean bExists = itemList.containsKey(sIniHeader);
                     if (bLoadingMain && bExists) {
-                        Log.log(Log.LEVEL_ERROR, Messages.getString("ItemManager.0") + sIniHeader + "]", "ItemManager"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+                        Log.error(Messages.getString("ItemManager.0") + sIniHeader + "]", "ItemManager"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
                     }
 
                     // Mod cambiando valores de un item que ya existe?
@@ -588,7 +588,7 @@ public class ItemManager {
                         item.setHappiness(UtilsXML.getChildValue(node.getChildNodes(), "happiness")); //$NON-NLS-1$
                     }
 
-                    // Se puede dormir ahí?
+                    // Se puede dormir ahÃ­?
                     if (bModChangingValues) {
                         String sAux = UtilsXML.getChildValue(node.getChildNodes(), "usedToSleep"); //$NON-NLS-1$
                         if (sAux != null) {
@@ -598,7 +598,7 @@ public class ItemManager {
                         item.setCanBeUsedToSleep(UtilsXML.getChildValue(node.getChildNodes(), "usedToSleep")); //$NON-NLS-1$
                     }
 
-                    // Se puede sentar ahí?
+                    // Se puede sentar ahÃ­?
                     if (bModChangingValues) {
                         String sAux = UtilsXML.getChildValue(node.getChildNodes(), "usedToSit"); //$NON-NLS-1$
                         if (sAux != null) {
@@ -1014,12 +1014,12 @@ public class ItemManager {
                         item.setBuildAction(UtilsXML.getChildValue(node.getChildNodes(), "buildAction")); //$NON-NLS-1$
                     }
 
-                    // Lo añadimos a la hash
+                    // Lo aÃ±adimos a la hash
                     itemList.put(sIniHeader, item);
                 }
             }
         } catch (Exception e) {
-            Log.log(Log.LEVEL_ERROR, Messages.getString("ItemManager.6") + sXMLName + Messages.getString("ItemManager.7") + e.toString() + "]", "ItemManager"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
+            Log.error(Messages.getString("ItemManager.6") + sXMLName + Messages.getString("ItemManager.7") + e.toString() + "]", "ItemManager"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
             Game.exit();
         }
     }

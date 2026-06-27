@@ -18,6 +18,7 @@ import xaos.utils.Log;
 import xaos.utils.Messages;
 import xaos.utils.UtilsXML;
 
+@SuppressWarnings("unchecked")
 public class Type implements Externalizable {
 
     private static final long serialVersionUID = -6367571957315536401L;
@@ -129,7 +130,7 @@ public class Type implements Externalizable {
     }
 
     /**
-     * Devuelve el tipo principal de un nombre de tipo ej: food.meat devolvería
+     * Devuelve el tipo principal de un nombre de tipo ej: food.meat devolverÃ­a
      * food
      *
      * @param sTypeName
@@ -199,7 +200,7 @@ public class Type implements Externalizable {
             Document doc = UtilsXML.loadXMLFile(sXMLPath); //$NON-NLS-1$ //$NON-NLS-2$
 
 			// Tenemos el documento XML parseado
-            // Lo recorremos entero y vamos añadiendo los nombres a la hash
+            // Lo recorremos entero y vamos aÃ±adiendo los nombres a la hash
             NodeList nodeList = doc.getDocumentElement().getChildNodes();
             Node node;
             String sTypeID, sName;
@@ -220,11 +221,11 @@ public class Type implements Externalizable {
                     }
 
                     if (bLoadingMain && typeNames.containsKey(sTypeID)) {
-                        Log.log(Log.LEVEL_ERROR, Messages.getString("Type.0") + sTypeID + "]", "Type"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+                        Log.error(Messages.getString("Type.0") + sTypeID + "]", "Type"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
                     }
                     sName = UtilsXML.getChildValue(nodeList, sTypeID);
 
-                    // Lo añadimos a la hash
+                    // Lo aÃ±adimos a la hash
                     if (sName != null) {
                         typeNames.put(sTypeID, sName);
                     } else {
@@ -238,7 +239,7 @@ public class Type implements Externalizable {
                 }
             }
         } catch (Exception e) {
-            Log.log(Log.LEVEL_ERROR, Messages.getString("Type.3") + e.toString() + "]", "Type"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+            Log.error(Messages.getString("Type.3") + e.toString() + "]", "Type"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
             Game.exit();
         }
     }

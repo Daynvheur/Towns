@@ -16,7 +16,7 @@ import xaos.utils.JNASteamAPI;
 import xaos.utils.Log;
 import xaos.utils.Messages;
 
-import com.sun.jna.Native;
+
 import xaos.property.Property;
 
 public final class Towns {
@@ -27,13 +27,17 @@ public final class Towns {
 
     public static boolean loadSteamAPI(String sLibName) {
         try {
-            JNASteamAPI steamAPI = (JNASteamAPI) Native.loadLibrary(sLibName, JNASteamAPI.class);
-            steamAPI.SteamAPI_Init();
-            return true;
+            return false;
+            // Steam API stub
+            // return false;
         } catch (Throwable t) {
         }
 
         return false;
+    }
+
+    public static java.io.File resolveFile(String path) {
+        return new java.io.File(path);
     }
 
     public static void main(String[] args) {
@@ -54,8 +58,8 @@ public final class Towns {
                 pw.close();
                 writer.close();
 
-                Log.log(Log.LEVEL_ERROR, "Error Code [" + Game.iError + "]", "Towns"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
-                Log.log(Log.LEVEL_ERROR, writer.toString(), "Towns"); //$NON-NLS-1$
+                Log.error("Error Code [" + Game.iError + "]", "Towns"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+                Log.error(writer.toString(), "Towns"); //$NON-NLS-1$
             } catch (Exception e) {
             }
 
@@ -80,11 +84,11 @@ public final class Towns {
             } catch (Exception e) {
             }
         } catch (FileNotFoundException e) {
-            Log.log(Log.LEVEL_ERROR, Messages.getString("Towns.2") + sFile, "Towns"); //$NON-NLS-1$ //$NON-NLS-2$
+            Log.error(Messages.getString("Towns.2") + sFile, "Towns"); //$NON-NLS-1$ //$NON-NLS-2$
             Game.exit();
         } catch (IOException e) {
-            Log.log(Log.LEVEL_ERROR, Messages.getString("Towns.7"), "Towns"); //$NON-NLS-1$ //$NON-NLS-2$
-            Log.log(Log.LEVEL_ERROR, e.toString(), "Towns"); //$NON-NLS-1$
+            Log.error(Messages.getString("Towns.7"), "Towns"); //$NON-NLS-1$ //$NON-NLS-2$
+            Log.error(e.toString(), "Towns"); //$NON-NLS-1$
             Game.exit();
         }
     }
@@ -117,11 +121,11 @@ public final class Towns {
                 }
             }
         } catch (FileNotFoundException e) {
-            Log.log(Log.LEVEL_ERROR, Messages.getString("Towns.2") + sFile, "Towns"); //$NON-NLS-1$ //$NON-NLS-2$
+            Log.error(Messages.getString("Towns.2") + sFile, "Towns"); //$NON-NLS-1$ //$NON-NLS-2$
             Game.exit();
         } catch (IOException e) {
-            Log.log(Log.LEVEL_ERROR, Messages.getString("Towns.7"), "Towns"); //$NON-NLS-1$ //$NON-NLS-2$
-            Log.log(Log.LEVEL_ERROR, e.toString(), "Towns"); //$NON-NLS-1$
+            Log.error(Messages.getString("Towns.7"), "Towns"); //$NON-NLS-1$ //$NON-NLS-2$
+            Log.error(e.toString(), "Towns"); //$NON-NLS-1$
             Game.exit();
         }
     }
@@ -185,7 +189,7 @@ public final class Towns {
                 return Integer.parseInt(sValue);
             }
         } catch (NumberFormatException nfe) {
-            Log.log(Log.LEVEL_ERROR, Messages.getString("Towns.10") + sProperty + Messages.getString("Towns.11") + sValue + Messages.getString("Towns.12") + iDefaultValue + "]", "Towns"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$ //$NON-NLS-5$
+            Log.error(Messages.getString("Towns.10") + sProperty + Messages.getString("Towns.11") + sValue + Messages.getString("Towns.12") + iDefaultValue + "]", "Towns"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$ //$NON-NLS-5$
         }
 
         return iDefaultValue;
@@ -215,7 +219,7 @@ public final class Towns {
         }
 
         if (sProperty == null || sProperty.length() == 0) {
-            Log.log(Log.LEVEL_ERROR, Messages.getString("Towns.15"), "Towns"); //$NON-NLS-1$ //$NON-NLS-2$
+            Log.error(Messages.getString("Towns.15"), "Towns"); //$NON-NLS-1$ //$NON-NLS-2$
             Game.exit();
         }
 

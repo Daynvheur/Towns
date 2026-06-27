@@ -19,11 +19,8 @@ import java.util.HashMap;
 import javax.imageio.ImageIO;
 
 import org.lwjgl.BufferUtils;
-import org.lwjgl.LWJGLException;
-import org.lwjgl.input.Cursor;
-import org.lwjgl.input.Mouse;
-import org.lwjgl.opengl.Display;
-import org.lwjgl.opengl.DisplayMode;
+
+import xaos.utils.GLFWWindow;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL13;
 
@@ -36,8 +33,8 @@ import xaos.panels.UIPanel;
 import xaos.property.PropertyFile;
 import xaos.tiles.Cell;
 import xaos.tiles.Tile;
-import de.matthiasmann.twl.utils.PNGDecoder;
-import de.matthiasmann.twl.utils.PNGDecoder.Format;
+
+
 
 
 public final class UtilsGL {
@@ -55,11 +52,12 @@ public final class UtilsGL {
 	private static int lastWindowHeight;
 
 
-	public static DisplayMode getFullscreenDisplayMode () throws LWJGLException {
-		int iWidth = Display.getDesktopDisplayMode ().getWidth ();
-		int iHeight = Display.getDesktopDisplayMode ().getHeight ();
+	public static DisplayMode getFullscreenDisplayMode() {
+		DisplayMode desktopMode = GLFWWindow.getDesktopDisplayMode();
+		int iWidth = desktopMode.getWidth();
+		int iHeight = desktopMode.getHeight();
 
-		DisplayMode[] modes = Display.getAvailableDisplayModes ();
+		DisplayMode[] modes = GLFWWindow.getAvailableDisplayModes ();
 		int freq = 0;
 
 		DisplayMode targetDisplayMode = null, current;
@@ -77,7 +75,7 @@ public final class UtilsGL {
 				// If we've found a match for bpp and frequence against the
 				// original display mode then it's probably best to go for this one
 				// since it's most likely compatible with the monitor
-				if ((current.getBitsPerPixel () == Display.getDesktopDisplayMode ().getBitsPerPixel ()) && (current.getFrequency () == Display.getDesktopDisplayMode ().getFrequency ())) {
+				if ((current.getBitsPerPixel() == desktopMode.getBitsPerPixel()) && (current.getFrequency() == desktopMode.getFrequency())) {
 					return current;
 				}
 			}
@@ -98,26 +96,30 @@ public final class UtilsGL {
 		try {
 			lastWindowWidth = width;
 			lastWindowHeight = height;
+			// Initialize GLFW window first
+			GLFWWindow.init(width, height, bFullScreen);
 			if (bFullScreen) {
 				// Full screen
-				Display.setDisplayMode (getFullscreenDisplayMode ());
+				DisplayMode fsm = getFullscreenDisplayMode();
+				if (fsm != null) {
+					GLFWWindow.setDisplayMode(fsm.getWidth(), fsm.getHeight());
+				}
 			} else {
-				Display.setDisplayMode (new DisplayMode (width, height));
+				GLFWWindow.setDisplayMode(width, height);
 			}
 
-			Display.setResizable (true);
-			Display.setFullscreen (bFullScreen);
-			Display.setVSyncEnabled (true);
-			Display.setTitle ("Towns");
+			
+			GLFWWindow.setFullscreen (bFullScreen);
+			GLFWWindow.setVSyncEnabled (true);
+			GLFWWindow.setTitle ("Towns");
 
-			ImageData iconImage = loadImage ("icon.png");
-			Display.setIcon (new ByteBuffer [] { iconImage.getImagePixels () });
-			Display.create ();
+			GLFWWindow.setIcon(loadImageAsBufferedImage ("icon.png"));
+			
 
 			setNativeCursor ();
 		}
 		catch (Exception e) {
-			Log.log (Log.LEVEL_ERROR, e.toString (), "UtilsGL"); //$NON-NLS-1$
+			Log.log (Log.LEVEL.ERROR, e.toString (), "UtilsGL"); //$NON-NLS-1$
 			Game.exit ();
 		}
 
@@ -133,7 +135,7 @@ public final class UtilsGL {
 		GL11.glDisable (GL11.GL_POINT_SMOOTH);
 		GL11.glDisable (GL11.GL_POLYGON_SMOOTH);
 
-		GL11.glViewport (0, 0, Display.getWidth (), Display.getHeight ());
+		GL11.glViewport (0, 0, GLFWWindow.getWidth (), GLFWWindow.getHeight ());
 		GL11.glLoadIdentity ();
 		GL11.glMatrixMode (GL11.GL_PROJECTION);
 		GL11.glLoadIdentity ();
@@ -155,7 +157,7 @@ public final class UtilsGL {
 
 
 	public static boolean isFullScreen () {
-		return Display.isFullscreen ();
+		return GLFWWindow.isFullscreen ();
 	}
 
 
@@ -169,17 +171,16 @@ public final class UtilsGL {
 
 	public static void toggleFullScreen () {
 		try {
-			if (Display.isFullscreen ()) {
-				Display.setDisplayMode (new DisplayMode (lastWindowWidth, lastWindowHeight));
+			if (GLFWWindow.isFullscreen ()) {
+				GLFWWindow.setDisplayMode(lastWindowWidth, lastWindowHeight);
 			} else {
-				lastWindowWidth = Display.getWidth ();
-				lastWindowHeight = Display.getHeight ();
-				DisplayMode fullscreenDisplayMode = getFullscreenDisplayMode ();
-				Display.setDisplayModeAndFullscreen (fullscreenDisplayMode);
+				lastWindowWidth = GLFWWindow.getWidth ();
+				lastWindowHeight = GLFWWindow.getHeight ();
+				GLFWWindow.setDisplayModeAndFullscreen(lastWindowWidth, lastWindowHeight, 60);
 			}
 		}
-		catch (LWJGLException e) {
-			Log.log (Log.LEVEL_ERROR, e.toString (), "UtilsGL"); //$NON-NLS-1$
+		catch (Exception e) {
+			Log.log (Log.LEVEL.ERROR, e.toString (), "UtilsGL"); //$NON-NLS-1$
 			Game.exit ();
 		}
 	}
@@ -196,34 +197,41 @@ public final class UtilsGL {
 
 
 	public static int getWidth () {
-		return Display.getWidth ();
+		return GLFWWindow.getWidth ();
 	}
 
 
 	public static int getHeight () {
-		return Display.getHeight ();
+		return GLFWWindow.getHeight ();
 	}
 
 
 	private static void setNativeCursor () throws Exception {
-		final File cursorFile = new File (Towns.getPropertiesString ("GRAPHICS_FOLDER") + Towns.getPropertiesString (PropertyFile.PROPERTY_FILE_GRAPHICS, "CURSOR_FILE"));
-		BufferedImage imageCursor = ImageIO.read (cursorFile);
+		String cursorFile = Towns.getPropertiesString ("GRAPHICS_FOLDER") + Towns.getPropertiesString (PropertyFile.PROPERTY_FILE_GRAPHICS, "CURSOR_FILE");
+		File cursorFileObj = new File (cursorFile);
+		if (!cursorFileObj.exists ()) {
+			return;
+		}
+		BufferedImage imageCursor = ImageIO.read (cursorFileObj);
+		if (imageCursor == null) {
+			return;
+		}
 
 		int[] buffer = new int [imageCursor.getWidth ()];
 		IntBuffer intBuffer = ByteBuffer.allocateDirect (imageCursor.getWidth () * imageCursor.getHeight () * 4).order (ByteOrder.nativeOrder ()).asIntBuffer ();
 
 		// swap y-axis
-		for (int y = imageCursor.getHeight () - 1; y >= 0; --y) {
+		for (int y = 0 ; y < imageCursor.getHeight () ; ++y) {
 			imageCursor.getRGB (0, y, imageCursor.getWidth (), 1, buffer, 0, imageCursor.getWidth ());
 			intBuffer.put (buffer);
 		}
 		intBuffer.rewind ();
 
 		try {
-			Mouse.setNativeCursor (new Cursor (imageCursor.getWidth (), imageCursor.getHeight (), 0, 15, 1, intBuffer, null));
+			GLFWWindow.setNativeCursor(imageCursor.getWidth(), imageCursor.getHeight(), 0, 0, intBuffer);
 		}
-		catch (LWJGLException e) {
-			Log.log (Log.LEVEL_ERROR, "No native cursor support.", UtilsGL.class.getCanonicalName ());
+		catch (Exception e) {
+			Log.log (Log.LEVEL.ERROR, "No native cursor support.", UtilsGL.class.getCanonicalName ());
 		}
 	}
 
@@ -239,7 +247,7 @@ public final class UtilsGL {
 	// byte[] texturePixels = imageData.imagePixels;
 	// byte[] texturePixels2 = new byte[texturePixels.length];
 	//
-	// // Giramos los pixels pq sale al revés
+	// // Giramos los pixels pq sale al revÃ©s
 	// int iPixel1, iPixel2;
 	// for (int x = 0; x < 16; x++) {
 	// for (int y = 0; y < 16; y++) {
@@ -278,8 +286,8 @@ public final class UtilsGL {
 	//
 	// try {
 	// Mouse.setNativeCursor(new Cursor(16, 16, 0, 15, 1, intbuf, null));
-	// } catch (LWJGLException e) {
-	// Log.log(Log.LEVEL_ERROR, "No native cursor support.", UtilsGL.class.getCanonicalName());
+	// } catch (Exception e) {
+	// Log.error("No native cursor support.", UtilsGL.class.getCanonicalName());
 	// }
 	// }
 	public static final void glBegin (final int mode) {
@@ -586,7 +594,7 @@ public final class UtilsGL {
 
 		ImageData imageData = null;
 		try {
-			// Primero miramos que no estén en alguna carpeta de mod
+			// Primero miramos que no estÃ©n en alguna carpeta de mod
 			File fUserFolder = new File (Game.getUserFolder ());
 			if (fUserFolder.exists () && fUserFolder.isDirectory ()) {
 				ArrayList<String> alMods = Game.getModsLoaded ();
@@ -607,7 +615,7 @@ public final class UtilsGL {
 		}
 		catch (IOException e) {
 			// e.printStackTrace();
-			Log.log (Log.LEVEL_DEBUG, "Fast decoding of image [" + imageFile + "] failed: " + e.toString (), "UtilsGL");
+			Log.log (Log.LEVEL.DEBUG, "Fast decoding of image [" + imageFile + "] failed: " + e.toString (), "UtilsGL");
 			// return null;
 		}
 
@@ -617,7 +625,7 @@ public final class UtilsGL {
 				imageData = loadImageDataImageIO (Towns.getPropertiesString ("GRAPHICS_FOLDER") + System.getProperty ("file.separator") + imageFile, imageFile);
 			}
 			catch (IOException e) {
-				Log.log (Log.LEVEL_ERROR, "ImageIO decoding of image [" + imageFile + "] failed: " + e.toString (), "UtilsGL");
+				Log.log (Log.LEVEL.ERROR, "ImageIO decoding of image [" + imageFile + "] failed: " + e.toString (), "UtilsGL");
 			}
 		}
 
@@ -625,7 +633,7 @@ public final class UtilsGL {
 			imageData.clearPixels ();
 			cachedImages.put (imageFile, imageData);
 		} else {
-			Log.log (Log.LEVEL_ERROR, "Failed to load image " + imageFile, "UtilsGL");
+			Log.log (Log.LEVEL.ERROR, "Failed to load image " + imageFile, "UtilsGL");
 		}
 
 		return imageData;
@@ -642,17 +650,25 @@ public final class UtilsGL {
 		InputStream in = null;
 		try {
 			in = new FileInputStream (imageFile);
-			PNGDecoder decoder = new PNGDecoder (in);
+			BufferedImage image = ImageIO.read (in);
+			int width = image.getWidth ();
+			int height = image.getHeight ();
 
-			int width = decoder.getWidth ();
-			int height = decoder.getHeight ();
-
-			ByteBuffer buffer = ByteBuffer.allocateDirect (4 * decoder.getWidth () * decoder.getHeight ());
-			decoder.decode (buffer, decoder.getWidth () * 4, Format.RGBA);
+			ByteBuffer buffer = ByteBuffer.allocateDirect (4 * width * height);
+			int[] intArray = new int[width];
+			for (int y = 0; y < height; y++) {
+				image.getRGB (0, y, width, 1, intArray, 0, width);
+				for (int x = 0; x < width; x++) {
+					int value = intArray[x];
+					// convert ARGB to RGBA
+					value = (value << 8) | (value >>> 24);
+					buffer.putInt (value);
+				}
+			}
 			buffer.flip ();
 
-			ImageData image = new ImageData (imageName, width, height, buffer, GL11.GL_RGBA);
-			return image;
+			ImageData imageData = new ImageData (imageName, width, height, buffer, GL11.GL_RGBA);
+			return imageData;
 		}
 		finally {
 			if (in != null) {
@@ -683,6 +699,19 @@ public final class UtilsGL {
 		byteBuffer.flip ();
 
 		return new ImageData (imageName, image.getWidth (), image.getHeight (), byteBuffer, GL11.GL_RGBA);
+	}
+
+
+	private static BufferedImage loadImageAsBufferedImage (String imageFile) {
+		try {
+			String graphicsFolder = Towns.getPropertiesString ("GRAPHICS_FOLDER");
+			if (graphicsFolder != null && !graphicsFolder.isEmpty ()) {
+				return ImageIO.read (new File (graphicsFolder + System.getProperty ("file.separator") + imageFile));
+			}
+			return ImageIO.read (new File (imageFile));
+		} catch (IOException e) {
+			return null;
+		}
 	}
 
 
@@ -962,7 +991,11 @@ public final class UtilsGL {
 			int iYIndex = Tile.TERRAIN_ICON_HEIGHT * tile.getTileSetY ();
 			for (int x = 0; x < tile.getTileWidth (); x++) {
 				for (int y = 0; y < tile.getTileHeight (); y++) {
-					alphaArray[x][y] = alphaStored[iXIndex + x][iYIndex + y];
+					int srcX = iXIndex + x;
+					int srcY = iYIndex + y;
+					if (srcX < alphaStored.length && srcY < alphaStored[0].length) {
+						alphaArray[x][y] = alphaStored[srcX][srcY];
+					}
 				}
 			}
 
@@ -976,7 +1009,7 @@ public final class UtilsGL {
 
 
 	public static boolean[][] generateAlpha (boolean[][] alphaArray, int width, int height) {
-		// Si llega aquí es que es un tamaño personalizado
+		// Si llega aquÃ­ es que es un tamaÃ±o personalizado
 		boolean[][] alphaPersonal = new boolean [width] [height];
 		float relationW = (float) alphaArray.length / (float) width;
 		float relationH = (float) alphaArray[0].length / (float) height;
@@ -1049,7 +1082,7 @@ public final class UtilsGL {
 
 
 	/**
-	 * Cambia la textura Y añade brillo
+	 * Cambia la textura Y aÃ±ade brillo
 	 * 
 	 * @param iTexture
 	 * @return la textura seteada
@@ -1108,7 +1141,7 @@ public final class UtilsGL {
 
 
 	/**
-	 * Cambia la textura Y añade brillo
+	 * Cambia la textura Y aÃ±ade brillo
 	 * 
 	 * @param iTexture
 	 * @return la textura seteada
@@ -1246,6 +1279,6 @@ public final class UtilsGL {
 
 
 	public static void destroy () {
-		Display.destroy ();
+		GLFWWindow.destroy ();
 	}
 }

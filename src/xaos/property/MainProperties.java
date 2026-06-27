@@ -42,5 +42,7 @@ public class MainProperties {
     public static Property<Integer> PATHFINDING_LEVEL = new Property<Integer>(PropertyFile.PROPERTY_FILE_MAIN, "PATHFINDING_LEVEL", IntegerPropertyWrapper.INSTANCE);
     public static Property<String> MODS = new Property<String>(PropertyFile.PROPERTY_FILE_MAIN, "MODS", StringPropertyWrapper.INSTANCE);
     public static Property<String> SERVERS = new Property<String>(PropertyFile.PROPERTY_FILE_MAIN, "SERVERS", StringPropertyWrapper.INSTANCE);
+    public static Property<Boolean> VSYNC = new Property<Boolean>(PropertyFile.PROPERTY_FILE_MAIN, "VSYNC", BooleanPropertyWrapper.INSTANCE);
+    public static Property<Integer> FPS_CAP = new Property<Integer>(PropertyFile.PROPERTY_FILE_MAIN, "FPS_CAP", IntegerPropertyWrapper.INSTANCE);
 
 }

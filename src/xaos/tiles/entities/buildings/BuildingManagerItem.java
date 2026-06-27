@@ -90,14 +90,14 @@ public class BuildingManagerItem {
     public void setGroundData(String groundData) {
         if (groundData == null || groundData.length() == 0 || groundData.length() != (getWidth() * getHeight()) || groundData.indexOf(Building.GROUND_ENTRANCE) == -1) {
             if (groundData != null && groundData.length() > 0) {
-                Log.log(Log.LEVEL_ERROR, Messages.getString("BuildingManagerItem.0") + getIniHeader() + Messages.getString("BuildingManagerItem.1"), getClass().toString()); //$NON-NLS-1$ //$NON-NLS-2$
+                Log.error(Messages.getString("BuildingManagerItem.0") + getIniHeader() + Messages.getString("BuildingManagerItem.1"), getClass().toString()); //$NON-NLS-1$ //$NON-NLS-2$
             }
 
             // Entrance en la primera casilla
             StringBuffer sBuffer = new StringBuffer();
             sBuffer.append(Building.GROUND_ENTRANCE);
             for (int i = 1; i < (getHeight() * getWidth()); i++) {
-                // Las demás 0 -> No transitable
+                // Las demÃ¡s 0 -> No transitable
                 sBuffer.append(Building.GROUND_NON_TRANSITABLE);
             }
 

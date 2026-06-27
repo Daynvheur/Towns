@@ -11,6 +11,7 @@ import xaos.panels.ImagesPanel;
 import xaos.utils.UtilsIniHeaders;
 
 
+@SuppressWarnings("unchecked")
 public class TutorialFlow implements Externalizable{
 	private static final long serialVersionUID = 8482871306171841743L;
 

@@ -59,7 +59,7 @@ public class CaravanManager {
             Document doc = UtilsXML.loadXMLFile(sXMLName); //$NON-NLS-1$
 
 			// Tenemos el documento XML parseado
-            // Lo recorremos entero y vamos añadiendo las caravans a la hash
+            // Lo recorremos entero y vamos aÃ±adiendo las caravans a la hash
             NodeList nodeList = doc.getDocumentElement().getChildNodes();
             Node node;
             CaravanManagerItem caravanData;
@@ -127,12 +127,12 @@ public class CaravanManager {
                         caravanData.setComePCT(UtilsXML.getChildValue(node.getChildNodes(), "comePCT")); //$NON-NLS-1$
                     }
 
-                    // Lo añadimos a la hash
+                    // Lo aÃ±adimos a la hash
                     caravanList.put(sID, caravanData);
                 }
             }
         } catch (Exception e) {
-            Log.log(Log.LEVEL_ERROR, Messages.getString("CaravanManager.0") + e.toString() + "]", "CaravanManager"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+            Log.error(Messages.getString("CaravanManager.0") + e.toString() + "]", "CaravanManager"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
             Game.exit();
         }
     }

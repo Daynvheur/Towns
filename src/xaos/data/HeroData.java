@@ -24,6 +24,7 @@ import xaos.utils.Messages;
 import xaos.utils.Point3DShort;
 import xaos.utils.Utils;
 
+@SuppressWarnings("unchecked")
 public class HeroData implements Externalizable {
 
     private static final long serialVersionUID = 3057389473429112206L;
@@ -208,7 +209,7 @@ public class HeroData implements Externalizable {
 
     /**
      * Mira si tiene que subir de nivel (o niveles), en ese caso lo hace y
-     * devuelve true. También añade las skills que se obtienen en ese nivel
+     * devuelve true. TambiÃ©n aÃ±ade las skills que se obtienen en ese nivel
      *
      * @return
      */

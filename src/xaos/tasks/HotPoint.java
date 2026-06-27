@@ -10,17 +10,18 @@ import xaos.utils.Point3DShort;
 
 /**
  * Clase usada por las tareas (Task's) para indicar donde hay que ir y sobre que
- * casilla actuar. Ej: Hay que ir a la posiciÛn 10,10,0 y minar la casilla
+ * casilla actuar. Ej: Hay que ir a la posici√≥n 10,10,0 y minar la casilla
  * 10,11,0
  */
+@SuppressWarnings("unchecked")
 public final class HotPoint implements Externalizable {
 
     private static final long serialVersionUID = 7742440798076745420L;
 
     /**
-     * Punto donde ejecutar la acciÛn
+     * Punto donde ejecutar la acci√≥n
      */
-    private Point3DShort hotPoint;
+    private Point3DShort point;
 
     /**
      * Indica posibles puntos donde ir para actuar sobre el hotpoint
@@ -28,7 +29,7 @@ public final class HotPoint implements Externalizable {
     private ArrayList<Point3DShort> places;
 
     /**
-     * Indica si el hotpoint est· acabado
+     * Indica si el hotpoint est√° acabado
      */
     private boolean finished;
 
@@ -40,22 +41,22 @@ public final class HotPoint implements Externalizable {
     public HotPoint() {
     }
 
-    public HotPoint(Point3DShort hotPoint, ArrayList<Point3DShort> places) {
-        setHotPoint(hotPoint);
+    public HotPoint(Point3DShort point, ArrayList<Point3DShort> places) {
+        setPoint(point);
         setPlaces(places, false);
     }
 
-    public HotPoint(Point3DShort hotPoint, Point3DShort place) {
-        setHotPoint(hotPoint);
+    public HotPoint(Point3DShort point, Point3DShort place) {
+        setPoint(point);
         addPlace(place);
     }
 
-    public Point3DShort getHotPoint() {
-        return hotPoint;
+    public Point3DShort getPoint() {
+        return point;
     }
 
-    public void setHotPoint(Point3DShort hotPoint) {
-        this.hotPoint = hotPoint;
+    public void setPoint(Point3DShort point) {
+        this.point = point;
     }
 
     public ArrayList<Point3DShort> getPlaces() {
@@ -64,7 +65,7 @@ public final class HotPoint implements Externalizable {
 
     public void setPlaces(ArrayList<Point3DShort> places, boolean maintainCurrentOrder) {
         if (maintainCurrentOrder && this.places != null && places != null) {
-            // Mantenemos el orden, ya que otros aldeanos podrÌan estar haciendo cosas
+            // Mantenemos el orden, ya que otros aldeanos podr√≠an estar haciendo cosas
             int iSize = this.places.size();
             for (int i = (iSize - 1); i >= 0; i--) {
                 if (places.contains(this.places.get(i))) {
@@ -110,14 +111,14 @@ public final class HotPoint implements Externalizable {
     }
 
     public void readExternal(ObjectInput in) throws IOException, ClassNotFoundException {
-        hotPoint = (Point3DShort) in.readObject();
+        point = (Point3DShort) in.readObject();
         places = (ArrayList<Point3DShort>) in.readObject();
         finished = in.readBoolean();
         parameter = in.readInt();
     }
 
     public void writeExternal(ObjectOutput out) throws IOException {
-        out.writeObject(hotPoint);
+        out.writeObject(point);
         out.writeObject(places);
         out.writeBoolean(finished);
         out.writeInt(parameter);

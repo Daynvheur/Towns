@@ -10,6 +10,7 @@ import java.util.ResourceBundle;
 import xaos.Towns;
 import xaos.main.Game;
 
+@SuppressWarnings("deprecation")
 public final class Messages {
 
     public static final String BUNDLE_NAME = "data.languages.messages"; //$NON-NLS-1$

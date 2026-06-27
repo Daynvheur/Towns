@@ -179,17 +179,17 @@ public class EventData implements Externalizable {
      *
      * @param emi
      * @param effectsList afterEat, afterSleep, effects, ...
-     * @param singleLiving Si se pasa una living sólo intenta aplicarlo a ella,
+     * @param singleLiving Si se pasa una living sÃ³lo intenta aplicarlo a ella,
      * no a todos
      */
     public void launchEffects(EventManagerItem emi, ArrayList<String> effectsList, LivingEntity singleLiving) {
         if (emi.getTargets() != null && emi.getTargets().size() > 0) {
-            // Tiene targets, vamos a ver si aplicamos efectos de 1 sólo uso (<effects>)
+            // Tiene targets, vamos a ver si aplicamos efectos de 1 sÃ³lo uso (<effects>)
             if (effectsList != null && effectsList.size() > 0) {
                 ArrayList<String> alTargets = emi.getTargets();
                 ArrayList<String> alPCTs = emi.getTargetsPCT();
 
-                // Por si acaso han cambiado el xml, comprobamos tamaños y esas cosas
+                // Por si acaso han cambiado el xml, comprobamos tamaÃ±os y esas cosas
                 if (alTargets != null && alPCTs != null && alTargets.size() == alPCTs.size()) {
 					// Go, go, go
 
@@ -246,7 +246,7 @@ public class EventData implements Externalizable {
                                     }
 
                                     if (iTargetType == LivingEntity.TYPE_HERO) {
-                                        // Héroes
+                                        // HÃ©roes
                                         for (int h = 0; h < World.getHeroIDs().size(); h++) {
                                             le = World.getLivingEntityByID(World.getHeroIDs().get((h)));
                                             if (le != null && Utils.getRandomBetween(1, 100) <= iPCT) {
@@ -328,7 +328,7 @@ public class EventData implements Externalizable {
                             }
                         }
                     } else {
-                        // Hay random cell, allá vamos!
+                        // Hay random cell, allÃ¡ vamos!
                         int iNumCells = Utils.launchDice(emi.getTargetsRandomCell());
                         Cell cell;
                         while (iNumCells > 0) {
@@ -344,7 +344,7 @@ public class EventData implements Externalizable {
                                     continue;
                                 }
 								// Cell con livings
-                                // Por cada livings que esté en el target le meteremos todos los efectos
+                                // Por cada livings que estÃ© en el target le meteremos todos los efectos
                                 LivingEntityManagerItem lemi;
                                 LivingEntity le;
                                 for (int l = 0; l < cell.getLivings().size(); l++) {
@@ -352,7 +352,7 @@ public class EventData implements Externalizable {
                                     lemi = LivingEntityManager.getItem(le.getIniHeader());
                                     if (lemi != null) {
                                         if (emi.getTargetsHateData().isHate(le)) {
-                                            // Miramos si es un target válido
+                                            // Miramos si es un target vÃ¡lido
                                             int iTargetIndex = -1;
                                             int iType = lemi.getType();
                                             for (int t = 0; t < alTargets.size(); t++) {
@@ -441,7 +441,7 @@ public class EventData implements Externalizable {
         }
 
         if (turns <= 0) {
-            // Se acabó
+            // Se acabÃ³
             return true;
         }
 
@@ -658,7 +658,7 @@ public class EventData implements Externalizable {
 
         // Comprobamos que tenemos todos los datos
         if (bd.type == null || bd.type.trim().length() == 0) {
-            Log.log(Log.LEVEL_ERROR, Messages.getString("MapGenerator.18"), "MapGenerator"); //$NON-NLS-1$ //$NON-NLS-2$
+            Log.error(Messages.getString("MapGenerator.18"), "MapGenerator"); //$NON-NLS-1$ //$NON-NLS-2$
             return;
         }
 
@@ -673,17 +673,17 @@ public class EventData implements Externalizable {
         }
 
         if (bd.level == -1) {
-            Log.log(Log.LEVEL_ERROR, Messages.getString("MapGenerator.20"), "MapGenerator"); //$NON-NLS-1$ //$NON-NLS-2$
+            Log.error(Messages.getString("MapGenerator.20"), "MapGenerator"); //$NON-NLS-1$ //$NON-NLS-2$
             return;
         }
 
         if ((bd.level + bd.depth) > World.MAP_DEPTH) {
-            Log.log(Log.LEVEL_ERROR, "Bezier. (level + depth) > MAX_DEPTH", "MapGenerator"); //$NON-NLS-1$ //$NON-NLS-2$
+            Log.error("Bezier. (level + depth) > MAX_DEPTH", "MapGenerator"); //$NON-NLS-1$ //$NON-NLS-2$
             return;
         }
 
         if (bd.point1xmin == -1 || bd.point1xmax == -1 || bd.point1ymin == -1 || bd.point1ymax == -1 || bd.point2xmin == -1 || bd.point2xmax == -1 || bd.point2ymin == -1 || bd.point2ymax == -1 || bd.controlpoint1xmin == -1 || bd.controlpoint1xmax == -1 || bd.controlpoint1ymin == -1 || bd.controlpoint1ymax == -1 || bd.controlpoint2xmin == -1 || bd.controlpoint2xmax == -1 || bd.controlpoint2ymin == -1 || bd.controlpoint2ymax == -1) {
-            Log.log(Log.LEVEL_ERROR, Messages.getString("MapGenerator.26"), "MapGenerator"); //$NON-NLS-1$ //$NON-NLS-2$
+            Log.error(Messages.getString("MapGenerator.26"), "MapGenerator"); //$NON-NLS-1$ //$NON-NLS-2$
             return;
         }
 
@@ -841,7 +841,7 @@ public class EventData implements Externalizable {
         }
 
         if (sd.type == null || sd.type.trim().length() == 0) {
-            Log.log(Log.LEVEL_ERROR, Messages.getString("MapGenerator.13"), "MapGenerator"); //$NON-NLS-1$ //$NON-NLS-2$
+            Log.error(Messages.getString("MapGenerator.13"), "MapGenerator"); //$NON-NLS-1$ //$NON-NLS-2$
             return;
         }
 
@@ -986,7 +986,7 @@ public class EventData implements Externalizable {
         if (iSpecialType == MapGeneratorItem.SPECIAL_INT_NONE) {
             TerrainManagerItem tmi = TerrainManager.getItem(sd.type);
             if (tmi == null) {
-                Log.log(Log.LEVEL_ERROR, Messages.getString("MapGenerator.5") + sd.type + "]", "MapGenerator"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+                Log.error(Messages.getString("MapGenerator.5") + sd.type + "]", "MapGenerator"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
                 return;
             }
             iTerrainID = tmi.getTerrainID();
@@ -1149,7 +1149,7 @@ public class EventData implements Externalizable {
 
         boolean bHaySeeds = true;
         while (bHaySeeds) {
-            // Copiamos el auxiliar (y de paso miramos que aún haya seeds)
+            // Copiamos el auxiliar (y de paso miramos que aÃºn haya seeds)
             bHaySeeds = false;
             for (int x = 0; x < World.MAP_WIDTH; x++) {
                 for (int y = 0; y < World.MAP_HEIGHT; y++) {
@@ -1170,7 +1170,7 @@ public class EventData implements Externalizable {
                 for (int y = 0; y < World.MAP_HEIGHT; y++) {
                     if (abMap[x][y]) {
 						// Raiseamos
-                        // Buscamos el último _AIR
+                        // Buscamos el Ãºltimo _AIR
                         boolean bHayAIRs = false;
                         for (int z = 0; z <= World.MAP_NUM_LEVELS_OUTSIDE; z++) {
                             cell = World.getCell(x, y, z);
@@ -1179,7 +1179,7 @@ public class EventData implements Externalizable {
                             } else {
                                 // Tenemos un no-air
                                 if (bHayAIRs) {
-                                    // Tiene espacio por encima, así que simplemente cambiamos el terrain por el de abajo
+                                    // Tiene espacio por encima, asÃ­ que simplemente cambiamos el terrain por el de abajo
                                     generateTerrain(cell.getTerrain().getTerrainID(), x, y, z - 1, false);
                                 }
                             }
@@ -1227,7 +1227,7 @@ public class EventData implements Externalizable {
         }
 
         if (cd.destination == null || cd.destination.length() == 0 || (cd.iHeightMin > cd.iHeightMax && cd.iHeightMax != -1)) {
-            Log.log(Log.LEVEL_ERROR, Messages.getString("MapGenerator.3"), "MapGenerator"); //$NON-NLS-1$ //$NON-NLS-2$
+            Log.error(Messages.getString("MapGenerator.3"), "MapGenerator"); //$NON-NLS-1$ //$NON-NLS-2$
             return;
         }
 
@@ -1239,7 +1239,7 @@ public class EventData implements Externalizable {
             if (tmi != null) {
                 iSourceTerrainID = tmi.getTerrainID();
             } else {
-                Log.log(Log.LEVEL_ERROR, Messages.getString("MapGenerator.5") + cd.source + "]", "MapGenerator"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+                Log.error(Messages.getString("MapGenerator.5") + cd.source + "]", "MapGenerator"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
                 return;
             }
         }
@@ -1249,7 +1249,7 @@ public class EventData implements Externalizable {
         if (iSpecialType == MapGeneratorItem.SPECIAL_INT_NONE && cd.terrain != null) {
             TerrainManagerItem tmi = TerrainManager.getItem(cd.terrain);
             if (tmi == null) {
-                Log.log(Log.LEVEL_ERROR, Messages.getString("MapGenerator.5") + cd.terrain + "]", "MapGenerator"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+                Log.error(Messages.getString("MapGenerator.5") + cd.terrain + "]", "MapGenerator"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
             } else {
                 iTerrainTerrainID = tmi.getTerrainID();
             }

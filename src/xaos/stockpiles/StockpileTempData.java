@@ -2,6 +2,7 @@ package xaos.stockpiles;
 
 import java.util.ArrayList;
 
+@SuppressWarnings("deprecation")
 public class StockpileTempData {
 
     private ArrayList<String> alElements; // iniheader del item

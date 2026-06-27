@@ -43,13 +43,13 @@ public class MapGenerator extends Generator {
 		String sLog = null;
 		if (TownsProperties.DEBUG_MODE) {
 			sLog = Messages.getString ("MapGenerator.7"); //$NON-NLS-1$
-			Log.log (Log.LEVEL_DEBUG, sLog, "MapGenerator"); //$NON-NLS-1$
+			Log.log (Log.LEVEL.DEBUG, sLog, "MapGenerator"); //$NON-NLS-1$
 		}
 		Game.getPanelMainMenu ().setLoadingText (Messages.getString ("MapGenerator.7")); //$NON-NLS-1$
 
 		hmSeedsIDs = new HashMap<String, ArrayList<Point3DShort>> ();
 
-		// Leemos el gen_map.xml (si está en una misión se carga de otro sitio)
+		// Leemos el gen_map.xml (si estÃ¡ en una misiÃ³n se carga de otro sitio)
 		Generator generator = new Generator ();
 		ArrayList<String> alPaths = Utils.getPathToFile (XML_FILE, sCampaignID, sMissionID);
 
@@ -69,7 +69,7 @@ public class MapGenerator extends Generator {
 		}
 
 		if (item == null || !item.getName ().equalsIgnoreCase (MapGeneratorItem.ITEM_INIT)) {
-			Log.log (Log.LEVEL_ERROR, Messages.getString ("MapGenerator.2"), "MapGenerator"); //$NON-NLS-1$ //$NON-NLS-2$
+			Log.log (Log.LEVEL.ERROR, Messages.getString ("MapGenerator.2"), "MapGenerator"); //$NON-NLS-1$ //$NON-NLS-2$
 			Game.exit ();
 		}
 
@@ -133,19 +133,19 @@ public class MapGenerator extends Generator {
 		}
 
 		if (iNumLevelsUnderground <= 0) {
-			Log.log (Log.LEVEL_ERROR, Messages.getString ("MapGenerator.8"), "MapGenerator"); //$NON-NLS-1$ //$NON-NLS-2$
+			Log.log (Log.LEVEL.ERROR, Messages.getString ("MapGenerator.8"), "MapGenerator"); //$NON-NLS-1$ //$NON-NLS-2$
 			Game.exit ();
 		}
 		if (iNumLevelsOutside <= 0) {
-			Log.log (Log.LEVEL_ERROR, Messages.getString ("MapGenerator.11"), "MapGenerator"); //$NON-NLS-1$ //$NON-NLS-2$
+			Log.log (Log.LEVEL.ERROR, Messages.getString ("MapGenerator.11"), "MapGenerator"); //$NON-NLS-1$ //$NON-NLS-2$
 			Game.exit ();
 		}
 		if (MAINTERRAIN == null || MAINTERRAIN.trim ().length () == 0) {
-			Log.log (Log.LEVEL_ERROR, Messages.getString ("MapGenerator.4"), "MapGenerator"); //$NON-NLS-1$ //$NON-NLS-2$
+			Log.log (Log.LEVEL.ERROR, Messages.getString ("MapGenerator.4"), "MapGenerator"); //$NON-NLS-1$ //$NON-NLS-2$
 			Game.exit ();
 		}
 		if (NUM_CITIZENS < 1) {
-			Log.log (Log.LEVEL_ERROR, Messages.getString ("MapGenerator.12") + NUM_CITIZENS + "]", "MapGenerator"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+			Log.log (Log.LEVEL.ERROR, Messages.getString ("MapGenerator.12") + NUM_CITIZENS + "]", "MapGenerator"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 			Game.exit ();
 		}
 
@@ -155,16 +155,16 @@ public class MapGenerator extends Generator {
 
 		// Events
 		if (STARTING_EVENTS != null && STARTING_EVENTS.size () > 0) {
-			// Si hay eventos miramos que la cola de PCTs sea del mismo tamaño
+			// Si hay eventos miramos que la cola de PCTs sea del mismo tamaÃ±o
 			if (alStartingEventsPCT == null || alStartingEventsPCT.size () != STARTING_EVENTS.size ()) {
-				Log.log (Log.LEVEL_ERROR, Messages.getString ("MapGenerator.14"), "MapGenerator"); //$NON-NLS-1$ //$NON-NLS-2$
+				Log.log (Log.LEVEL.ERROR, Messages.getString ("MapGenerator.14"), "MapGenerator"); //$NON-NLS-1$ //$NON-NLS-2$
 				Game.exit ();
 			}
 
 			// Miramos que los eventos existan
 			for (int i = 0; i < STARTING_EVENTS.size (); i++) {
 				if (EventManager.getItem (STARTING_EVENTS.get (i)) == null) {
-					Log.log (Log.LEVEL_ERROR, Messages.getString ("MapGenerator.15") + " [" + STARTING_EVENTS.get (i) + "]", "MapGenerator"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
+					Log.log (Log.LEVEL.ERROR, Messages.getString ("MapGenerator.15") + " [" + STARTING_EVENTS.get (i) + "]", "MapGenerator"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
 					Game.exit ();
 				}
 			}
@@ -191,14 +191,14 @@ public class MapGenerator extends Generator {
 
 		World.MAP_DEPTH = (short) (iNumLevelsOutside + iNumLevelsUnderground);
 		if (World.MAP_DEPTH > World.MAX_DEPTH) {
-			Log.log (Log.LEVEL_ERROR, Messages.getString ("MapGenerator.9") + World.MAX_DEPTH + "]", "MapGenerator"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+			Log.log (Log.LEVEL.ERROR, Messages.getString ("MapGenerator.9") + World.MAX_DEPTH + "]", "MapGenerator"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 			Game.exit ();
 		}
 		World.MAP_NUM_LEVELS_OUTSIDE = iNumLevelsOutside;
 		World.MAP_NUM_LEVELS_UNDERGROUND = iNumLevelsUnderground;
 
 		if (STARTING_LEVEL < 0 || STARTING_LEVEL >= World.MAP_DEPTH) {
-			Log.log (Log.LEVEL_ERROR, Messages.getString ("MapGenerator.16") + STARTING_LEVEL + "]", "MapGenerator"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+			Log.log (Log.LEVEL.ERROR, Messages.getString ("MapGenerator.16") + STARTING_LEVEL + "]", "MapGenerator"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 			Game.exit ();
 		}
 
@@ -209,7 +209,7 @@ public class MapGenerator extends Generator {
 			alBaseTerrains.add (tokenizer.nextToken ());
 		}
 		if (alBaseTerrains.size () <= 0) {
-			Log.log (Log.LEVEL_ERROR, Messages.getString ("MapGenerator.6") + MAINTERRAIN + "]", "MapGenerator"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+			Log.log (Log.LEVEL.ERROR, Messages.getString ("MapGenerator.6") + MAINTERRAIN + "]", "MapGenerator"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 			Game.exit ();
 		}
 
@@ -255,7 +255,7 @@ public class MapGenerator extends Generator {
 				generateSeed (asMap, item);
 				if (TownsProperties.DEBUG_MODE) {
 					sLog += (System.currentTimeMillis () - lTime) + " ms)"; //$NON-NLS-1$
-					Log.log (Log.LEVEL_DEBUG, sLog, "MapGenerator"); //$NON-NLS-1$
+					Log.log (Log.LEVEL.DEBUG, sLog, "MapGenerator"); //$NON-NLS-1$
 				}
 			} else if (item.getName () == MapGeneratorItem.ITEM_HEIGHTSEED) {
 				if (TownsProperties.DEBUG_MODE) {
@@ -266,7 +266,7 @@ public class MapGenerator extends Generator {
 				generateHeightSeed (asMap, item);
 				if (TownsProperties.DEBUG_MODE) {
 					sLog += (System.currentTimeMillis () - lTime) + " ms)"; //$NON-NLS-1$
-					Log.log (Log.LEVEL_DEBUG, sLog, "MapGenerator"); //$NON-NLS-1$
+					Log.log (Log.LEVEL.DEBUG, sLog, "MapGenerator"); //$NON-NLS-1$
 				}
 			} else if (item.getName () == MapGeneratorItem.ITEM_BEZIER) {
 				if (TownsProperties.DEBUG_MODE) {
@@ -277,7 +277,7 @@ public class MapGenerator extends Generator {
 				generateBezier (asMap, item);
 				if (TownsProperties.DEBUG_MODE) {
 					sLog += (System.currentTimeMillis () - lTime) + " ms)"; //$NON-NLS-1$
-					Log.log (Log.LEVEL_DEBUG, sLog, "MapGenerator"); //$NON-NLS-1$
+					Log.log (Log.LEVEL.DEBUG, sLog, "MapGenerator"); //$NON-NLS-1$
 				}
 			} else if (item.getName () == MapGeneratorItem.ITEM_CHANGE) {
 				if (TownsProperties.DEBUG_MODE) {
@@ -288,10 +288,10 @@ public class MapGenerator extends Generator {
 				generateChange (asMap, item);
 				if (TownsProperties.DEBUG_MODE) {
 					sLog += (System.currentTimeMillis () - lTime) + " ms)"; //$NON-NLS-1$
-					Log.log (Log.LEVEL_DEBUG, sLog, "MapGenerator"); //$NON-NLS-1$
+					Log.log (Log.LEVEL.DEBUG, sLog, "MapGenerator"); //$NON-NLS-1$
 				}
 			} else {
-				Log.log (Log.LEVEL_ERROR, Messages.getString ("MapGenerator.0") + item.getName () + Messages.getString ("MapGenerator.1") + XML_FILE + "]", "MapGenerator"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
+				Log.log (Log.LEVEL.ERROR, Messages.getString ("MapGenerator.0") + item.getName () + Messages.getString ("MapGenerator.1") + XML_FILE + "]", "MapGenerator"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
 			}
 		}
 
@@ -301,7 +301,7 @@ public class MapGenerator extends Generator {
 		}
 		Game.getPanelMainMenu ().setLoadingText (Messages.getString ("MapGenerator.48")); //$NON-NLS-1$
 
-		// Mapa generado, vamos a eliminar las celdas AIR del último nivel
+		// Mapa generado, vamos a eliminar las celdas AIR del Ãºltimo nivel
 		iTerrainIDTmp = TerrainManager.getItem (alBaseTerrains.get (alBaseTerrains.size () - 1)).getTerrainID ();
 
 		for (int x = 0; x < World.MAP_WIDTH; x++) {
@@ -321,7 +321,7 @@ public class MapGenerator extends Generator {
 					// Obtenemos el String con el terreno y los tipos especiales
 					tmi = TerrainManager.getItemByID (asMap[x][y][z].getTerrainID ());
 					if (tmi == null) {
-						Log.log (Log.LEVEL_ERROR, Messages.getString ("MapGenerator.5") + asMap[x][y][z].getTerrainID () + "]", "MapGenerator"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+						Log.log (Log.LEVEL.ERROR, Messages.getString ("MapGenerator.5") + asMap[x][y][z].getTerrainID () + "]", "MapGenerator"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 						Game.exit ();
 					}
 					if (!asMap[x][y][z].hasSpecial ()) {
@@ -349,11 +349,11 @@ public class MapGenerator extends Generator {
 								cells[x][y][z].getTerrain ().setFluidType (Terrain.FLUIDS_LAVA);
 								cells[x][y][z].getTerrain ().setFluidCount (Terrain.FLUIDS_COUNT_INFINITE);
 							} else {
-								Log.log (Log.LEVEL_ERROR, Messages.getString ("MapGenerator.10") + asMap[x][y][z].getSpecial () + "]", "MapGenerator"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+								Log.log (Log.LEVEL.ERROR, Messages.getString ("MapGenerator.10") + asMap[x][y][z].getSpecial () + "]", "MapGenerator"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 							}
 
 							// Flag fluid_1 de la celda
-							// No hace falta pq se chequean todas al acabar la generación
+							// No hace falta pq se chequean todas al acabar la generaciÃ³n
 							// cells[x][y][z].setFlagFluid1 (cells[x][y][z].getTerrain ().getFluidCount () == 1);
 						}
 					}
@@ -387,10 +387,10 @@ public class MapGenerator extends Generator {
 		// Diggeds
 		Cell.generateDiggedsMinedsAndBlockys (cells);
 
-		// Cambiamos los gráficos (al final pq usa el ismined de Cell)
+		// Cambiamos los grÃ¡ficos (al final pq usa el ismined de Cell)
 		// Terrain.changeSlopes (cells);
 		if (TownsProperties.DEBUG_MODE) {
-			Log.log (Log.LEVEL_DEBUG, Messages.getString ("MapGenerator.51"), "MapGenerator"); //$NON-NLS-1$ //$NON-NLS-2$
+			Log.log (Log.LEVEL.DEBUG, Messages.getString ("MapGenerator.51"), "MapGenerator"); //$NON-NLS-1$ //$NON-NLS-2$
 		}
 		Game.getPanelMainMenu ().setLoadingText (Messages.getString ("MapGenerator.51")); //$NON-NLS-1$
 
@@ -399,7 +399,7 @@ public class MapGenerator extends Generator {
 
 
 	private static boolean airAround (Cell[][][] cells, int x, int y, int z) {
-		// Miramos si algún vecino tiene AIR, incluido arriba y abajo
+		// Miramos si algÃºn vecino tiene AIR, incluido arriba y abajo
 
 		// Arriba
 		if (z > 0 && cells[x][y][z - 1].getTerrain ().getTerrainID () == TerrainManagerItem.TERRAIN_AIR_ID) {
@@ -441,7 +441,7 @@ public class MapGenerator extends Generator {
 		SeedData sd = new SeedData (item);
 
 		if (sd.type == null || sd.type.trim ().length () == 0) {
-			Log.log (Log.LEVEL_ERROR, Messages.getString ("MapGenerator.13"), "MapGenerator"); //$NON-NLS-1$ //$NON-NLS-2$
+			Log.log (Log.LEVEL.ERROR, Messages.getString ("MapGenerator.13"), "MapGenerator"); //$NON-NLS-1$ //$NON-NLS-2$
 			return;
 		}
 
@@ -578,7 +578,7 @@ public class MapGenerator extends Generator {
 		if (iSpecialType == MapGeneratorItem.SPECIAL_INT_NONE) {
 			TerrainManagerItem tmi = TerrainManager.getItem (sd.type);
 			if (tmi == null) {
-				Log.log (Log.LEVEL_ERROR, Messages.getString ("MapGenerator.5") + sd.type + "]", "MapGenerator"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+				Log.log (Log.LEVEL.ERROR, Messages.getString ("MapGenerator.5") + sd.type + "]", "MapGenerator"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 				return;
 			}
 			iTerrainID = tmi.getTerrainID ();
@@ -724,7 +724,7 @@ public class MapGenerator extends Generator {
 
 		boolean bHaySeeds = true;
 		while (bHaySeeds) {
-			// Copiamos el auxiliar (y de paso miramos que aún haya seeds)
+			// Copiamos el auxiliar (y de paso miramos que aÃºn haya seeds)
 			bHaySeeds = false;
 			for (int x = 0; x < World.MAP_WIDTH; x++) {
 				for (int y = 0; y < World.MAP_HEIGHT; y++) {
@@ -744,7 +744,7 @@ public class MapGenerator extends Generator {
 				for (int y = 0; y < World.MAP_HEIGHT; y++) {
 					if (abMap[x][y]) {
 						// Raiseamos
-						// Buscamos el último _AIR
+						// Buscamos el Ãºltimo _AIR
 						boolean bHayAIRs = false;
 						for (int z = 0; z <= World.MAP_NUM_LEVELS_OUTSIDE; z++) {
 							if (asMap[x][y][z].getTerrainID () == TerrainManagerItem.TERRAIN_AIR_ID) {
@@ -752,7 +752,7 @@ public class MapGenerator extends Generator {
 							} else {
 								// Tenemos un no-air
 								if (bHayAIRs) {
-									// Tiene espacio por encima, así que simplemente cambiamos el terrain por el de abajo
+									// Tiene espacio por encima, asÃ­ que simplemente cambiamos el terrain por el de abajo
 									asMap[x][y][z - 1].setTerrainID (asMap[x][y][z].getTerrainID ());
 									asMap[x][y][z].setSpecial (MapGeneratorItem.SPECIAL_INT_NONE);
 								}
@@ -807,7 +807,7 @@ public class MapGenerator extends Generator {
 
 		// Comprobamos que tenemos todos los datos
 		if (bd.type == null || bd.type.trim ().length () == 0) {
-			Log.log (Log.LEVEL_ERROR, Messages.getString ("MapGenerator.18"), "MapGenerator"); //$NON-NLS-1$ //$NON-NLS-2$
+			Log.log (Log.LEVEL.ERROR, Messages.getString ("MapGenerator.18"), "MapGenerator"); //$NON-NLS-1$ //$NON-NLS-2$
 			return;
 		}
 
@@ -822,17 +822,17 @@ public class MapGenerator extends Generator {
 		}
 
 		if (bd.level == -1) {
-			Log.log (Log.LEVEL_ERROR, Messages.getString ("MapGenerator.20"), "MapGenerator"); //$NON-NLS-1$ //$NON-NLS-2$
+			Log.log (Log.LEVEL.ERROR, Messages.getString ("MapGenerator.20"), "MapGenerator"); //$NON-NLS-1$ //$NON-NLS-2$
 			return;
 		}
 
 		if ((bd.level + bd.depth) > World.MAP_DEPTH) {
-			Log.log (Log.LEVEL_ERROR, "Bezier. (level + depth) > MAX_DEPTH", "MapGenerator"); //$NON-NLS-1$ //$NON-NLS-2$
+			Log.log (Log.LEVEL.ERROR, "Bezier. (level + depth) > MAX_DEPTH", "MapGenerator"); //$NON-NLS-1$ //$NON-NLS-2$
 			return;
 		}
 
 		if (bd.point1xmin == -1 || bd.point1xmax == -1 || bd.point1ymin == -1 || bd.point1ymax == -1 || bd.point2xmin == -1 || bd.point2xmax == -1 || bd.point2ymin == -1 || bd.point2ymax == -1 || bd.controlpoint1xmin == -1 || bd.controlpoint1xmax == -1 || bd.controlpoint1ymin == -1 || bd.controlpoint1ymax == -1 || bd.controlpoint2xmin == -1 || bd.controlpoint2xmax == -1 || bd.controlpoint2ymin == -1 || bd.controlpoint2ymax == -1) {
-			Log.log (Log.LEVEL_ERROR, Messages.getString ("MapGenerator.26"), "MapGenerator"); //$NON-NLS-1$ //$NON-NLS-2$
+			Log.log (Log.LEVEL.ERROR, Messages.getString ("MapGenerator.26"), "MapGenerator"); //$NON-NLS-1$ //$NON-NLS-2$
 			return;
 		}
 
@@ -891,7 +891,7 @@ public class MapGenerator extends Generator {
 		ChangeData cd = new ChangeData (item);
 
 		if (cd.destination == null || cd.destination.length () == 0 || (cd.iHeightMin > cd.iHeightMax && cd.iHeightMax != -1)) {
-			Log.log (Log.LEVEL_ERROR, Messages.getString ("MapGenerator.3"), "MapGenerator"); //$NON-NLS-1$ //$NON-NLS-2$
+			Log.log (Log.LEVEL.ERROR, Messages.getString ("MapGenerator.3"), "MapGenerator"); //$NON-NLS-1$ //$NON-NLS-2$
 			return;
 		}
 
@@ -903,7 +903,7 @@ public class MapGenerator extends Generator {
 			if (tmi != null) {
 				iSourceTerrainID = tmi.getTerrainID ();
 			} else {
-				Log.log (Log.LEVEL_ERROR, Messages.getString ("MapGenerator.5") + cd.source + "]", "MapGenerator"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+				Log.log (Log.LEVEL.ERROR, Messages.getString ("MapGenerator.5") + cd.source + "]", "MapGenerator"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 				return;
 			}
 		}
@@ -913,7 +913,7 @@ public class MapGenerator extends Generator {
 		if (iSpecialType == MapGeneratorItem.SPECIAL_INT_NONE && cd.terrain != null) {
 			TerrainManagerItem tmi = TerrainManager.getItem (cd.terrain);
 			if (tmi == null) {
-				Log.log (Log.LEVEL_ERROR, Messages.getString ("MapGenerator.5") + cd.terrain + "]", "MapGenerator"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+				Log.log (Log.LEVEL.ERROR, Messages.getString ("MapGenerator.5") + cd.terrain + "]", "MapGenerator"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 			} else {
 				iTerrainTerrainID = tmi.getTerrainID ();
 			}

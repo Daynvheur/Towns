@@ -10,6 +10,7 @@ import xaos.main.World;
 import xaos.utils.Messages;
 import xaos.utils.Point3DShort;
 
+@SuppressWarnings("unchecked")
 public class SoldierGroupData implements Externalizable {
 
     private static final long serialVersionUID = 5464174806753157978L;

@@ -33,7 +33,7 @@ public class DungeonManager {
 
                 if (doc != null) {
 					// Tenemos el documento XML parseado
-                    // Lo recorremos entero y vamos añadiendo los datos al array
+                    // Lo recorremos entero y vamos aÃ±adiendo los datos al array
                     NodeList nodeList = doc.getDocumentElement().getChildNodes();
                     Node node;
                     for (int i = 0; i < nodeList.getLength(); i++) {
@@ -65,7 +65,7 @@ public class DungeonManager {
                             // Si ya existe lo borramos
                             if (iIndexExists != -1) {
                                 if (i == 0) {
-                                    Log.log(Log.LEVEL_DEBUG, Messages.getString("Generator.1") + " [" + sID + "]", "DungeonManager"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
+                                    Log.debug(Messages.getString("Generator.1") + " [" + sID + "]", "DungeonManager"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
                                 }
                                 alDungeons.remove(iIndexExists);
                             }
@@ -84,7 +84,7 @@ public class DungeonManager {
                                 // Monsters
                                 dungeonData.setMonsters(loadMonsters(node.getChildNodes()));
 
-                                // Lo añadimos al array
+                                // Lo aÃ±adimos al array
                                 if (iIndexExists != -1) {
                                     alDungeons.add(iIndexExists, dungeonData);
                                 } else {
@@ -94,12 +94,12 @@ public class DungeonManager {
                         }
                     }
                 } else {
-                    Log.log(Log.LEVEL_ERROR, Messages.getString("DungeonManager.0"), "DungeonManager"); //$NON-NLS-1$ //$NON-NLS-2$
+                    Log.error(Messages.getString("DungeonManager.0"), "DungeonManager"); //$NON-NLS-1$ //$NON-NLS-2$
                     Game.exit();
                 }
             }
         } catch (Exception e) {
-            Log.log(Log.LEVEL_ERROR, Messages.getString("DungeonManager.0"), "DungeonManager"); //$NON-NLS-1$ //$NON-NLS-2$
+            Log.error(Messages.getString("DungeonManager.0"), "DungeonManager"); //$NON-NLS-1$ //$NON-NLS-2$
             Game.exit();
         }
     }

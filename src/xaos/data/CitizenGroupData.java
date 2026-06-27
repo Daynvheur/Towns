@@ -16,6 +16,7 @@ import xaos.tiles.entities.living.LivingEntityManagerItem;
 import xaos.utils.Messages;
 import xaos.utils.UtilsIniHeaders;
 
+@SuppressWarnings("unchecked")
 public class CitizenGroupData implements Externalizable {
 
     private static final long serialVersionUID = 2274922628971868017L;

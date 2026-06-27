@@ -16,18 +16,25 @@ import org.w3c.dom.NodeList;
 public class UtilsServer {
 
     public static String getServerName(String serverURL) {
+        // Online server check disabled: townsmods.net is unreachable and the TCP
+        // connect timeout (~20s) delayed game startup.
+        return null;
+    }
+
+    @SuppressWarnings("unused")
+    private static String getServerNameOnline(String serverURL) {
         String sXML;
 
         try {
             sXML = getUrlSource(serverURL);
             if (sXML == null || sXML.trim().length() == 0) {
-                Log.log(Log.LEVEL_DEBUG, Messages.getString("UtilsServer.0"), "UtilsServer"); //$NON-NLS-1$ //$NON-NLS-2$
+                Log.debug(Messages.getString("UtilsServer.0"), "UtilsServer"); //$NON-NLS-1$ //$NON-NLS-2$
                 return null;
             }
 
             Document doc = UtilsXML.loadXMLFileFromString(sXML);
             if (doc == null || doc.getDocumentElement() == null || doc.getDocumentElement().getChildNodes() == null) {
-                Log.log(Log.LEVEL_DEBUG, Messages.getString("UtilsServer.2"), "UtilsServer"); //$NON-NLS-1$ //$NON-NLS-2$
+                Log.debug(Messages.getString("UtilsServer.2"), "UtilsServer"); //$NON-NLS-1$ //$NON-NLS-2$
                 return null;
             }
 
@@ -55,25 +62,31 @@ public class UtilsServer {
             }
         } catch (Exception e) {
             // log the error
-            Log.log(Log.LEVEL_DEBUG, Messages.getString("UtilsServer.21") + " [" + e.toString() + "]", "UtilsServer"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
+            Log.debug(Messages.getString("UtilsServer.21") + " [" + e.toString() + "]", "UtilsServer"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
         }
 
         return Messages.getString("UtilsServer.1") + " [" + serverURL + "]"; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
     }
 
     public static String getBuriedTown(String serverURL, String buryFolder) {
+        // Online bury download disabled: townsmods.net is unreachable.
+        return null;
+    }
+
+    @SuppressWarnings("unused")
+    private static String getBuriedTownOnline(String serverURL, String buryFolder) {
         String sXML;
 
         try {
             sXML = getUrlSource(serverURL);
             if (sXML == null || sXML.trim().length() == 0) {
-                Log.log(Log.LEVEL_DEBUG, Messages.getString("UtilsServer.0"), "UtilsServer"); //$NON-NLS-1$ //$NON-NLS-2$
+                Log.debug(Messages.getString("UtilsServer.0"), "UtilsServer"); //$NON-NLS-1$ //$NON-NLS-2$
                 return null;
             }
 
             Document doc = UtilsXML.loadXMLFileFromString(sXML);
             if (doc == null || doc.getDocumentElement() == null || doc.getDocumentElement().getChildNodes() == null) {
-                Log.log(Log.LEVEL_DEBUG, Messages.getString("UtilsServer.2"), "UtilsServer"); //$NON-NLS-1$ //$NON-NLS-2$
+                Log.debug(Messages.getString("UtilsServer.2"), "UtilsServer"); //$NON-NLS-1$ //$NON-NLS-2$
                 return null;
             }
 
@@ -109,7 +122,7 @@ public class UtilsServer {
                                         String sName = UtilsXML.getChildValue(nodeBurieds.getChildNodes(), "fileName"); //$NON-NLS-1$
                                         String sID = UtilsXML.getChildValue(nodeBurieds.getChildNodes(), "fileID"); //$NON-NLS-1$
                                         if (sName != null && sID != null && sName.trim().length() > 0 && sID.trim().length() > 0) {
-                                            // Miramos que no tenga car�cteres especiales
+                                            // Miramos que no tenga carÃ¡cteres especiales
                                             if (!sName.contains("/") && !sName.contains("\\") && !sName.contains(";") && !sName.contains("&") && !sName.contains("#") && !sName.contains("..")) {
                                                 // Todo ok, aunque primero miramos que el fichero no exista en local
                                                 File fTest = new File(buryFolder + File.separator + sName);
@@ -133,7 +146,7 @@ public class UtilsServer {
                 // Reemplazamos los __ID__ de la URL por el fileID
                 int iIndexID = sDownloadURL.indexOf("__ID__"); //$NON-NLS-1$
                 if (iIndexID == -1) {
-                    Log.log(Log.LEVEL_DEBUG, Messages.getString("UtilsServer.13"), "UtilsServer"); //$NON-NLS-1$ //$NON-NLS-2$
+                    Log.debug(Messages.getString("UtilsServer.13"), "UtilsServer"); //$NON-NLS-1$ //$NON-NLS-2$
                 } else {
                     while (iIndexID != -1) {
                         sDownloadURL = sDownloadURL.substring(0, iIndexID) + alIDs.get(iIndexRandom) + sDownloadURL.substring(iIndexID + "__ID__".length()); //$NON-NLS-1$
@@ -143,18 +156,18 @@ public class UtilsServer {
                     if (downloadBuryFile(sDownloadURL, buryFolder + File.separator + alNames.get(iIndexRandom))) {
                         return alNames.get(iIndexRandom);
                     } else {
-                        Log.log(Log.LEVEL_DEBUG, Messages.getString("UtilsServer.17"), "UtilsServer"); //$NON-NLS-1$ //$NON-NLS-2$
+                        Log.debug(Messages.getString("UtilsServer.17"), "UtilsServer"); //$NON-NLS-1$ //$NON-NLS-2$
                     }
 
                 }
             } else {
                 if (sDownloadURL == null) {
-                    Log.log(Log.LEVEL_DEBUG, Messages.getString("UtilsServer.19"), "UtilsServer"); //$NON-NLS-1$ //$NON-NLS-2$
+                    Log.debug(Messages.getString("UtilsServer.19"), "UtilsServer"); //$NON-NLS-1$ //$NON-NLS-2$
                 }
             }
         } catch (Exception e) {
             // log the error
-            Log.log(Log.LEVEL_DEBUG, Messages.getString("UtilsServer.21") + " [" + e.toString() + "]", "UtilsServer"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
+            Log.debug(Messages.getString("UtilsServer.21") + " [" + e.toString() + "]", "UtilsServer"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
         }
 
         return null;
@@ -166,7 +179,7 @@ public class UtilsServer {
             url = "http://" + url; //$NON-NLS-1$
         }
 
-        URL urlObject = new URL(url);
+        URL urlObject = java.net.URI.create(url).toURL();
         URLConnection uc = urlObject.openConnection();
 
         try {
@@ -198,7 +211,7 @@ public class UtilsServer {
         /*
          * Get a connection to the URL and start up a buffered reader.
          */
-        URL url = new URL(dlURL);
+        URL url = java.net.URI.create(dlURL).toURL();
         url.openConnection();
         InputStream reader = url.openStream();
 

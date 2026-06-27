@@ -10,6 +10,7 @@ import xaos.main.Game;
 import xaos.tiles.entities.items.Item;
 import xaos.utils.Point3DShort;
 
+@SuppressWarnings("unchecked")
 public class Action implements Externalizable {
 
     private static final long serialVersionUID = 2857246074554917976L;
