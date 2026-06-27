@@ -21,6 +21,7 @@ import xaos.utils.TextureData;
 import xaos.utils.UtilFont;
 import xaos.utils.UtilsGL;
 
+@SuppressWarnings("unchecked")
 public final class MessagesPanel {
 
     public static final int MAX_MESSAGES = 512;
@@ -43,7 +44,7 @@ public final class MessagesPanel {
     public MessagesPanel(int renderWidth, int renderHeight) {
         final TextureData fontTexture = UtilsGL.loadTexture(Towns.getPropertiesString(PropertyFile.PROPERTY_FILE_GRAPHICS, "TILESET_FONT_FILE"), GL11.GL_MODULATE);
         if (fontTexture == null) {
-            Log.log(Log.LEVEL_ERROR, Messages.getString("MessagesPanel.2"), getClass().toString()); //$NON-NLS-1$
+            Log.error(Messages.getString("MessagesPanel.2"), getClass().toString()); //$NON-NLS-1$
             Game.exit();
         }
         Game.TEXTURE_FONT_ID = fontTexture.getTextureID(); //$NON-NLS-1$ //$NON-NLS-2$
@@ -111,7 +112,7 @@ public final class MessagesPanel {
     }
 
     /**
-     * Añade un mensaje al final de la cola de mensajes, lo parte si no cabe
+     * AÃ±ade un mensaje al final de la cola de mensajes, lo parte si no cabe
      *
      * @param iMessageType
      * @param sMessage Mensaje
@@ -121,7 +122,7 @@ public final class MessagesPanel {
     }
 
     /**
-     * Añade un mensaje al final de la cola de mensajes, lo parte si no cabe
+     * AÃ±ade un mensaje al final de la cola de mensajes, lo parte si no cabe
      *
      * @param iMessageType
      * @param sMessage Mensaje
@@ -132,7 +133,7 @@ public final class MessagesPanel {
     }
 
     /**
-     * Añade un mensaje al final de la cola de mensajes Lo parte para meter en
+     * AÃ±ade un mensaje al final de la cola de mensajes Lo parte para meter en
      * la cola a renderizar
      *
      * @param iMessageType
@@ -161,7 +162,7 @@ public final class MessagesPanel {
     }
 
     /**
-     * Añade el mensaje a la cola de mensajes a renderizar
+     * AÃ±ade el mensaje a la cola de mensajes a renderizar
      *
      * @param sMessage
      * @param color
@@ -198,7 +199,7 @@ public final class MessagesPanel {
         GL11.glBindTexture(GL11.GL_TEXTURE_2D, Game.TEXTURE_FONT_ID);
         GL11.glTexEnvf(GL11.GL_TEXTURE_ENV, GL11.GL_TEXTURE_ENV_MODE, GL11.GL_MODULATE);
         UtilsGL.glBegin(GL11.GL_QUADS);
-        // Pintamos los mensajes y también miramos si el ratón está allí para highlightearlos
+        // Pintamos los mensajes y tambiÃ©n miramos si el ratÃ³n estÃ¡ allÃ­ para highlightearlos
         MessagesPanelData[] messagesDataRender = messagesDataFull.get(iMessagesType * 2 + 1);
         int xM = x;
         int iIndex = (pages[iMessagesType] + 1 - pagesCurrent[iMessagesType]) * maxRenderLines;
@@ -312,7 +313,7 @@ public final class MessagesPanel {
 
     /**
      * Limpia todos los datos (se usa cuando se sale de la partida y se va al
-     * menú principal)
+     * menÃº principal)
      */
     public static void initialize() {
         messagesDataFull = new ArrayList<MessagesPanelData[]>(MAX_TYPES * 2);
@@ -358,7 +359,7 @@ public final class MessagesPanel {
                                 Game.getWorld().setView(messagesDataRender[i].getView());
                                 return true;
                             }
-                        } else if (messagesDataRender[i].getView() != null) { // Si llega aquí debería ser != null siempre
+                        } else if (messagesDataRender[i].getView() != null) { // Si llega aquÃ­ deberÃ­a ser != null siempre
                             Game.getWorld().setView(messagesDataRender[i].getView());
                             return true;
                         }

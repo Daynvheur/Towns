@@ -10,7 +10,7 @@ import xaos.utils.Log;
 import xaos.utils.Messages;
 
 /**
- * Contiene la informaci髇 de Hate para una living
+ * Contiene la informaci贸n de Hate para una living
  *
  */
 public class HateData {
@@ -48,7 +48,7 @@ public class HateData {
                 if (token.length() > 0) {
 					// Miramos a ver que es
 
-                    // Primero los tipos gen閞icos
+                    // Primero los tipos gen茅ricos
                     if (token.equalsIgnoreCase(LivingEntityManagerItem.TYPE_FRIENDLY)) {
                         setAllFriendlies(true);
                     } else if (token.equalsIgnoreCase(LivingEntityManagerItem.TYPE_ALLY)) {
@@ -73,10 +73,10 @@ public class HateData {
                             } else if (lemi.getType() == LivingEntity.TYPE_HERO) {
                                 heros.add(token);
                             } else {
-                                Log.log(Log.LEVEL_ERROR, Messages.getString("HateData.1") + token + "]", getClass().toString()); //$NON-NLS-1$ //$NON-NLS-2$
+                                Log.error(Messages.getString("HateData.1") + token + "]", getClass().toString()); //$NON-NLS-1$ //$NON-NLS-2$
                             }
                         } else {
-                            Log.log(Log.LEVEL_ERROR, Messages.getString("HateData.3") + token + "]", getClass().toString()); //$NON-NLS-1$ //$NON-NLS-2$
+                            Log.error(Messages.getString("HateData.3") + token + "]", getClass().toString()); //$NON-NLS-1$ //$NON-NLS-2$
                         }
                     }
                 }
@@ -181,7 +181,7 @@ public class HateData {
             if (isAllCitizens()) {
                 return true;
             } else if (getCitizens().size() > 0) {
-                // Odia s髄o a algunos citizens, miramos si el de la celda es odiado
+                // Odia s贸lo a algunos citizens, miramos si el de la celda es odiado
                 if (getCitizens().contains(le.getIniHeader())) {
                     return true;
                 }
@@ -206,7 +206,7 @@ public class HateData {
             if (isAllHeros()) {
                 return true;
             } else if (getHeros().size() > 0) {
-                // Odia s髄o a algunos heros, miramos si el de la celda es odiado
+                // Odia s贸lo a algunos heros, miramos si el de la celda es odiado
                 if (getHeros().contains(le.getIniHeader())) {
                     return true;
                 }
@@ -215,7 +215,7 @@ public class HateData {
             if (isAllAllies()) {
                 return true;
             } else if (getAllies().size() > 0) {
-                // Odia s髄o a algunos allies, miramos si el de la celda es odiado
+                // Odia s贸lo a algunos allies, miramos si el de la celda es odiado
                 if (getAllies().contains(le.getIniHeader())) {
                     return true;
                 }

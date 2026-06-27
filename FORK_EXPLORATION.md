@@ -2,7 +2,11 @@
 
 Ce fichier documente l'exploration des forks du projet Towns pour identifier les modifications pertinentes et les intégrer dans ce dépôt.
 
-## Forks Explorés
+## Objectif
+
+L'objectif de cette branche est de regrouper les modifications pertinentes des forks distants et de leurs sous-forks pour obtenir une version mutualisée du projet Towns. Cette branche servira de base pour les futures améliorations et corrections.
+
+## Forks et Sous-Forks
 
 ### 1. feder-byte/Feder-Towns
 - **Auteur** : feder-byte
@@ -75,6 +79,11 @@ Ce fichier documente l'exploration des forks du projet Towns pour identifier les
 - **Statut** : Intégré
 - **Commentaire** : Ce fork a été intégré pour ses améliorations structurelles.
 
+### Livedeath2k/TownsRebuilt
+- **Modifications** : Améliorations structurelles.
+- **Statut** : Intégré
+- **Commentaire** : Ce sous-fork a été intégré pour ses améliorations structurelles.
+
 ### Buried-In-Code/Towns
 - **Modifications** : Corrections de bugs et optimisations.
 - **Statut** : Intégré
@@ -107,4 +116,4 @@ Ce fichier documente l'exploration des forks du projet Towns pour identifier les
 
 ## Conclusion
 
-L'exploration des forks a permis d'identifier des modifications pertinentes qui ont été intégrées dans ce dépôt. Les modifications incompatibles ont été documentées pour référence future.
+La mutualisation des forks distants a permis d'identifier et d'intégrer des modifications pertinentes pour obtenir une version mutualisée du projet Towns. Les modifications incompatibles ont été documentées pour référence future.

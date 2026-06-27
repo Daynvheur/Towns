@@ -6,6 +6,7 @@ import java.io.ObjectInput;
 import java.io.ObjectOutput;
 import java.util.ArrayList;
 
+@SuppressWarnings("unchecked")
 public final class TaskManagerItem implements Externalizable {
 
     private static final long serialVersionUID = -6261978696270872236L;
@@ -38,15 +39,15 @@ public final class TaskManagerItem implements Externalizable {
     }
 
     public boolean containsCitizen(int citizenID) {
-        return listCitizens.contains(new Integer(citizenID));
+        return listCitizens.contains(Integer.valueOf(citizenID));
     }
 
     public void addCitizen(int citizenID) {
-        listCitizens.add(new Integer(citizenID));
+        listCitizens.add(Integer.valueOf(citizenID));
     }
 
-    public void removeCitizen(int citizenID) {
-        listCitizens.remove(new Integer(citizenID));
+    public void removeCitizen(Integer citizenID) {
+        listCitizens.remove(Integer.valueOf(citizenID));
     }
 
     public String toString() {

@@ -7,10 +7,12 @@ import java.util.Calendar;
 
 public final class Log {
 
-    public final static int LEVEL_DEBUG = 1;
-    public final static int LEVEL_ERROR = 2;
+    public enum LEVEL {
+        DEBUG,
+        ERROR
+    }
 
-    public static void log(int type, String message, String sClass) {
+    public static void log(LEVEL type, String message, String sClass) {
         Calendar cal = Calendar.getInstance();
         DateFormat df = DateFormat.getDateTimeInstance();
         StringBuffer sMessage = new StringBuffer();
@@ -25,10 +27,10 @@ public final class Log {
         sMessage.append(message);
 
         switch (type) {
-            case LEVEL_DEBUG:
+            case DEBUG:
                 System.out.println(sMessage.toString());
                 break;
-            case LEVEL_ERROR:
+            case ERROR:
                 System.err.println(sMessage.toString());
                 File f = new File("error.log"); //$NON-NLS-1$
                 try {
@@ -41,5 +43,13 @@ public final class Log {
                 break;
             default:
         }
+    }
+
+    public static void debug(String message, String sClass) {
+        log(Log.LEVEL.DEBUG, message, sClass);
+    }
+
+    public static void error(String message, String sClass) {
+        log(Log.LEVEL.ERROR, message, sClass);
     }
 }

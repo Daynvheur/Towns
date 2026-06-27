@@ -2,7 +2,7 @@ package xaos.utils;
 
 import java.util.StringTokenizer;
 
-import org.lwjgl.input.Keyboard;
+import xaos.utils.KeyAdapter;
 
 import xaos.Towns;
 
@@ -88,11 +88,11 @@ public final class UtilsKeyboard {
     };
 
     private final static String FNHUMANSTRINGS[] = {
-        "UtilsKeyboard.0", //$NON-NLS-1$
-        "UtilsKeyboard.1", //$NON-NLS-1$
-        "UtilsKeyboard.2", //$NON-NLS-1$
-        "UtilsKeyboard.3", //$NON-NLS-1$
-        "UtilsKeyboard.4", //$NON-NLS-1$
+        "UtilsKeyAdapter.0", //$NON-NLS-1$
+        "UtilsKeyAdapter.1", //$NON-NLS-1$
+        "UtilsKeyAdapter.2", //$NON-NLS-1$
+        "UtilsKeyAdapter.3", //$NON-NLS-1$
+        "UtilsKeyAdapter.4", //$NON-NLS-1$
         "UIPanel.32", //$NON-NLS-1$
         "UIPanel.14", //$NON-NLS-1$
         "UIPanel.25", //$NON-NLS-1$
@@ -111,20 +111,20 @@ public final class UtilsKeyboard {
         "UIPanel.23", //$NON-NLS-1$
         "UIPanel.22", //$NON-NLS-1$
         "UIPanel.16", //$NON-NLS-1$
-        "UtilsKeyboard.5", //$NON-NLS-1$
-        "UtilsKeyboard.6", //$NON-NLS-1$
-        "UtilsKeyboard.7", //$NON-NLS-1$
-        "UtilsKeyboard.8", //$NON-NLS-1$
-        "UtilsKeyboard.9", //$NON-NLS-1$
-        "UtilsKeyboard.10", //$NON-NLS-1$
-        "UtilsKeyboard.11", //$NON-NLS-1$
-        "UtilsKeyboard.12", //$NON-NLS-1$
-        "UtilsKeyboard.13", //$NON-NLS-1$
-        "UtilsKeyboard.14", //$NON-NLS-1$
-        "UtilsKeyboard.16", //$NON-NLS-1$
-        "UtilsKeyboard.17", //$NON-NLS-1$
-        "UtilsKeyboard.18", //$NON-NLS-1$
-        "UtilsKeyboard.19" //$NON-NLS-1$
+        "UtilsKeyAdapter.5", //$NON-NLS-1$
+        "UtilsKeyAdapter.6", //$NON-NLS-1$
+        "UtilsKeyAdapter.7", //$NON-NLS-1$
+        "UtilsKeyAdapter.8", //$NON-NLS-1$
+        "UtilsKeyAdapter.9", //$NON-NLS-1$
+        "UtilsKeyAdapter.10", //$NON-NLS-1$
+        "UtilsKeyAdapter.11", //$NON-NLS-1$
+        "UtilsKeyAdapter.12", //$NON-NLS-1$
+        "UtilsKeyAdapter.13", //$NON-NLS-1$
+        "UtilsKeyAdapter.14", //$NON-NLS-1$
+        "UtilsKeyAdapter.16", //$NON-NLS-1$
+        "UtilsKeyAdapter.17", //$NON-NLS-1$
+        "UtilsKeyAdapter.18", //$NON-NLS-1$
+        "UtilsKeyAdapter.19" //$NON-NLS-1$
     };
 
     private static int[][] shortcuts = new int[FNSTRINGS.length][2];
@@ -138,22 +138,22 @@ public final class UtilsKeyboard {
                 sShortcuts = sShortcuts.toUpperCase();
                 StringTokenizer tokenizer = new StringTokenizer(sShortcuts.trim(), ","); //$NON-NLS-1$
                 String key = tokenizer.nextToken().trim();
-                if (key.equals(Keyboard.getKeyName(Keyboard.KEY_ESCAPE))) {
-                    shortcuts[i][0] = Keyboard.KEY_NONE;
+                if (key.equals(KeyAdapter.getKeyName(KeyAdapter.KEY_ESCAPE))) {
+                    shortcuts[i][0] = KeyAdapter.KEY_NONE;
                 } else {
-                    shortcuts[i][0] = Keyboard.getKeyIndex(key);
+                    shortcuts[i][0] = KeyAdapter.getKeyIndex(key);
                 }
                 if (tokenizer.hasMoreTokens()) {
                     key = tokenizer.nextToken().trim();
-                    if (key.equals(Keyboard.getKeyName(Keyboard.KEY_ESCAPE))) {
-                        shortcuts[i][1] = Keyboard.KEY_NONE;
+                    if (key.equals(KeyAdapter.getKeyName(KeyAdapter.KEY_ESCAPE))) {
+                        shortcuts[i][1] = KeyAdapter.KEY_NONE;
                     } else {
-                        shortcuts[i][1] = Keyboard.getKeyIndex(key);
+                        shortcuts[i][1] = KeyAdapter.getKeyIndex(key);
                     }
                 }
             } else {
-                shortcuts[i][0] = Keyboard.KEY_NONE;
-                shortcuts[i][1] = Keyboard.KEY_NONE;
+                shortcuts[i][0] = KeyAdapter.KEY_NONE;
+                shortcuts[i][1] = KeyAdapter.KEY_NONE;
             }
         }
     }
@@ -163,12 +163,12 @@ public final class UtilsKeyboard {
         for (int i = 0; i < FNSTRINGS.length; i++) {
             String value = "";
 
-            if (shortcuts[i][0] != Keyboard.KEY_NONE) {
-                value = Keyboard.getKeyName(shortcuts[i][0]);
+            if (shortcuts[i][0] != KeyAdapter.KEY_NONE) {
+                value = KeyAdapter.getKeyName(shortcuts[i][0]);
 
-                if (shortcuts[i][1] != Keyboard.KEY_NONE) {
+                if (shortcuts[i][1] != KeyAdapter.KEY_NONE) {
                     value += ", "; //$NON-NLS-1$
-                    value += Keyboard.getKeyName(shortcuts[i][1]);
+                    value += KeyAdapter.getKeyName(shortcuts[i][1]);
                 }
             }
             pw.setProperty(FNSTRINGS[i], value);
@@ -176,16 +176,16 @@ public final class UtilsKeyboard {
     }
 
     public static String getTooltip(int iFN) {
-        if (shortcuts[iFN][0] == Keyboard.KEY_NONE) {
+        if (shortcuts[iFN][0] == KeyAdapter.KEY_NONE) {
             return EMPTY_STRING;
         }
 
-        String sAux = Keyboard.getKeyName(shortcuts[iFN][0]);
-        if (shortcuts[iFN][1] != Keyboard.KEY_NONE) {
-            sAux += ", " + Keyboard.getKeyName(shortcuts[iFN][1]); //$NON-NLS-1$
+        String sAux = KeyAdapter.getKeyName(shortcuts[iFN][0]);
+        if (shortcuts[iFN][1] != KeyAdapter.KEY_NONE) {
+            sAux += ", " + KeyAdapter.getKeyName(shortcuts[iFN][1]); //$NON-NLS-1$
         }
 
-        return " (" + Messages.getString("UtilsKeyboard.15") + sAux + ")"; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+        return " (" + Messages.getString("UtilsKeyAdapter.15") + sAux + ")"; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
     }
 
     public static int getKey(int fn, int iIndex) {
@@ -193,7 +193,7 @@ public final class UtilsKeyboard {
             return shortcuts[fn][iIndex];
         }
 
-        return Keyboard.KEY_NONE;
+        return KeyAdapter.KEY_NONE;
     }
 
     public static String getFNString(int fn) {
@@ -213,10 +213,10 @@ public final class UtilsKeyboard {
     }
 
     /**
-     * Retorna la funci�n a partir de la tecla pulsada o -1 si no se encuentra
+     * Retorna la funciÃ³n a partir de la tecla pulsada o -1 si no se encuentra
      *
      * @param key Tecla
-     * @return la funci�n a partir de la tecla pulsada o -1 si no se encuentra
+     * @return la funciÃ³n a partir de la tecla pulsada o -1 si no se encuentra
      */
     public static int getFN(int key) {
         for (int i = 0; i < shortcuts.length; i++) {
@@ -237,7 +237,7 @@ public final class UtilsKeyboard {
      */
     public static void redefineKey(int iIndex, int iFN, int iKey) {
         if (iIndex == 1 && iKey == shortcuts[iFN][0]) {
-            shortcuts[iFN][1] = Keyboard.KEY_NONE;
+            shortcuts[iFN][1] = KeyAdapter.KEY_NONE;
         } else {
             shortcuts[iFN][iIndex] = iKey;
             checkDuplicates(iIndex, iFN, iKey);
@@ -254,14 +254,14 @@ public final class UtilsKeyboard {
      * @param iKey Key to check
      */
     public static void checkDuplicates(int iIndex, int iFN, int iKey) {
-        if (iKey != Keyboard.KEY_NONE) {
+        if (iKey != KeyAdapter.KEY_NONE) {
             for (int i = 0; i < shortcuts.length; i++) {
                 for (int j = 0; j <= 1; j++) {
                     if (shortcuts[i][j] == iKey) {
                         // Duplicado?
                         if (iIndex != j || iFN != i) {
                             // Bingo, la borramos
-                            shortcuts[i][j] = Keyboard.KEY_NONE;
+                            shortcuts[i][j] = KeyAdapter.KEY_NONE;
                         }
                     }
                 }
@@ -270,17 +270,17 @@ public final class UtilsKeyboard {
     }
 
     /**
-     * Indica si el usuario est� pulsando alguna tecla de la funci�n pasadas
+     * Indica si el usuario estÃ¡ pulsando alguna tecla de la funciÃ³n pasadas
      *
-     * @return true si el usuario est� pulsando alguna tecla de la funci�n
+     * @return true si el usuario estÃ¡ pulsando alguna tecla de la funciÃ³n
      * pasadas
      */
     public static boolean isFNKeyDown(int fn) {
-        if (shortcuts[fn][0] != Keyboard.KEY_NONE && Keyboard.isKeyDown(shortcuts[fn][0])) {
+        if (shortcuts[fn][0] != KeyAdapter.KEY_NONE && KeyAdapter.isKeyDown(shortcuts[fn][0])) {
             return true;
         }
 
-        if (shortcuts[fn][1] != Keyboard.KEY_NONE && Keyboard.isKeyDown(shortcuts[fn][1])) {
+        if (shortcuts[fn][1] != KeyAdapter.KEY_NONE && KeyAdapter.isKeyDown(shortcuts[fn][1])) {
             return true;
         }
 

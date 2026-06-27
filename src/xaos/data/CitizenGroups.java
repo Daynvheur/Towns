@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import xaos.main.Game;
 import xaos.main.World;
 
+@SuppressWarnings("unchecked")
 public class CitizenGroups implements Externalizable {
 
     private static final long serialVersionUID = 2133422179578566722L;
@@ -63,7 +64,7 @@ public class CitizenGroups implements Externalizable {
     }
 
     /**
-     * Esto comprueba que no haya algún ciudadano inexistente en los grupos
+     * Esto comprueba que no haya algÃºn ciudadano inexistente en los grupos
      */
     public void purgeNonExistentCitizens() {
         // Sin grupo

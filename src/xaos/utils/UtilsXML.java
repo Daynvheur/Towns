@@ -73,15 +73,27 @@ public final class UtilsXML {
 
     public static Document loadXMLFile(String fileName) throws Exception {
         File f = new File(fileName);
-        DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
+        DocumentBuilderFactory dbf = newHardenedDocumentBuilderFactory();
         DocumentBuilder db = dbf.newDocumentBuilder();
         return db.parse(f);
     }
 
     public static Document loadXMLFileFromString(String sXML) throws Exception {
-        DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
+        DocumentBuilderFactory dbf = newHardenedDocumentBuilderFactory();
         DocumentBuilder db = dbf.newDocumentBuilder();
 //		sXML = "<?xml version='1.0' encoding='ISO-8859-1' ?><response><server><name>TownsMods.net</name><downloadURL>http://townsmods.net/api/getbury/__ID__</downloadURL><uploadURL>http://townsmods.net/api/getbury/__ID__</uploadURL></server><buriedFiles><buriedFile><fileName>popo</fileName><fileID>pot</fileID></buriedFile></buriedFiles></response>";
         return db.parse(new InputSource(new ByteArrayInputStream(sXML.getBytes())));
+    }
+
+    // Hardened factory: disables DOCTYPE/external entities to prevent XXE when parsing local or mod-supplied XML.
+    private static DocumentBuilderFactory newHardenedDocumentBuilderFactory() throws Exception {
+        DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
+        dbf.setFeature("http://apache.org/xml/features/disallow-doctype-decl", true);
+        dbf.setFeature("http://xml.org/sax/features/external-general-entities", false);
+        dbf.setFeature("http://xml.org/sax/features/external-parameter-entities", false);
+        dbf.setFeature("http://apache.org/xml/features/nonvalidating/load-external-dtd", false);
+        dbf.setXIncludeAware(false);
+        dbf.setExpandEntityReferences(false);
+        return dbf;
     }
 }

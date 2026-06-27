@@ -1,0 +1,232 @@
+
+[26 juin 2026, 08:18:50][Towns] Error Code [0]
+[26 juin 2026, 08:18:50][Towns] java.lang.UnsatisfiedLinkError: no lwjgl64 in java.library.path: C:\Perso\jdk-26.0.1\bin;C:\WINDOWS\Sun\Java\bin;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0\;C:\WINDOWS\System32\OpenSSH\;C:\Program Files\WindowsPowerShell\Scripts;C:\Program Files\Microsoft SQL Server\170\Tools\Binn\;C:\Program Files\Microsoft SQL Server\Client SDK\ODBC\170\Tools\Binn\;C:\Program Files\dotnet\;C:\Program Files (x86)\Microsoft SQL Server\160\Tools\Binn\;C:\Program Files\Microsoft SQL Server\160\Tools\Binn\;C:\Program Files\Microsoft SQL Server\160\DTS\Binn\;C:\Program Files (x86)\dotnet-core-uninstall\;C:\Program Files\Microsoft SQL Server\130\Tools\Binn\;C:\Program Files\Git\cmd;C:\Program Files\Microsoft SQL Server\150\Tools\Binn\;C:\Program Files (x86)\Windows Kits\10\Windows Performance Toolkit\;C:\Program Files\nodejs\;C:\Perso\apache-maven-3.9.16\bin;C:\Users\ext-glemartret\.local\bin;C:\Users\ext-glemartret\AppData\Local\Microsoft\WindowsApps;C:\Users\ext-glemartret\.dotnet\tools;C:\Users\ext-glemartret\AppData\Roaming\npm;.
+	at java.base/java.lang.ClassLoader.loadLibrary(ClassLoader.java:2322)
+	at java.base/java.lang.Runtime.loadLibrary0(Runtime.java:822)
+	at java.base/java.lang.System.loadLibrary(System.java:1686)
+	at org.lwjgl.Sys$1.run(Sys.java:72)
+	at java.base/java.security.AccessController.doPrivileged(AccessController.java:74)
+	at org.lwjgl.Sys.doLoadLibrary(Sys.java:66)
+	at org.lwjgl.Sys.loadLibrary(Sys.java:87)
+	at org.lwjgl.Sys.<clinit>(Sys.java:117)
+	at org.lwjgl.opengl.Display.<clinit>(Display.java:135)
+	at xaos.main.Game.<init>(Game.java:194)
+	at xaos.Towns.main(Towns.java:48)
+
+[26 juin 2026, 08:19:00][Towns] Error Code [0]
+[26 juin 2026, 08:19:00][Towns] java.lang.UnsatisfiedLinkError: no lwjgl64 in java.library.path: C:\Perso\jdk-26.0.1\bin;C:\WINDOWS\Sun\Java\bin;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0\;C:\WINDOWS\System32\OpenSSH\;C:\Program Files\WindowsPowerShell\Scripts;C:\Program Files\Microsoft SQL Server\170\Tools\Binn\;C:\Program Files\Microsoft SQL Server\Client SDK\ODBC\170\Tools\Binn\;C:\Program Files\dotnet\;C:\Program Files (x86)\Microsoft SQL Server\160\Tools\Binn\;C:\Program Files\Microsoft SQL Server\160\Tools\Binn\;C:\Program Files\Microsoft SQL Server\160\DTS\Binn\;C:\Program Files (x86)\dotnet-core-uninstall\;C:\Program Files\Microsoft SQL Server\130\Tools\Binn\;C:\Program Files\Git\cmd;C:\Program Files\Microsoft SQL Server\150\Tools\Binn\;C:\Program Files (x86)\Windows Kits\10\Windows Performance Toolkit\;C:\Program Files\nodejs\;C:\Perso\apache-maven-3.9.16\bin;C:\Users\ext-glemartret\.local\bin;C:\Users\ext-glemartret\AppData\Local\Microsoft\WindowsApps;C:\Users\ext-glemartret\.dotnet\tools;C:\Users\ext-glemartret\AppData\Roaming\npm;.
+	at java.base/java.lang.ClassLoader.loadLibrary(ClassLoader.java:2322)
+	at java.base/java.lang.Runtime.loadLibrary0(Runtime.java:822)
+	at java.base/java.lang.System.loadLibrary(System.java:1686)
+	at org.lwjgl.Sys$1.run(Sys.java:72)
+	at java.base/java.security.AccessController.doPrivileged(AccessController.java:74)
+	at org.lwjgl.Sys.doLoadLibrary(Sys.java:66)
+	at org.lwjgl.Sys.loadLibrary(Sys.java:87)
+	at org.lwjgl.Sys.<clinit>(Sys.java:117)
+	at org.lwjgl.opengl.Display.<clinit>(Display.java:135)
+	at xaos.main.Game.<init>(Game.java:194)
+	at xaos.Towns.main(Towns.java:48)
+
+[26 juin 2026, 08:34:14][Towns] Error Code [0]
+[26 juin 2026, 08:34:14][Towns] java.lang.UnsatisfiedLinkError: Can't load library: C:\Perso\Repo_Towns\src\natives\lwjgl64.dll
+	at java.base/java.lang.ClassLoader.loadLibrary(ClassLoader.java:2286)
+	at java.base/java.lang.Runtime.load0(Runtime.java:767)
+	at java.base/java.lang.System.load(System.java:1647)
+	at org.lwjgl.Sys$1.run(Sys.java:70)
+	at java.base/java.security.AccessController.doPrivileged(AccessController.java:74)
+	at org.lwjgl.Sys.doLoadLibrary(Sys.java:66)
+	at org.lwjgl.Sys.loadLibrary(Sys.java:87)
+	at org.lwjgl.Sys.<clinit>(Sys.java:117)
+	at org.lwjgl.opengl.Display.<clinit>(Display.java:135)
+	at xaos.main.Game.<init>(Game.java:194)
+	at xaos.Towns.main(Towns.java:51)
+
+[26 juin 2026, 21:51:45][Towns] Error Code [0]
+[26 juin 2026, 21:51:45][Towns] java.lang.UnsatisfiedLinkError: Can't load library: C:\Perso\Repo_Towns\src\natives\lwjgl64.dll
+	at java.base/java.lang.ClassLoader.loadLibrary(ClassLoader.java:2286)
+	at java.base/java.lang.Runtime.load0(Runtime.java:767)
+	at java.base/java.lang.System.load(System.java:1647)
+	at org.lwjgl.Sys$1.run(Sys.java:70)
+	at java.base/java.security.AccessController.doPrivileged(AccessController.java:74)
+	at org.lwjgl.Sys.doLoadLibrary(Sys.java:66)
+	at org.lwjgl.Sys.loadLibrary(Sys.java:87)
+	at org.lwjgl.Sys.<clinit>(Sys.java:117)
+	at org.lwjgl.opengl.Display.<clinit>(Display.java:135)
+	at xaos.main.Game.<init>(Game.java:194)
+	at xaos.Towns.main(Towns.java:51)
+
+[26 juin 2026, 21:51:58][UtilsGL] ImageIO decoding of image [icon.png] failed: javax.imageio.IIOException: Can't read input file!
+[26 juin 2026, 21:51:58][UtilsGL] Failed to load image icon.png
+[26 juin 2026, 21:51:58][UtilsGL] java.lang.NullPointerException: Cannot invoke "xaos.utils.ImageData.getImagePixels()" because "iconImage" is null
+[26 juin 2026, 21:53:01][UtilsGL] ImageIO decoding of image [icon.png] failed: javax.imageio.IIOException: Can't read input file!
+[26 juin 2026, 21:53:01][UtilsGL] Failed to load image icon.png
+[26 juin 2026, 21:53:02][UtilsGL] javax.imageio.IIOException: Can't read input file!
+[26 juin 2026, 21:53:29][UtilsGL] ImageIO decoding of image [icon.png] failed: javax.imageio.IIOException: Can't read input file!
+[26 juin 2026, 21:53:29][UtilsGL] Failed to load image icon.png
+[26 juin 2026, 21:53:29][UtilsGL] javax.imageio.IIOException: Can't read input file!
+[26 juin 2026, 21:53:36][UtilsGL] ImageIO decoding of image [icon.png] failed: javax.imageio.IIOException: Can't read input file!
+[26 juin 2026, 21:53:36][UtilsGL] Failed to load image icon.png
+[26 juin 2026, 21:53:36][UtilsGL] javax.imageio.IIOException: Can't read input file!
+[26 juin 2026, 21:54:26][UtilsGL] ImageIO decoding of image [icon.png] failed: javax.imageio.IIOException: Can't read input file!
+[26 juin 2026, 21:54:26][UtilsGL] Failed to load image icon.png
+[26 juin 2026, 21:54:27][UtilsGL] javax.imageio.IIOException: Can't read input file!
+[26 juin 2026, 21:59:00][UtilsGL] ImageIO decoding of image [icon.png] failed: javax.imageio.IIOException: Can't read input file!
+[26 juin 2026, 21:59:00][UtilsGL] Failed to load image icon.png
+[26 juin 2026, 21:59:00][UtilsGL] javax.imageio.IIOException: Can't read input file!
+[26 juin 2026, 21:59:41][UtilsGL] ImageIO decoding of image [icon.png] failed: javax.imageio.IIOException: Can't read input file!
+[26 juin 2026, 21:59:41][UtilsGL] Failed to load image icon.png
+[26 juin 2026, 21:59:41][UtilsGL] javax.imageio.IIOException: Can't read input file!
+[26 juin 2026, 21:59:48][UtilsGL] ImageIO decoding of image [icon.png] failed: javax.imageio.IIOException: Can't read input file!
+[26 juin 2026, 21:59:48][UtilsGL] Failed to load image icon.png
+[26 juin 2026, 21:59:48][UtilsGL] javax.imageio.IIOException: Can't read input file!
+[26 juin 2026, 22:00:01][UtilsGL] ImageIO decoding of image [icon.png] failed: javax.imageio.IIOException: Can't read input file!
+[26 juin 2026, 22:00:01][UtilsGL] Failed to load image icon.png
+[26 juin 2026, 22:00:01][UtilsGL] javax.imageio.IIOException: Can't read input file!
+[26 juin 2026, 22:00:26][UtilsGL] ImageIO decoding of image [icon.png] failed: javax.imageio.IIOException: Can't read input file!
+[26 juin 2026, 22:00:26][UtilsGL] Failed to load image icon.png
+[26 juin 2026, 22:00:26][UtilsGL] javax.imageio.IIOException: Can't read input file!
+[26 juin 2026, 22:03:03][UtilsGL] ImageIO decoding of image [icon.png] failed: javax.imageio.IIOException: Can't read input file!
+[26 juin 2026, 22:03:03][UtilsGL] Failed to load image icon.png
+[26 juin 2026, 22:03:03][UtilsGL] javax.imageio.IIOException: Can't read input file!
+[26 juin 2026, 22:03:41][UtilsGL] javax.imageio.IIOException: Can't read input file!
+[26 juin 2026, 22:04:05][UtilsGL] javax.imageio.IIOException: Can't read input file!
+[26 juin 2026, 22:04:54][UtilsGL] javax.imageio.IIOException: Can't read input file!
+[26 juin 2026, 22:06:45][UtilsGL] javax.imageio.IIOException: Can't read input file!
+[26 juin 2026, 22:12:23][UtilsGL] javax.imageio.IIOException: Can't read input file!
+[26 juin 2026, 22:19:48][UtilsGL] javax.imageio.IIOException: Can't read input file!
+[26 juin 2026, 22:20:24][UtilsGL] javax.imageio.IIOException: Can't read input file!
+[26 juin 2026, 22:21:30][UtilsGL] javax.imageio.IIOException: Can't read input file!
+[26 juin 2026, 22:27:50][UtilsGL] javax.imageio.IIOException: Can't read input file!
+[26 juin 2026, 22:37:42][UtilsGL] Fast decoding of image [items.png] failed: javax.imageio.IIOException: Can't read input file!
+[26 juin 2026, 22:37:42][UtilsGL] ImageIO decoding of image [items.png] failed: javax.imageio.IIOException: Can't read input file!
+[26 juin 2026, 22:37:42][UtilsGL] Failed to load image items.png
+[26 juin 2026, 22:37:42][UtilsGL] Fast decoding of image [ui2.png] failed: javax.imageio.IIOException: Can't read input file!
+[26 juin 2026, 22:37:42][UtilsGL] ImageIO decoding of image [ui2.png] failed: javax.imageio.IIOException: Can't read input file!
+[26 juin 2026, 22:37:42][UtilsGL] Failed to load image ui2.png
+[26 juin 2026, 22:37:42][UtilsGL] Fast decoding of image [living3.png] failed: javax.imageio.IIOException: Can't read input file!
+[26 juin 2026, 22:37:42][UtilsGL] ImageIO decoding of image [living3.png] failed: javax.imageio.IIOException: Can't read input file!
+[26 juin 2026, 22:37:42][UtilsGL] Failed to load image living3.png
+[26 juin 2026, 22:37:42][UtilsGL] Fast decoding of image [bury.png] failed: javax.imageio.IIOException: Can't read input file!
+[26 juin 2026, 22:37:42][UtilsGL] ImageIO decoding of image [bury.png] failed: javax.imageio.IIOException: Can't read input file!
+[26 juin 2026, 22:37:42][UtilsGL] Failed to load image bury.png
+[26 juin 2026, 22:37:42][UtilsGL] Fast decoding of image [military.png] failed: javax.imageio.IIOException: Can't read input file!
+[26 juin 2026, 22:37:42][UtilsGL] ImageIO decoding of image [military.png] failed: javax.imageio.IIOException: Can't read input file!
+[26 juin 2026, 22:37:42][UtilsGL] Failed to load image military.png
+[26 juin 2026, 22:37:42][UtilsGL] Fast decoding of image [walls2.png] failed: javax.imageio.IIOException: Can't read input file!
+[26 juin 2026, 22:37:42][UtilsGL] ImageIO decoding of image [walls2.png] failed: javax.imageio.IIOException: Can't read input file!
+[26 juin 2026, 22:37:42][UtilsGL] Failed to load image walls2.png
+[26 juin 2026, 22:37:42][UtilsGL] Fast decoding of image [living2.png] failed: javax.imageio.IIOException: Can't read input file!
+[26 juin 2026, 22:37:42][UtilsGL] ImageIO decoding of image [living2.png] failed: javax.imageio.IIOException: Can't read input file!
+[26 juin 2026, 22:37:42][UtilsGL] Failed to load image living2.png
+[26 juin 2026, 22:37:42][UtilsGL] Fast decoding of image [tutorial.png] failed: javax.imageio.IIOException: Can't read input file!
+[26 juin 2026, 22:37:42][UtilsGL] ImageIO decoding of image [tutorial.png] failed: javax.imageio.IIOException: Can't read input file!
+[26 juin 2026, 22:37:42][UtilsGL] Failed to load image tutorial.png
+[26 juin 2026, 22:37:42][UtilsGL] Fast decoding of image [items2.png] failed: javax.imageio.IIOException: Can't read input file!
+[26 juin 2026, 22:37:42][UtilsGL] ImageIO decoding of image [items2.png] failed: javax.imageio.IIOException: Can't read input file!
+[26 juin 2026, 22:37:42][UtilsGL] Failed to load image items2.png
+[26 juin 2026, 22:37:42][UtilsGL] Fast decoding of image [ui.png] failed: javax.imageio.IIOException: Can't read input file!
+[26 juin 2026, 22:37:42][UtilsGL] ImageIO decoding of image [ui.png] failed: javax.imageio.IIOException: Can't read input file!
+[26 juin 2026, 22:37:42][UtilsGL] Failed to load image ui.png
+[26 juin 2026, 22:37:42][UtilsGL] Fast decoding of image [items3.png] failed: javax.imageio.IIOException: Can't read input file!
+[26 juin 2026, 22:37:42][UtilsGL] ImageIO decoding of image [items3.png] failed: javax.imageio.IIOException: Can't read input file!
+[26 juin 2026, 22:37:42][UtilsGL] Failed to load image items3.png
+[26 juin 2026, 22:37:42][UtilsGL] Fast decoding of image [military2.png] failed: javax.imageio.IIOException: Can't read input file!
+[26 juin 2026, 22:37:42][UtilsGL] ImageIO decoding of image [military2.png] failed: javax.imageio.IIOException: Can't read input file!
+[26 juin 2026, 22:37:42][UtilsGL] Failed to load image military2.png
+[26 juin 2026, 22:37:42][UtilsGL] Fast decoding of image [terrainslopes.png] failed: javax.imageio.IIOException: Can't read input file!
+[26 juin 2026, 22:37:42][UtilsGL] ImageIO decoding of image [terrainslopes.png] failed: javax.imageio.IIOException: Can't read input file!
+[26 juin 2026, 22:37:42][UtilsGL] Failed to load image terrainslopes.png
+[26 juin 2026, 22:37:42][UtilsGL] Fast decoding of image [walls.png] failed: javax.imageio.IIOException: Can't read input file!
+[26 juin 2026, 22:37:42][UtilsGL] ImageIO decoding of image [walls.png] failed: javax.imageio.IIOException: Can't read input file!
+[26 juin 2026, 22:37:42][UtilsGL] Failed to load image walls.png
+[26 juin 2026, 22:37:42][UtilsGL] Fast decoding of image [special.png] failed: javax.imageio.IIOException: Can't read input file!
+[26 juin 2026, 22:37:42][UtilsGL] ImageIO decoding of image [special.png] failed: javax.imageio.IIOException: Can't read input file!
+[26 juin 2026, 22:37:42][UtilsGL] Failed to load image special.png
+[26 juin 2026, 22:37:42][UtilsGL] Fast decoding of image [items4.png] failed: javax.imageio.IIOException: Can't read input file!
+[26 juin 2026, 22:37:42][UtilsGL] ImageIO decoding of image [items4.png] failed: javax.imageio.IIOException: Can't read input file!
+[26 juin 2026, 22:37:42][UtilsGL] Failed to load image items4.png
+[26 juin 2026, 22:37:42][UtilsGL] Fast decoding of image [living.png] failed: javax.imageio.IIOException: Can't read input file!
+[26 juin 2026, 22:37:42][UtilsGL] ImageIO decoding of image [living.png] failed: javax.imageio.IIOException: Can't read input file!
+[26 juin 2026, 22:37:42][UtilsGL] Failed to load image living.png
+[26 juin 2026, 22:37:42][UtilsGL] Fast decoding of image [terrainslopes2.png] failed: javax.imageio.IIOException: Can't read input file!
+[26 juin 2026, 22:37:42][UtilsGL] ImageIO decoding of image [terrainslopes2.png] failed: javax.imageio.IIOException: Can't read input file!
+[26 juin 2026, 22:37:42][UtilsGL] Failed to load image terrainslopes2.png
+[26 juin 2026, 22:37:42][UtilsGL] Fast decoding of image [heroes2.png] failed: javax.imageio.IIOException: Can't read input file!
+[26 juin 2026, 22:37:42][UtilsGL] ImageIO decoding of image [heroes2.png] failed: javax.imageio.IIOException: Can't read input file!
+[26 juin 2026, 22:37:42][UtilsGL] Failed to load image heroes2.png
+[26 juin 2026, 22:37:42][UtilsGL] Fast decoding of image [living4.png] failed: javax.imageio.IIOException: Can't read input file!
+[26 juin 2026, 22:37:42][UtilsGL] ImageIO decoding of image [living4.png] failed: javax.imageio.IIOException: Can't read input file!
+[26 juin 2026, 22:37:42][UtilsGL] Failed to load image living4.png
+[26 juin 2026, 22:37:42][UtilsGL] Fast decoding of image [heroes3.png] failed: javax.imageio.IIOException: Can't read input file!
+[26 juin 2026, 22:37:42][UtilsGL] ImageIO decoding of image [heroes3.png] failed: javax.imageio.IIOException: Can't read input file!
+[26 juin 2026, 22:37:42][UtilsGL] Failed to load image heroes3.png
+[26 juin 2026, 22:37:42][UtilsGL] Fast decoding of image [heroes.png] failed: javax.imageio.IIOException: Can't read input file!
+[26 juin 2026, 22:37:42][UtilsGL] ImageIO decoding of image [heroes.png] failed: javax.imageio.IIOException: Can't read input file!
+[26 juin 2026, 22:37:42][UtilsGL] Failed to load image heroes.png
+[26 juin 2026, 22:37:42][UtilsGL] Fast decoding of image [citizenmale.png] failed: javax.imageio.IIOException: Can't read input file!
+[26 juin 2026, 22:37:42][UtilsGL] ImageIO decoding of image [citizenmale.png] failed: javax.imageio.IIOException: Can't read input file!
+[26 juin 2026, 22:37:42][UtilsGL] Failed to load image citizenmale.png
+[26 juin 2026, 22:37:42][UtilsGL] Fast decoding of image [buildings.png] failed: javax.imageio.IIOException: Can't read input file!
+[26 juin 2026, 22:37:42][UtilsGL] ImageIO decoding of image [buildings.png] failed: javax.imageio.IIOException: Can't read input file!
+[26 juin 2026, 22:37:42][UtilsGL] Failed to load image buildings.png
+[26 juin 2026, 22:37:42][UtilsGL] Fast decoding of image [special2.png] failed: javax.imageio.IIOException: Can't read input file!
+[26 juin 2026, 22:37:42][UtilsGL] ImageIO decoding of image [special2.png] failed: javax.imageio.IIOException: Can't read input file!
+[26 juin 2026, 22:37:42][UtilsGL] Failed to load image special2.png
+[26 juin 2026, 22:37:42][UtilsGL] Fast decoding of image [citizenfemale.png] failed: javax.imageio.IIOException: Can't read input file!
+[26 juin 2026, 22:37:42][UtilsGL] ImageIO decoding of image [citizenfemale.png] failed: javax.imageio.IIOException: Can't read input file!
+[26 juin 2026, 22:37:42][UtilsGL] Failed to load image citizenfemale.png
+[26 juin 2026, 22:37:42][UtilsGL] Fast decoding of image [terrainslopes.png] failed: javax.imageio.IIOException: Can't read input file!
+[26 juin 2026, 22:37:42][UtilsGL] ImageIO decoding of image [terrainslopes.png] failed: javax.imageio.IIOException: Can't read input file!
+[26 juin 2026, 22:37:42][UtilsGL] Failed to load image terrainslopes.png
+[26 juin 2026, 22:37:42][class xaos.tiles.Tile] No texture for [grid] Also tried [null]
+[26 juin 2026, 22:38:55][UtilsGL] Fast decoding of image [special.png] failed: javax.imageio.IIOException: Can't read input file!
+[26 juin 2026, 22:38:55][UtilsGL] ImageIO decoding of image [special.png] failed: javax.imageio.IIOException: Can't read input file!
+[26 juin 2026, 22:38:55][UtilsGL] Failed to load image special.png
+[26 juin 2026, 22:38:55][UtilsGL] Fast decoding of image [items4.png] failed: javax.imageio.IIOException: Can't read input file!
+[26 juin 2026, 22:38:55][UtilsGL] ImageIO decoding of image [items4.png] failed: javax.imageio.IIOException: Can't read input file!
+[26 juin 2026, 22:38:55][UtilsGL] Failed to load image items4.png
+[26 juin 2026, 22:38:55][UtilsGL] Fast decoding of image [living.png] failed: javax.imageio.IIOException: Can't read input file!
+[26 juin 2026, 22:38:55][UtilsGL] ImageIO decoding of image [living.png] failed: javax.imageio.IIOException: Can't read input file!
+[26 juin 2026, 22:38:55][UtilsGL] Failed to load image living.png
+[26 juin 2026, 22:38:55][UtilsGL] Fast decoding of image [heroes2.png] failed: javax.imageio.IIOException: Can't read input file!
+[26 juin 2026, 22:38:55][UtilsGL] ImageIO decoding of image [heroes2.png] failed: javax.imageio.IIOException: Can't read input file!
+[26 juin 2026, 22:38:55][UtilsGL] Failed to load image heroes2.png
+[26 juin 2026, 22:38:55][UtilsGL] Fast decoding of image [living4.png] failed: javax.imageio.IIOException: Can't read input file!
+[26 juin 2026, 22:38:55][UtilsGL] ImageIO decoding of image [living4.png] failed: javax.imageio.IIOException: Can't read input file!
+[26 juin 2026, 22:38:55][UtilsGL] Failed to load image living4.png
+[26 juin 2026, 22:38:55][UtilsGL] Fast decoding of image [heroes3.png] failed: javax.imageio.IIOException: Can't read input file!
+[26 juin 2026, 22:38:55][UtilsGL] ImageIO decoding of image [heroes3.png] failed: javax.imageio.IIOException: Can't read input file!
+[26 juin 2026, 22:38:55][UtilsGL] Failed to load image heroes3.png
+[26 juin 2026, 22:38:55][UtilsGL] Fast decoding of image [heroes.png] failed: javax.imageio.IIOException: Can't read input file!
+[26 juin 2026, 22:38:55][UtilsGL] ImageIO decoding of image [heroes.png] failed: javax.imageio.IIOException: Can't read input file!
+[26 juin 2026, 22:38:55][UtilsGL] Failed to load image heroes.png
+[26 juin 2026, 22:38:55][UtilsGL] Fast decoding of image [citizenmale.png] failed: javax.imageio.IIOException: Can't read input file!
+[26 juin 2026, 22:38:55][UtilsGL] ImageIO decoding of image [citizenmale.png] failed: javax.imageio.IIOException: Can't read input file!
+[26 juin 2026, 22:38:55][UtilsGL] Failed to load image citizenmale.png
+[26 juin 2026, 22:38:55][UtilsGL] Fast decoding of image [buildings.png] failed: javax.imageio.IIOException: Can't read input file!
+[26 juin 2026, 22:38:55][UtilsGL] ImageIO decoding of image [buildings.png] failed: javax.imageio.IIOException: Can't read input file!
+[26 juin 2026, 22:38:55][UtilsGL] Failed to load image buildings.png
+[26 juin 2026, 22:38:55][UtilsGL] Fast decoding of image [special2.png] failed: javax.imageio.IIOException: Can't read input file!
+[26 juin 2026, 22:38:55][UtilsGL] ImageIO decoding of image [special2.png] failed: javax.imageio.IIOException: Can't read input file!
+[26 juin 2026, 22:38:55][UtilsGL] Failed to load image special2.png
+[26 juin 2026, 22:38:55][UtilsGL] Fast decoding of image [citizenfemale.png] failed: javax.imageio.IIOException: Can't read input file!
+[26 juin 2026, 22:38:55][UtilsGL] ImageIO decoding of image [citizenfemale.png] failed: javax.imageio.IIOException: Can't read input file!
+[26 juin 2026, 22:38:55][UtilsGL] Failed to load image citizenfemale.png
+[26 juin 2026, 22:38:55][UtilsGL] Fast decoding of image [special.png] failed: javax.imageio.IIOException: Can't read input file!
+[26 juin 2026, 22:38:55][UtilsGL] ImageIO decoding of image [special.png] failed: javax.imageio.IIOException: Can't read input file!
+[26 juin 2026, 22:38:55][UtilsGL] Failed to load image special.png
+[26 juin 2026, 22:38:55][class xaos.tiles.Tile] No texture for [lockedconnector] Also tried [null]
+[26 juin 2026, 22:42:25][Towns] Error Code [0]
+[26 juin 2026, 22:42:25][Towns] java.lang.ExceptionInInitializerError
+	at xaos.main.Game.<init>(Game.java:230)
+	at xaos.Towns.main(Towns.java:51)
+Caused by: java.lang.ArrayIndexOutOfBoundsException: Index 960 out of bounds for length 512
+	at xaos.utils.UtilsGL.generateAlpha(UtilsGL.java:973)
+	at xaos.utils.UtilsGL.generateAlpha(UtilsGL.java:933)
+	at xaos.panels.UIPanel.<clinit>(UIPanel.java:514)
+	... 2 more
+
+[26 juin 2026, 22:44:08][UtilFont] Error loading font data java.lang.Exception: data/fonts/cantarell_17.fnt
+[27 juin 2026, 00:04:51][UtilsGL] java.lang.NullPointerException
+[27 juin 2026, 00:08:30][UtilsGL] java.lang.NullPointerException
+[27 juin 2026, 00:10:03][UtilsGL] java.lang.RuntimeException: Failed to create the GLFW window

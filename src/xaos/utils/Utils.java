@@ -54,7 +54,7 @@ public final class Utils {
     // * 2D UTILS *
     // ************
     /**
-     * Returns a point in the BÈzier curve
+     * Returns a point in the B√©zier curve
      *
      * @param pointSource Source point
      * @param pointDest Dstination point
@@ -99,7 +99,7 @@ public final class Utils {
     }
 
     /**
-     * Indica si la coordenada pasada est· dentro del mapa
+     * Indica si la coordenada pasada est√° dentro del mapa
      *
      * @param x
      * @param y
@@ -111,7 +111,7 @@ public final class Utils {
     }
 
     /**
-     * Indica si el punto (coordenada) pasado est· dentro del mapa
+     * Indica si el punto (coordenada) pasado est√° dentro del mapa
      *
      * @param p3d
      * @return
@@ -492,7 +492,7 @@ public final class Utils {
             return;
         }
 
-        // Miramos la direcciÛn de la luz
+        // Miramos la direcci√≥n de la luz
         int iDirection; // 0 = misma casilla, 1-NW 2-N 3-NE 4-W 5-E 6-SW 7-S 8-SE
         if (x0 == x1) {
             if (y0 == y1) {
@@ -714,19 +714,19 @@ public final class Utils {
 //		if (zs >= (World.MAP_NUM_LEVELS_OUTSIDE - 1)) {
 //			if (zd >= (World.MAP_NUM_LEVELS_OUTSIDE - 1)) {
 //				// Los 2 puntos son underground
-//				h += ((World.MAP_WIDTH / 4) * Math.abs (zd - zs)); // MÈtodo Manhattan, funciona mejor incluso permitiendo movimiento diagonal que la "Distancia Chebyshev" (20% mejor)
+//				h += ((World.MAP_WIDTH / 4) * Math.abs (zd - zs)); // M√©todo Manhattan, funciona mejor incluso permitiendo movimiento diagonal que la "Distancia Chebyshev" (20% mejor)
 //			} else {
 //				// El origen es underground pero el destino no
-//				h += ((World.MAP_WIDTH / 4) * Math.abs (zs - (World.MAP_NUM_LEVELS_OUTSIDE - 1)) + 2 * (World.MAP_NUM_LEVELS_OUTSIDE - 1 - zd)); // MÈtodo Manhattan, funciona mejor incluso permitiendo movimiento diagonal que la "Distancia Chebyshev" (20% mejor)
+//				h += ((World.MAP_WIDTH / 4) * Math.abs (zs - (World.MAP_NUM_LEVELS_OUTSIDE - 1)) + 2 * (World.MAP_NUM_LEVELS_OUTSIDE - 1 - zd)); // M√©todo Manhattan, funciona mejor incluso permitiendo movimiento diagonal que la "Distancia Chebyshev" (20% mejor)
 //			}
 //		} else {
 //			// El origen es outside
 //			if (zd >= (World.MAP_NUM_LEVELS_OUTSIDE - 1)) {
 //				// El destino es underground (y origen outside)
-//				h += ((World.MAP_WIDTH / 4) * Math.abs (zd - (World.MAP_NUM_LEVELS_OUTSIDE - 1)) + 2 * (World.MAP_NUM_LEVELS_OUTSIDE - 1 - zs)); // MÈtodo Manhattan, funciona mejor incluso permitiendo movimiento diagonal que la "Distancia Chebyshev" (20% mejor)
+//				h += ((World.MAP_WIDTH / 4) * Math.abs (zd - (World.MAP_NUM_LEVELS_OUTSIDE - 1)) + 2 * (World.MAP_NUM_LEVELS_OUTSIDE - 1 - zs)); // M√©todo Manhattan, funciona mejor incluso permitiendo movimiento diagonal que la "Distancia Chebyshev" (20% mejor)
 //			} else {
 //				// El destino es outside, como el origen
-//				h += (2 * Math.abs (zd - zs)); // MÈtodo Manhattan, funciona mejor incluso permitiendo movimiento diagonal que la "Distancia Chebyshev" (20% mejor)
+//				h += (2 * Math.abs (zd - zs)); // M√©todo Manhattan, funciona mejor incluso permitiendo movimiento diagonal que la "Distancia Chebyshev" (20% mejor)
 //			}
 //		}
 //
@@ -751,7 +751,7 @@ public final class Utils {
         try {
             return Integer.parseInt(sNumber);
         } catch (NumberFormatException nfe) {
-            Log.log(Log.LEVEL_ERROR, Messages.getString("Utils.1") + sNumber + Messages.getString("Utils.2") + defaultNumber + "]", "Utils"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
+            Log.error(Messages.getString("Utils.1") + sNumber + Messages.getString("Utils.2") + defaultNumber + "]", "Utils"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
         }
 
         return defaultNumber;
@@ -900,12 +900,12 @@ public final class Utils {
                         return launchDice(iNumber, Integer.parseInt(sStr.substring(iIndexD + 1, (iIndexPlus + 1 - iIndexD)).trim()), Integer.parseInt(sStr.substring(iIndexPlus + 1)));
                     }
                 } catch (Exception e) {
-                    Log.log(Log.LEVEL_ERROR, Messages.getString("Utils.0") + sStr + "] [" + e.toString() + "]", "Utils"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
+                    Log.error(Messages.getString("Utils.0") + sStr + "] [" + e.toString() + "]", "Utils"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
                     return 0;
                 }
             } else {
                 try {
-                    // No existe la 'D', quiz· es un +X o -X directo
+                    // No existe la 'D', quiz√° es un +X o -X directo
                     if (sStr.charAt(0) == '-') {
                         return launchDice(0, 0, -Integer.parseInt(sStr.substring(1)));
                     } else {
@@ -916,12 +916,12 @@ public final class Utils {
                         }
                     }
                 } catch (Exception e) {
-                    Log.log(Log.LEVEL_ERROR, Messages.getString("Utils.0") + sStr + "] [" + e.toString() + "]", "Utils"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
+                    Log.error(Messages.getString("Utils.0") + sStr + "] [" + e.toString() + "]", "Utils"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
                     return 0;
                 }
             }
         } else {
-            // Recorremos los tokens y vamos sumando, llam·ndose a si misma
+            // Recorremos los tokens y vamos sumando, llam√°ndose a si misma
             StringTokenizer tokenizer = new StringTokenizer(sStr, ","); //$NON-NLS-1$
             String token;
             while (tokenizer.hasMoreTokens()) {
@@ -973,7 +973,7 @@ public final class Utils {
                 }
             } else {
                 try {
-                    // No existe la 'D', quiz· es un +X o -X directo
+                    // No existe la 'D', quiz√° es un +X o -X directo
                     if (sStr.charAt(0) == '-') {
                         int iMinus = -Integer.parseInt(sStr.substring(1));
                         return new Point(iMinus, iMinus);
@@ -987,12 +987,12 @@ public final class Utils {
                         }
                     }
                 } catch (Exception e) {
-                    Log.log(Log.LEVEL_ERROR, Messages.getString("Utils.3") + sStr + "] [" + e.toString() + "]", "Utils"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
+                    Log.error(Messages.getString("Utils.3") + sStr + "] [" + e.toString() + "]", "Utils"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
                     return new Point(0, 0);
                 }
             }
         } else {
-            // Recorremos los tokens y vamos sumando, llam·ndose a si misma
+            // Recorremos los tokens y vamos sumando, llam√°ndose a si misma
             StringTokenizer tokenizer = new StringTokenizer(sStr, ","); //$NON-NLS-1$
             String token;
             Point pointTmp;
@@ -1069,11 +1069,11 @@ public final class Utils {
                 if (coloresOK) {
                     return new ColorGL(new Color(r, g, b));
                 } else {
-                    Log.log(Log.LEVEL_ERROR, Messages.getString("Utils.6") + sColor + "]", "Utils"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+                    Log.error(Messages.getString("Utils.6") + sColor + "]", "Utils"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
                     return new ColorGL(null);
                 }
             } catch (Exception e) {
-                Log.log(Log.LEVEL_ERROR, Messages.getString("Utils.6") + sColor + "] [" + e.toString() + "]", "Utils"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
+                Log.error(Messages.getString("Utils.6") + sColor + "] [" + e.toString() + "]", "Utils"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
                 return new ColorGL(null);
             }
         }
@@ -1230,7 +1230,7 @@ public final class Utils {
                 fFinal.delete();
             }
             File fTemporary = new File(sSaveFolder + sTemporaryFileName);
-            if (fTemporary.exists()) { // DeberÌa, siempre
+            if (fTemporary.exists()) { // Deber√≠a, siempre
                 fTemporary.renameTo(fFinal);
             }
         } catch (Exception e) {
@@ -1406,7 +1406,7 @@ public final class Utils {
             Game.getWorld().refreshTransients();
         } catch (Exception e) {
             e.printStackTrace();
-            Log.log(Log.LEVEL_ERROR, Messages.getString("Utils.23") + e.toString() + "]", "Utils"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+            Log.error(Messages.getString("Utils.23") + e.toString() + "]", "Utils"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
             if (e.getMessage() != null) {
                 throw new Exception(Messages.getString("Utils.23") + e.getMessage() + "]"); //$NON-NLS-1$ //$NON-NLS-2$
             } else {
@@ -1475,7 +1475,7 @@ public final class Utils {
                 fFinal.delete();
             }
             File fTemporary = new File(sBuryFolder + sTemporaryFileName);
-            if (fTemporary.exists()) { // DeberÌa, siempre
+            if (fTemporary.exists()) { // Deber√≠a, siempre
                 fTemporary.renameTo(fFinal);
             }
         } catch (Exception e) {
@@ -1486,7 +1486,7 @@ public final class Utils {
     }
 
     /**
-     * Devuelve un random bury, nunca devuelve null, en todo caso un bury vacÌo
+     * Devuelve un random bury, nunca devuelve null, en todo caso un bury vac√≠o
      *
      * @return
      */
@@ -1534,10 +1534,10 @@ public final class Utils {
                 zis.close();
                 zipFile.close();
             } else {
-                Log.log(Log.LEVEL_ERROR, Messages.getString("Utils.17"), "Utils"); //$NON-NLS-1$ //$NON-NLS-2$
+                Log.error(Messages.getString("Utils.17"), "Utils"); //$NON-NLS-1$ //$NON-NLS-2$
             }
         } catch (Exception e) {
-            Log.log(Log.LEVEL_ERROR, Messages.getString("BuryData.1") + " [" + e.toString() + "]", "Utils"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
+            Log.error(Messages.getString("BuryData.1") + " [" + e.toString() + "]", "Utils"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
         }
 
         return bd;
@@ -1656,28 +1656,28 @@ public final class Utils {
     }
 
     /**
-     * Retorna la ruta entera a un fichero, teniendo en cuenta si est· en una
-     * misiÛn o no. Tambien mira los mods cargados. Si es misiÛn, mirar· primero
-     * la carpeta general y despuÈs dentro de las carpetas de campaÒa
+     * Retorna la ruta entera a un fichero, teniendo en cuenta si est√° en una
+     * misi√≥n o no. Tambien mira los mods cargados. Si es misi√≥n, mirar√° primero
+     * la carpeta general y despu√©s dentro de las carpetas de campa√±a
      *
      * @param sOriginalFile
      * @param sCampaignID
      * @param sMissionID
-     * @return la ruta entera a un fichero, teniendo en cuenta si est· en una
-     * misiÛn o no
+     * @return la ruta entera a un fichero, teniendo en cuenta si est√° en una
+     * misi√≥n o no
      */
     public static ArrayList<String> getPathToFile(String sOriginalFile, String sCampaignID, String sMissionID) {
         ArrayList<String> alReturn = new ArrayList<String>();
 
         if (sMissionID == null || sMissionID.trim().length() == 0) {
-            // Sin misiÛn, lo pillamos de la carpeta data
+            // Sin misi√≥n, lo pillamos de la carpeta data
             String sPath = Towns.getPropertiesString("DATA_FOLDER") + sOriginalFile; //$NON-NLS-1$
             File f = new File(sPath);
             if (f.exists()) {
                 alReturn.add(sPath);
             }
         } else {
-			// MisiÛn
+			// Misi√≥n
             // Primero miramos la carpeta data
             String sPath = Towns.getPropertiesString("DATA_FOLDER") + sOriginalFile; //$NON-NLS-1$
             File f = new File(sPath);
@@ -1685,14 +1685,14 @@ public final class Utils {
                 alReturn.add(sPath);
             }
 
-            // DespuÈs la carpeta de campaÒa
+            // Despu√©s la carpeta de campa√±a
             sPath = Towns.getPropertiesString("CAMPAIGNS_FOLDER") + sCampaignID + File.separator + sOriginalFile; //$NON-NLS-1$
             f = new File(sPath);
             if (f.exists()) {
                 alReturn.add(sPath);
             }
 
-            // Ahora la de campaÒa + misiÛn
+            // Ahora la de campa√±a + misi√≥n
             sPath = Towns.getPropertiesString("CAMPAIGNS_FOLDER") + sCampaignID + File.separator + sMissionID + File.separator + sOriginalFile; //$NON-NLS-1$
             f = new File(sPath);
             if (f.exists()) {
@@ -1707,15 +1707,15 @@ public final class Utils {
     }
 
     /**
-     * Retorna la ruta entera a un fichero de mods, teniendo en cuenta si est·
-     * en una misiÛn o no Si es misiÛn, mirar· primero la carpeta general y
-     * despuÈs dentro de las carpetas de campaÒa
+     * Retorna la ruta entera a un fichero de mods, teniendo en cuenta si est√°
+     * en una misi√≥n o no Si es misi√≥n, mirar√° primero la carpeta general y
+     * despu√©s dentro de las carpetas de campa√±a
      *
      * @param sOriginalFile
      * @param sCampaignID
      * @param sMissionID
-     * @return la ruta entera a un fichero, teniendo en cuenta si est· en una
-     * misiÛn o no
+     * @return la ruta entera a un fichero, teniendo en cuenta si est√° en una
+     * misi√≥n o no
      */
     private static void getPathToFileMods(ArrayList<String> alList, String sOriginalFile, String sCampaignID, String sMissionID) {
         File fUserFolder = new File(Game.getUserFolder());
@@ -1734,7 +1734,7 @@ public final class Utils {
             sModName = alMods.get(i);
 
             if (sMissionID == null || sMissionID.trim().length() == 0) {
-                // Sin misiÛn, lo pillamos de la carpeta data
+                // Sin misi√≥n, lo pillamos de la carpeta data
                 String sModActionsPath = fUserFolder.getAbsolutePath() + System.getProperty("file.separator") + Game.MODS_FOLDER1 + System.getProperty("file.separator") + sModName + System.getProperty("file.separator") + Towns.getPropertiesString("DATA_FOLDER") + sOriginalFile; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
                 File f = new File(sModActionsPath);
                 if (f.exists()) {
@@ -1747,13 +1747,13 @@ public final class Utils {
                     alList.add(sPath);
                 }
 
-                // Ahora miramos la carpeta de la campaÒa
+                // Ahora miramos la carpeta de la campa√±a
                 sPath = fUserFolder.getAbsolutePath() + System.getProperty("file.separator") + Game.MODS_FOLDER1 + System.getProperty("file.separator") + sModName + System.getProperty("file.separator") + Towns.getPropertiesString("CAMPAIGNS_FOLDER") + sCampaignID + File.separator + sOriginalFile; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
                 if (new File(sPath).exists()) {
                     alList.add(sPath);
                 }
 
-                // Ahora la carpeta de campa+a+misiÛn
+                // Ahora la carpeta de campa+a+misi√≥n
                 sPath = fUserFolder.getAbsolutePath() + System.getProperty("file.separator") + Game.MODS_FOLDER1 + System.getProperty("file.separator") + sModName + System.getProperty("file.separator") + Towns.getPropertiesString("CAMPAIGNS_FOLDER") + sCampaignID + File.separator + sMissionID + File.separator + sOriginalFile; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
                 if (new File(sPath).exists()) {
                     alList.add(sPath);
@@ -1793,6 +1793,8 @@ public final class Utils {
             pw.setProperty(MainProperties.CARAVAN_PAUSE, Game.isCaravanPause());
             pw.setProperty(MainProperties.ALLOW_BURY, Game.isAllowBury());
             pw.setProperty(MainProperties.PATHFINDING_LEVEL, Game.getPathfindingCPULevel());
+            pw.setProperty(MainProperties.VSYNC, Game.isVsync());
+            pw.setProperty(MainProperties.FPS_CAP, Game.getFpsCap());
             UtilsKeyboard.saveShortcuts(pw);
 
             pw.addSection("Mod/Servers");
@@ -1800,14 +1802,14 @@ public final class Utils {
             pw.setProperty(MainProperties.SERVERS, Game.getServersString());
             pw.store(fSave);
         } catch (Exception e) {
-            Log.log(Log.LEVEL_ERROR, Messages.getString("Utils.13") + e.toString() + "]", "Utils"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+            Log.error(Messages.getString("Utils.13") + e.toString() + "]", "Utils"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
         }
     }
 
     public static File createUserFolder(String sUserFolder) {
         File fUserFolder = new File(sUserFolder);
         if (!fUserFolder.exists() || !fUserFolder.isDirectory()) {
-            Log.log(Log.LEVEL_ERROR, Messages.getString("Utils.10") + fUserFolder.getAbsolutePath() + "]", "Utils"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+            Log.error(Messages.getString("Utils.10") + fUserFolder.getAbsolutePath() + "]", "Utils"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
             return null;
         }
 
@@ -1817,7 +1819,7 @@ public final class Utils {
         }
 
         if (!fFolderTowns.exists()) {
-            Log.log(Log.LEVEL_ERROR, Messages.getString("Utils.20") + " [" + fFolderTowns.getAbsolutePath() + "]", "Utils"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
+            Log.error(Messages.getString("Utils.20") + " [" + fFolderTowns.getAbsolutePath() + "]", "Utils"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
             return null;
         }
 
@@ -1827,7 +1829,7 @@ public final class Utils {
         }
 
         if (!fFolderSave.exists()) {
-            Log.log(Log.LEVEL_ERROR, Messages.getString("Utils.25") + " [" + fFolderSave.getAbsolutePath() + "]", "Utils"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
+            Log.error(Messages.getString("Utils.25") + " [" + fFolderSave.getAbsolutePath() + "]", "Utils"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
             return null;
         }
 
@@ -1837,7 +1839,7 @@ public final class Utils {
         }
 
         if (!fFolderMods.exists()) {
-            Log.log(Log.LEVEL_ERROR, Messages.getString("Utils.29") + " [" + fFolderMods.getAbsolutePath() + "]", "Utils"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
+            Log.error(Messages.getString("Utils.29") + " [" + fFolderMods.getAbsolutePath() + "]", "Utils"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
             return null;
         }
 
@@ -1847,7 +1849,7 @@ public final class Utils {
         }
 
         if (!fFolderBury.exists()) {
-            Log.log(Log.LEVEL_ERROR, Messages.getString("Utils.29") + " [" + fFolderBury.getAbsolutePath() + "]", "Utils"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
+            Log.error(Messages.getString("Utils.29") + " [" + fFolderBury.getAbsolutePath() + "]", "Utils"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
             return null;
         }
 
@@ -1857,7 +1859,7 @@ public final class Utils {
         }
 
         if (!fFolderScreenshots.exists()) {
-            Log.log(Log.LEVEL_ERROR, Messages.getString("Utils.18") + " [" + fFolderScreenshots.getAbsolutePath() + "]", "Utils"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
+            Log.error(Messages.getString("Utils.18") + " [" + fFolderScreenshots.getAbsolutePath() + "]", "Utils"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
             return null;
         }
 
@@ -1868,7 +1870,7 @@ public final class Utils {
     // * STRING UTILS *
     // ***************
     /**
-     * Retorna una cadena haciendo cambios din·micos (sustituyendo ciertas
+     * Retorna una cadena haciendo cambios din√°micos (sustituyendo ciertas
      * cadenas por otras)
      */
     public static String getDynamicString(String sString) {
@@ -1876,7 +1878,7 @@ public final class Utils {
         int iIndex = sString.indexOf("__MUSIC__"); //$NON-NLS-1$
 
         if (iIndex != -1) {
-            // M˙sica ON?
+            // M√∫sica ON?
             String sMusicON = Game.isMusicON() ? Messages.getString("Utils.4") : Messages.getString("Utils.5"); //$NON-NLS-1$ //$NON-NLS-2$
             sAux = sString.substring(0, iIndex) + sMusicON + sString.substring(iIndex + "__MUSIC__".length()); //$NON-NLS-1$
             return getDynamicString(sAux);
@@ -2013,6 +2015,28 @@ public final class Utils {
                                                                             String sLevel = Integer.toString(Game.getPathfindingCPULevel());
                                                                             sAux = sString.substring(0, iIndex) + sLevel + sString.substring(iIndex + "__CPUPF__".length()); //$NON-NLS-1$
                                                                             return getDynamicString(sAux);
+                                                                        } else {
+                                                                            // VSync
+                                                                            iIndex = sString.indexOf("__VSYNC__"); //$NON-NLS-1$
+                                                                            if (iIndex != -1) {
+                                                                                String sVsyncON = Game.isVsync() ? Messages.getString("Utils.4") : Messages.getString("Utils.5"); //$NON-NLS-1$ //$NON-NLS-2$
+                                                                                sAux = sString.substring(0, iIndex) + sVsyncON + sString.substring(iIndex + "__VSYNC__".length()); //$NON-NLS-1$
+                                                                                return getDynamicString(sAux);
+                                                                            } else {
+                                                                                // FPS Cap
+                                                                                iIndex = sString.indexOf("__FPS_CAP__"); //$NON-NLS-1$
+                                                                                if (iIndex != -1) {
+                                                                                    String sFpsCap;
+                                                                                    int fpsCap = Game.getFpsCap();
+                                                                                    if (fpsCap <= 0) {
+                                                                                        sFpsCap = Messages.getString("Utils.19"); //$NON-NLS-1$
+                                                                                    } else {
+                                                                                        sFpsCap = Integer.toString(fpsCap);
+                                                                                    }
+                                                                                    sAux = sString.substring(0, iIndex) + sFpsCap + sString.substring(iIndex + "__FPS_CAP__".length()); //$NON-NLS-1$
+                                                                                    return getDynamicString(sAux);
+                                                                                }
+                                                                            }
                                                                         }
                                                                     }
                                                                 }
@@ -2040,7 +2064,7 @@ public final class Utils {
      *
      * @param sChain Cadena
      * @return un array de strings a partir de un string con elementos separados
-     * por comas ",". Null en caso de error/cadena vacÌa
+     * por comas ",". Null en caso de error/cadena vac√≠a
      */
     public static ArrayList<String> getArray(String sChain) {
         if (sChain != null && sChain.trim().length() > 0) {
@@ -2062,7 +2086,7 @@ public final class Utils {
      *
      * @param sChain Cadena
      * @return un array de Integers a partir de un string con elementos
-     * separados por comas ",". Null en caso de error/cadena vacÌa
+     * separados por comas ",". Null en caso de error/cadena vac√≠a
      */
     public static ArrayList<Integer> getArrayIntegers(String sChain) throws Exception {
         if (sChain != null && sChain.trim().length() > 0) {

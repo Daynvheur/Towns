@@ -56,7 +56,7 @@ public class EventManager {
             if (emi.getItems() != null && emi.getItems().size() > 0) {
                 for (int e = 0; e < emi.getItems().size(); e++) {
                     if (ItemManager.getItem(emi.getItems().get(e)) == null) {
-                        Log.log(Log.LEVEL_ERROR, Messages.getString("EventManager.0") + " [" + emi.getItems().get(e) + "]", "EventManager"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
+                        Log.error(Messages.getString("EventManager.0") + " [" + emi.getItems().get(e) + "]", "EventManager"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
                         Game.exit();
                     }
                 }
@@ -66,7 +66,7 @@ public class EventManager {
             if (emi.getItemsSpawnLiving() != null && emi.getItemsSpawnLiving().size() > 0) {
                 for (int e = 0; e < emi.getItemsSpawnLiving().size(); e++) {
                     if (LivingEntityManager.getItem(emi.getItemsSpawnLiving().get(e)) == null) {
-                        Log.log(Log.LEVEL_ERROR, Messages.getString("EventManager.2") + " [" + emi.getItemsSpawnLiving().get(e) + "]", "EventManager"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
+                        Log.error(Messages.getString("EventManager.2") + " [" + emi.getItemsSpawnLiving().get(e) + "]", "EventManager"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
                         Game.exit();
                     }
                 }
@@ -76,7 +76,7 @@ public class EventManager {
             if (emi.getSiegeLivings() != null && emi.getSiegeLivings().size() > 0) {
                 for (int e = 0; e < emi.getSiegeLivings().size(); e++) {
                     if (LivingEntityManager.getItem(emi.getSiegeLivings().get(e)) == null) {
-                        Log.log(Log.LEVEL_ERROR, Messages.getString("EventManager.3") + " [" + emi.getSiegeLivings().get(e) + "]", "EventManager"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
+                        Log.error(Messages.getString("EventManager.3") + " [" + emi.getSiegeLivings().get(e) + "]", "EventManager"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
                         Game.exit();
                     }
                 }
@@ -86,7 +86,7 @@ public class EventManager {
             if (emi.getAfterEvents() != null && emi.getAfterEvents().size() > 0) {
                 for (int e = 0; e < emi.getAfterEvents().size(); e++) {
                     if (!eventsList.containsKey(emi.getAfterEvents().get(e))) {
-                        Log.log(Log.LEVEL_ERROR, Messages.getString("EventManager.4") + " [" + emi.getAfterEvents().get(e) + "]", "EventManager"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
+                        Log.error(Messages.getString("EventManager.4") + " [" + emi.getAfterEvents().get(e) + "]", "EventManager"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
                         Game.exit();
                     }
                 }
@@ -96,7 +96,7 @@ public class EventManager {
             if (emi.getPrerequisites() != null && emi.getPrerequisites().size() > 0) {
                 for (int e = 0; e < emi.getPrerequisites().size(); e++) {
                     if (!eventsList.containsKey(emi.getPrerequisites().get(e))) {
-                        Log.log(Log.LEVEL_ERROR, Messages.getString("EventManager.8") + " [" + emi.getPrerequisites().get(e) + "]", "EventManager"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
+                        Log.error(Messages.getString("EventManager.8") + " [" + emi.getPrerequisites().get(e) + "]", "EventManager"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
                         Game.exit();
                     }
                 }
@@ -106,7 +106,7 @@ public class EventManager {
             if (emi.getEventsImmune() != null && emi.getEventsImmune().size() > 0) {
                 for (int e = 0; e < emi.getEventsImmune().size(); e++) {
                     if (!eventsList.containsKey(emi.getEventsImmune().get(e))) {
-                        Log.log(Log.LEVEL_ERROR, Messages.getString("EventManager.12") + " [" + emi.getEventsImmune().get(e) + "]", "EventManager"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
+                        Log.error(Messages.getString("EventManager.12") + " [" + emi.getEventsImmune().get(e) + "]", "EventManager"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
                         Game.exit();
                     }
                 }
@@ -116,7 +116,7 @@ public class EventManager {
             if (emi.getEffects() != null && emi.getEffects().size() > 0) {
                 for (int e = 0; e < emi.getEffects().size(); e++) {
                     if (EffectManager.getItem(emi.getEffects().get(e)) == null) {
-                        Log.log(Log.LEVEL_ERROR, Messages.getString("EventManager.16") + " [" + emi.getEffects().get(e) + "]", "EventManager"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
+                        Log.error(Messages.getString("EventManager.16") + " [" + emi.getEffects().get(e) + "]", "EventManager"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
                         Game.exit();
                     }
                 }
@@ -126,7 +126,7 @@ public class EventManager {
             if (emi.getEffectsAfterEat() != null && emi.getEffectsAfterEat().size() > 0) {
                 for (int e = 0; e < emi.getEffectsAfterEat().size(); e++) {
                     if (EffectManager.getItem(emi.getEffectsAfterEat().get(e)) == null) {
-                        Log.log(Log.LEVEL_ERROR, Messages.getString("EventManager.1") + " [" + emi.getEffectsAfterEat().get(e) + "]", "EventManager"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
+                        Log.error(Messages.getString("EventManager.1") + " [" + emi.getEffectsAfterEat().get(e) + "]", "EventManager"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
                         Game.exit();
                     }
                 }
@@ -136,7 +136,7 @@ public class EventManager {
             if (emi.getEffectsAfterSleep() != null && emi.getEffectsAfterSleep().size() > 0) {
                 for (int e = 0; e < emi.getEffectsAfterSleep().size(); e++) {
                     if (EffectManager.getItem(emi.getEffectsAfterSleep().get(e)) == null) {
-                        Log.log(Log.LEVEL_ERROR, Messages.getString("EventManager.24") + " [" + emi.getEffectsAfterSleep().get(e) + "]", "EventManager"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
+                        Log.error(Messages.getString("EventManager.24") + " [" + emi.getEffectsAfterSleep().get(e) + "]", "EventManager"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
                         Game.exit();
                     }
                 }
@@ -185,7 +185,7 @@ public class EventManager {
             Document doc = UtilsXML.loadXMLFile(sXMLName); //$NON-NLS-1$
 
 			// Tenemos el documento XML parseado
-            // Lo recorremos entero y vamos añadiendo las skills (SkillManagerItem) a la hash
+            // Lo recorremos entero y vamos aÃ±adiendo las skills (SkillManagerItem) a la hash
             NodeList nodeList = doc.getDocumentElement().getChildNodes();
             Node node;
             EventManagerItem emi;
@@ -438,12 +438,12 @@ public class EventManager {
                         emi.loadUseFile(sXMLName);
                     }
 
-                    // Lo añadimos a la hash
+                    // Lo aÃ±adimos a la hash
                     eventsList.put(sIniHeader, emi);
                 }
             }
         } catch (Exception e) {
-            Log.log(Log.LEVEL_ERROR, Messages.getString("EventManager.32") + " [" + e.getMessage() + "]", "EventManager"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
+            Log.error(Messages.getString("EventManager.32") + " [" + e.getMessage() + "]", "EventManager"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
             Game.exit();
         }
     }

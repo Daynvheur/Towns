@@ -14,6 +14,7 @@ import xaos.tiles.entities.items.ItemManagerItem;
 import xaos.tiles.entities.living.LivingEntity;
 import xaos.utils.Point3DShort;
 
+@SuppressWarnings("unchecked")
 public class Projectile extends Tile implements Externalizable {
 
     private static final long serialVersionUID = -5065819692431962137L;
@@ -29,11 +30,11 @@ public class Projectile extends Tile implements Externalizable {
     private int damage;
     private int maxDistance;
     private LivingEntity attacker;
-    private String attackerWeapon; // Para obtener los verbos despuÈs
+    private String attackerWeapon; // Para obtener los verbos despu√©s
     private LivingEntity victim;
     private ArrayList<Point3DShort> path;
     private int direction; // Binaria
-    private boolean delete; // Se guarda para que se dibuje un turno m·s
+    private boolean delete; // Se guarda para que se dibuje un turno m√°s
 
     public Projectile() {
         super();
@@ -53,7 +54,7 @@ public class Projectile extends Tile implements Externalizable {
 
     public void setCoordinates(Point3DShort point) {
         if (locations != null) {
-            if (getX() != -1) { // Con esto sabemos si es un nuevo proyectil que a˙n no tiene coordenadas
+            if (getX() != -1) { // Con esto sabemos si es un nuevo proyectil que a√∫n no tiene coordenadas
                 locations[getX()][getY()][getZ()]--;
             }
             locations[point.x][point.y][point.z]++;
@@ -128,13 +129,13 @@ public class Projectile extends Tile implements Externalizable {
     public void setPath(ArrayList<Point3DShort> path) {
         this.path = path;
 
-		// Miramos la direcciÛn en la que hay que dibujar el ammo
-        // Obtenemos el 1er y ˙ltimo puntos del recorrido para ello
+		// Miramos la direcci√≥n en la que hay que dibujar el ammo
+        // Obtenemos el 1er y √∫ltimo puntos del recorrido para ello
         if (path != null && path.size() > 1) {
             Point3DShort p3dIni = path.get(0);
             Point3DShort p3dFin = path.get(path.size() - 1);
 
-            // Miramos quÈ parte es m·s corta (servir· para girarlo bien en modo isomÈtrico) (difÌcil de entender)
+            // Miramos qu√© parte es m√°s corta (servir√° para girarlo bien en modo isom√©trico) (dif√≠cil de entender)
             boolean bParteCortaHorizontal = Math.abs(p3dIni.x - p3dFin.x) < Math.abs(p3dIni.y - p3dFin.y);
 
             if (bParteCortaHorizontal) {

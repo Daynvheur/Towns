@@ -63,7 +63,7 @@ public class MatsPanelData {
             Document doc = UtilsXML.loadXMLFile(sXMLPath); //$NON-NLS-1$ //$NON-NLS-2$
 
 			// Tenemos el documento XML parseado
-            // Lo recorremos entero y vamos añadiendo los grupos
+            // Lo recorremos entero y vamos aÃ±adiendo los grupos
             NodeList nodeList = doc.getDocumentElement().getChildNodes();
             Node node;
             String sAux, sIniHeader;
@@ -95,7 +95,7 @@ public class MatsPanelData {
                     // ID
                     sAux = UtilsXML.getChildValue(node.getChildNodes(), "id"); //$NON-NLS-1$
                     if (sAux == null || sAux.trim().length() == 0) {
-                        Log.log(Log.LEVEL_ERROR, Messages.getString("MatsPanelData.5"), "MatsPanelData"); //$NON-NLS-1$ //$NON-NLS-2$
+                        Log.error(Messages.getString("MatsPanelData.5"), "MatsPanelData"); //$NON-NLS-1$ //$NON-NLS-2$
                         Game.exit();
                     }
 
@@ -118,7 +118,7 @@ public class MatsPanelData {
                         }
                     } else {
                         if (sAux == null || sAux.trim().length() == 0) {
-                            Log.log(Log.LEVEL_ERROR, Messages.getString("MatsPanelData.0"), "MatsPanelData"); //$NON-NLS-1$ //$NON-NLS-2$
+                            Log.error(Messages.getString("MatsPanelData.0"), "MatsPanelData"); //$NON-NLS-1$ //$NON-NLS-2$
                             Game.exit();
                         }
                         nameGroups.add(sAux);
@@ -134,7 +134,7 @@ public class MatsPanelData {
                         }
                     } else {
                         if (sAux == null || sAux.trim().length() == 0) {
-                            Log.log(Log.LEVEL_ERROR, Messages.getString("MatsPanelData.2"), "MatsPanelData"); //$NON-NLS-1$ //$NON-NLS-2$
+                            Log.error(Messages.getString("MatsPanelData.2"), "MatsPanelData"); //$NON-NLS-1$ //$NON-NLS-2$
                             Game.exit();
                         }
                         iconGroups.add(sAux);
@@ -146,7 +146,7 @@ public class MatsPanelData {
                     ArrayList<String> alTypes = Utils.getArray(UtilsXML.getChildValue(node.getChildNodes(), "types")); //$NON-NLS-1$
                     if (alTypes == null || alTypes.size() == 0) {
                         if (!bModChangingValues) {
-                            Log.log(Log.LEVEL_ERROR, Messages.getString("MatsPanelData.4"), "MatsPanelData"); //$NON-NLS-1$ //$NON-NLS-2$
+                            Log.error(Messages.getString("MatsPanelData.4"), "MatsPanelData"); //$NON-NLS-1$ //$NON-NLS-2$
                             Game.exit();
                         }
                     }
@@ -159,10 +159,10 @@ public class MatsPanelData {
                             alItems.addAll(ItemManager.getItemsByType(alTypes.get(t)));
                         }
                         if (alItems.size() == 0) {
-                            Log.log(Log.LEVEL_ERROR, Messages.getString("MatsPanelData.6"), "MatsPanelData"); //$NON-NLS-1$ //$NON-NLS-2$
+                            Log.error(Messages.getString("MatsPanelData.6"), "MatsPanelData"); //$NON-NLS-1$ //$NON-NLS-2$
                             Game.exit();
                         }
-                        // Ordenamos alfabéticamente
+                        // Ordenamos alfabÃ©ticamente
                         for (int t = 0; t < alItems.size(); t++) {
                             alItemNames.add(ItemManager.getItem(alItems.get(t)).getName());
                         }
@@ -201,12 +201,12 @@ public class MatsPanelData {
                 }
             }
         } catch (Exception e) {
-            Log.log(Log.LEVEL_ERROR, Messages.getString("MatsPanelData.8") + e.toString() + "]", "MatsPanelData"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+            Log.error(Messages.getString("MatsPanelData.8") + e.toString() + "]", "MatsPanelData"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
             Game.exit();
         }
 
         if (numGroups == 0) {
-            Log.log(Log.LEVEL_ERROR, Messages.getString("MatsPanelData.11"), "MatsPanelData"); //$NON-NLS-1$ //$NON-NLS-2$
+            Log.error(Messages.getString("MatsPanelData.11"), "MatsPanelData"); //$NON-NLS-1$ //$NON-NLS-2$
             Game.exit();
         }
     }

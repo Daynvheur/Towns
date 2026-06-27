@@ -5,7 +5,7 @@ import java.awt.Desktop;
 import java.io.File;
 import java.util.ArrayList;
 
-import org.lwjgl.opengl.Display;
+import xaos.utils.GLFWWindow;
 import org.lwjgl.opengl.GL11;
 
 import xaos.Towns;
@@ -44,6 +44,7 @@ import xaos.utils.Utils;
 import xaos.utils.UtilsAL;
 import xaos.utils.UtilsGL;
 
+@SuppressWarnings("deprecation")
 public final class CommandPanel {
 
     private static final long serialVersionUID = 5224811443500566092L;
@@ -70,6 +71,8 @@ public final class CommandPanel {
     public static String COMMAND_MM_SWITCH_SIEGE_PAUSE = "SWITCHSIEGEPAUSE"; //$NON-NLS-1$
     public static String COMMAND_MM_SWITCH_CARAVAN_PAUSE = "SWITCHCARPAUSE"; //$NON-NLS-1$
     public static String COMMAND_MM_SWITCH_BURY = "SWITCHBURY"; //$NON-NLS-1$
+    public static String COMMAND_MM_TOGGLE_VSYNC = "TOGGLEVSYNC"; //$NON-NLS-1$
+    public static String COMMAND_MM_SET_FPS_CAP = "SETFPSCAP"; //$NON-NLS-1$
     public static String COMMAND_MM_DELETE_ERROR = "MMDELETEERROR"; //$NON-NLS-1$
     public static String COMMAND_CHANGE_HOTKEY = "CHGHOTKEY"; //$NON-NLS-1$
     public static String COMMAND_MM_SWITCH_PATHFINDING_LEVEL = "SWITCHPFL"; //$NON-NLS-1$
@@ -815,8 +818,8 @@ public final class CommandPanel {
                 task.setPointIni(p3dDirect);
                 Game.getWorld().getTaskManager().addTask(task);
             } else if (sCommand.equals(COMMAND_CUSTOM_ACTION_DIRECT_LIVING)) {
-				// Como esto es en diferido, quiz· el usuario hace botÛn derecho, deja pasar el tiempo y luego clica
-                // AsÌ que buscamos las coordenadas actuales de la living
+				// Como esto es en diferido, quiz√° el usuario hace bot√≥n derecho, deja pasar el tiempo y luego clica
+                // As√≠ que buscamos las coordenadas actuales de la living
                 LivingEntity le = World.getLivingEntityByID(Integer.parseInt(sParameter2));
                 if (le != null) {
                     Game.createTask(Task.TASK_CUSTOM_ACTION);
@@ -827,8 +830,8 @@ public final class CommandPanel {
                     Game.getCurrentTask().setPoint(le.getCoordinates().toPoint3D());
                 }
             } else if (sCommand.equals(COMMAND_CUSTOM_ACTION_DIRECT_ITEM)) {
-				// Como esto es en diferido, quiz· el usuario hace botÛn derecho, deja pasar el tiempo y luego clica
-                // AsÌ que buscamos las coordenadas actuales de la living
+				// Como esto es en diferido, quiz√° el usuario hace bot√≥n derecho, deja pasar el tiempo y luego clica
+                // As√≠ que buscamos las coordenadas actuales de la living
                 Item it = Item.getItemByID(Integer.parseInt(sParameter2));
                 if (it != null) {
                     Game.createTask(Task.TASK_CUSTOM_ACTION);
@@ -931,14 +934,14 @@ public final class CommandPanel {
                 try {
                     Utils.save (true);
                 } catch (Exception ex) {
-                    Log.log(Log.LEVEL_ERROR, Messages.getString("CommandPanel.38") + ex.toString() + "]", "CommandPanel"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+                    Log.error(Messages.getString("CommandPanel.38") + ex.toString() + "]", "CommandPanel"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
                     MessagesPanel.addMessage(MessagesPanel.TYPE_SYSTEM, Messages.getString("CommandPanel.38") + ex.toString() + "]", ColorGL.RED); //$NON-NLS-1$ //$NON-NLS-2$
                 }
             } else if (sCommand.equals(COMMAND_SAVE_NO_MISSIONDATA)) {
                 try {
                     Utils.save (false);
                 } catch (Exception ex) {
-                    Log.log(Log.LEVEL_ERROR, Messages.getString("CommandPanel.38") + ex.toString() + "]", "CommandPanel"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+                    Log.error(Messages.getString("CommandPanel.38") + ex.toString() + "]", "CommandPanel"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
                     MessagesPanel.addMessage(MessagesPanel.TYPE_SYSTEM, Messages.getString("CommandPanel.38") + ex.toString() + "]", ColorGL.RED); //$NON-NLS-1$ //$NON-NLS-2$
                 }
             } else if (sCommand.equals(COMMAND_ITEM_TEXT_ADD)) {
@@ -973,7 +976,7 @@ public final class CommandPanel {
                     Utils.saveBury();
                     MessagesPanel.addMessage(MessagesPanel.TYPE_SYSTEM, Messages.getString("CommandPanel.9")); //$NON-NLS-1$
                 } catch (Exception ex) {
-                    Log.log(Log.LEVEL_ERROR, Messages.getString("CommandPanel.8") + " [" + ex.toString() + "]", "CommandPanel"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
+                    Log.error(Messages.getString("CommandPanel.8") + " [" + ex.toString() + "]", "CommandPanel"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
                     MessagesPanel.addMessage(MessagesPanel.TYPE_SYSTEM, Messages.getString("CommandPanel.8") + " [" + ex.toString() + "]", ColorGL.RED); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
                 }
             } else if (sCommand.equals(COMMAND_EXIT_GAME)) {
@@ -1024,7 +1027,7 @@ public final class CommandPanel {
 //				Utils.saveOptions ();
             } else if (sCommand.equals(COMMAND_MM_NEWGAME_SET_SAVE_NAME)) {
                 MainMenuPanel.useBuryTemporary = true;
-                // Si tiene el par·metro del point, ahÌ indica el n˙mero de servidor a usar
+                // Si tiene el par√°metro del point, ah√≠ indica el n√∫mero de servidor a usar
                 if (p3dDirect != null) {
                     Game.setServerToUse(p3dDirect.x);
                 } else {
@@ -1042,15 +1045,15 @@ public final class CommandPanel {
             	} else {
                     MainMenuPanel.loadingGame = true;
                     Game.getPanelMainMenu().render();
-                    Display.update();
-                    Display.sync(Game.FPS_MAINMENU); // Para "capear" a 30 fps
+                    GLFWWindow.update();
+                    GLFWWindow.sync(Game.FPS_MAINMENU); // Para "capear" a 30 fps
                     GL11.glClear(GL11.GL_COLOR_BUFFER_BIT | GL11.GL_DEPTH_BUFFER_BIT | GL11.GL_ACCUM_BUFFER_BIT | GL11.GL_STENCIL_BUFFER_BIT);
                     Game.startGame(sParameter, sParameter2);
             	}
             } else if (sCommand.equals(COMMAND_MM_CONTINUEGAME)) {
                 MainMenuPanel.loadingGame = true;
                 Game.getPanelMainMenu().render();
-                Display.update();
+                GLFWWindow.update();
                 if (sParameter2 != null) {
                     Game.continueGame(sParameter, sParameter2);
                 } else {
@@ -1140,6 +1143,13 @@ public final class CommandPanel {
                 Utils.saveOptions();
                 Game.exitToMainMenu();
                 Game.getPanelMainMenu().createMenu();
+            } else if (sCommand.equals(COMMAND_MM_TOGGLE_VSYNC)) {
+                Game.setVsync(!Game.isVsync());
+                Utils.saveOptions();
+            } else if (sCommand.equals(COMMAND_MM_SET_FPS_CAP)) {
+                int newFpsCap = Integer.parseInt(sParameter);
+                Game.setFpsCap(newFpsCap);
+                Utils.saveOptions();
             } else if (sCommand.equals(COMMAND_MM_SWITCH_PATHFINDING_LEVEL)) {
                 Game.setPathfindingCPULevel(Game.getPathfindingCPULevel() + 1);
                 Utils.saveOptions();
@@ -1261,10 +1271,10 @@ public final class CommandPanel {
 //							}
 //						}
                     } else {
-                        Log.log(Log.LEVEL_ERROR, Messages.getString("CommandPanel.6") + sCommand + "] [" + sParameter + "]", "CommandPannel"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
+                        Log.error(Messages.getString("CommandPanel.6") + sCommand + "] [" + sParameter + "]", "CommandPannel"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
                     }
                 } else {
-                    Log.log(Log.LEVEL_ERROR, Messages.getString("CommandPanel.6") + sCommand + "] [" + sParameter + "]", "CommandPannel"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
+                    Log.error(Messages.getString("CommandPanel.6") + sCommand + "] [" + sParameter + "]", "CommandPannel"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
                 }
             }
         }
@@ -1279,7 +1289,7 @@ public final class CommandPanel {
 
     /**
      * Limpia todos los datos (se usa cuando se sale de la partida y se va al
-     * men˙ principal)
+     * men√∫ principal)
      */
     public void clear() {
         currentMenu = null;

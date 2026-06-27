@@ -55,7 +55,7 @@ public class GodManager {
             if (gmi.getItemsLike() != null && gmi.getItemsDislike().size() > 0) {
                 for (int i = 0; i < gmi.getItemsLike().size(); i++) {
                     if (ItemManager.getItem(gmi.getItemsLike().get(i)) == null) {
-                        Log.log(Log.LEVEL_ERROR, Messages.getString("GodManager.2") + " [" + gmi.getItemsLike().get(i) + "]", "GodManager"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
+                        Log.error(Messages.getString("GodManager.2") + " [" + gmi.getItemsLike().get(i) + "]", "GodManager"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
                         Game.exit();
                     }
                 }
@@ -65,7 +65,7 @@ public class GodManager {
             if (gmi.getItemsDislike() != null && gmi.getItemsDislike().size() > 0) {
                 for (int i = 0; i < gmi.getItemsDislike().size(); i++) {
                     if (ItemManager.getItem(gmi.getItemsDislike().get(i)) == null) {
-                        Log.log(Log.LEVEL_ERROR, Messages.getString("GodManager.6") + " [" + gmi.getItemsDislike().get(i) + "]", "GodManager"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
+                        Log.error(Messages.getString("GodManager.6") + " [" + gmi.getItemsDislike().get(i) + "]", "GodManager"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
                         Game.exit();
                     }
                 }
@@ -75,7 +75,7 @@ public class GodManager {
             if (gmi.getEventsWhenHappy() != null && gmi.getEventsWhenHappy().size() > 0) {
                 for (int i = 0; i < gmi.getEventsWhenHappy().size(); i++) {
                     if (EventManager.getItem(gmi.getEventsWhenHappy().get(i)) == null) {
-                        Log.log(Log.LEVEL_ERROR, Messages.getString("GodManager.3") + " [" + gmi.getEventsWhenHappy().get(i) + "]", "GodManager"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
+                        Log.error(Messages.getString("GodManager.3") + " [" + gmi.getEventsWhenHappy().get(i) + "]", "GodManager"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
                         Game.exit();
                     }
                 }
@@ -85,7 +85,7 @@ public class GodManager {
             if (gmi.getEventsWhenReallyHappy() != null && gmi.getEventsWhenReallyHappy().size() > 0) {
                 for (int i = 0; i < gmi.getEventsWhenReallyHappy().size(); i++) {
                     if (EventManager.getItem(gmi.getEventsWhenReallyHappy().get(i)) == null) {
-                        Log.log(Log.LEVEL_ERROR, Messages.getString("GodManager.8") + " [" + gmi.getEventsWhenReallyHappy().get(i) + "]", "GodManager"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
+                        Log.error(Messages.getString("GodManager.8") + " [" + gmi.getEventsWhenReallyHappy().get(i) + "]", "GodManager"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
                         Game.exit();
                     }
                 }
@@ -95,7 +95,7 @@ public class GodManager {
             if (gmi.getEventsWhenAngry() != null && gmi.getEventsWhenAngry().size() > 0) {
                 for (int i = 0; i < gmi.getEventsWhenAngry().size(); i++) {
                     if (EventManager.getItem(gmi.getEventsWhenAngry().get(i)) == null) {
-                        Log.log(Log.LEVEL_ERROR, Messages.getString("GodManager.12") + " [" + gmi.getEventsWhenAngry().get(i) + "]", "GodManager"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
+                        Log.error(Messages.getString("GodManager.12") + " [" + gmi.getEventsWhenAngry().get(i) + "]", "GodManager"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
                         Game.exit();
                     }
                 }
@@ -105,7 +105,7 @@ public class GodManager {
             if (gmi.getEventsWhenReallyAngry() != null && gmi.getEventsWhenReallyAngry().size() > 0) {
                 for (int i = 0; i < gmi.getEventsWhenReallyAngry().size(); i++) {
                     if (EventManager.getItem(gmi.getEventsWhenReallyAngry().get(i)) == null) {
-                        Log.log(Log.LEVEL_ERROR, Messages.getString("GodManager.16") + " [" + gmi.getEventsWhenReallyAngry().get(i) + "]", "GodManager"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
+                        Log.error(Messages.getString("GodManager.16") + " [" + gmi.getEventsWhenReallyAngry().get(i) + "]", "GodManager"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
                         Game.exit();
                     }
                 }
@@ -149,7 +149,7 @@ public class GodManager {
             Document doc = UtilsXML.loadXMLFile(sXMLName); //$NON-NLS-1$
 
 			// Tenemos el documento XML parseado
-            // Lo recorremos entero y vamos añadiendo las skills (SkillManagerItem) a la hash
+            // Lo recorremos entero y vamos aÃ±adiendo las skills (SkillManagerItem) a la hash
             NodeList nodeList = doc.getDocumentElement().getChildNodes();
             Node node;
             GodManagerItem gmi;
@@ -240,12 +240,12 @@ public class GodManager {
                         gmi.setEventsWhenReallyAngry(Utils.getArray(UtilsXML.getChildValue(node.getChildNodes(), "eventsWhenReallyAngry"))); //$NON-NLS-1$
                     }
 
-                    // Lo añadimos a la hash
+                    // Lo aÃ±adimos a la hash
                     godsList.put(sIniHeader, gmi);
                 }
             }
         } catch (Exception e) {
-            Log.log(Log.LEVEL_ERROR, Messages.getString("GodManager.1") + " [" + e.getMessage() + "]", "GodManager"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
+            Log.error(Messages.getString("GodManager.1") + " [" + e.getMessage() + "]", "GodManager"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
             Game.exit();
         }
     }

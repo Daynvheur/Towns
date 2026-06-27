@@ -6,6 +6,7 @@ import java.io.ObjectInput;
 import java.io.ObjectOutput;
 import java.util.ArrayList;
 
+@SuppressWarnings("unchecked")
 public class SoldierGroups implements Externalizable {
 
     private static final long serialVersionUID = 775074143636086575L;

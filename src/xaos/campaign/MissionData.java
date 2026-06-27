@@ -12,9 +12,10 @@ import xaos.utils.Messages;
 
 /**
  * 
- * Aquí se guardan los datos de una misión. ID, Nombre, objetivos, ...
+ * AquÃ­ se guardan los datos de una misiÃ³n. ID, Nombre, objetivos, ...
  * 
  */
+@SuppressWarnings("unchecked")
 public class MissionData implements Externalizable {
 	private static final long serialVersionUID = -1688348947848596698L;
 

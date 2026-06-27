@@ -31,7 +31,7 @@ public class Generator {
 
             generator.setList(lista);
         } catch (Exception e) {
-            Log.log(Log.LEVEL_ERROR, Messages.getString("Generator.0") + sFile + "]", "Generator"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+            Log.error(Messages.getString("Generator.0") + sFile + "]", "Generator"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
             Game.exit();
         }
 
@@ -84,7 +84,7 @@ public class Generator {
                     // Si ya existe lo borramos
                     if (iIndexExists != -1) {
                         if (bFirst) {
-                            Log.log(Log.LEVEL_DEBUG, Messages.getString("Generator.1") + " [" + sID + "]", "Generator"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
+                            Log.debug(Messages.getString("Generator.1") + " [" + sID + "]", "Generator"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
                         }
                         list.remove(iIndexExists);
                     }
@@ -97,7 +97,7 @@ public class Generator {
                         gi.setId(sID);
                         gi.setName(child.getNodeName());
                         gi.setList(getNodes(child));
-                        // Si lo hemos borrado ponemos el nuevo item en la posición que estaba
+                        // Si lo hemos borrado ponemos el nuevo item en la posiciÃ³n que estaba
                         if (iIndexExists != -1) {
                             list.add(iIndexExists, gi);
                         } else {

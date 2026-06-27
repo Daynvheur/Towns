@@ -12,7 +12,7 @@ import java.awt.event.WindowListener;
 
 import javax.swing.ImageIcon;
 
-import org.lwjgl.opengl.Display;
+import xaos.utils.GLFWWindow;
 import org.lwjgl.opengl.GL11;
 import xaos.property.PropertyFile;
 
@@ -38,8 +38,8 @@ public final class MainFrame extends Frame implements WindowListener, ComponentL
         setWantsToClose(false);
 
         // Ancho y alto
-        int iDesktopWidth = Display.getDesktopDisplayMode().getWidth();
-        int iDesktopHeight = Display.getDesktopDisplayMode().getHeight();
+        int iDesktopWidth = GLFWWindow.getDesktopDisplayMode().getWidth();
+        int iDesktopHeight = GLFWWindow.getDesktopDisplayMode().getHeight();
         int iWidth = Towns.getPropertiesInt("WINDOW_WIDTH", (iDesktopWidth * 2) / 3); //$NON-NLS-1$
         int iHeight = Towns.getPropertiesInt("WINDOW_HEIGHT", (iDesktopHeight * 2) / 3); //$NON-NLS-1$
 
@@ -63,7 +63,7 @@ public final class MainFrame extends Frame implements WindowListener, ComponentL
         setIconImage(iIcon);
         setVisible(true); // Se pone visible antes de pillar los insets ya que sino devuelve 0
 
-        // Tamaño de los bordes
+        // TamaÃ±o de los bordes
         Insets insets = getInsets();
         int iBorderWidth = insets.left + insets.right;
         int iBorderHeight = insets.top + insets.bottom;
@@ -144,7 +144,7 @@ public final class MainFrame extends Frame implements WindowListener, ComponentL
 
     public void resize() {
         int iWidth, iHeight;
-        if (Display.isFullscreen()) {
+        if (GLFWWindow.isFullscreen()) {
             iWidth = UtilsGL.getWidth();
             iHeight = UtilsGL.getHeight();
         } else {
