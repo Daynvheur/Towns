@@ -41,38 +41,7 @@ public final class Towns {
     }
 
     public static void main(String[] args) {
-        // Check for --glcheck flag
-        for (String arg : args) {
-            if ("--glcheck".equals(arg)) {
-                xaos.utils.GLCheck.main(new String[0]);
-                return;
-            }
-        }
-
-//		if (true) System.exit (0);
-        // Steam
-        if (!loadSteamAPI("steam_api")) {
-            loadSteamAPI("steam_api64");
-        }
-
-        // Lanzamos la ventana principal
-        try {
-            new Game();
-        } catch (Throwable t) {
-            try {
-                Writer writer = new StringWriter();
-                PrintWriter pw = new PrintWriter(writer);
-                t.printStackTrace(pw);
-                pw.close();
-                writer.close();
-
-                Log.error("Error Code [" + Game.iError + "]", "Towns"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
-                Log.error(writer.toString(), "Towns"); //$NON-NLS-1$
-            } catch (Exception e) {
-            }
-
-            Game.exit();
-        }
+        xaos.utils.GLCheck.main(args);
     }
 
     public native boolean SteamAPI_Init();
