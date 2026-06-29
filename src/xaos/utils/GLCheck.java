@@ -1,3 +1,5 @@
+package xaos.utils;
+
 import java.nio.IntBuffer;
 import org.lwjgl.PointerBuffer;
 import org.lwjgl.glfw.*;
