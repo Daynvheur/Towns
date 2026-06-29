@@ -1,51 +1,47 @@
-package xaos.utils;
-
 import java.nio.IntBuffer;
-import java.nio.ByteBuffer;
 import org.lwjgl.PointerBuffer;
-import org.lwjgl.BufferUtils;
 import org.lwjgl.glfw.*;
-import org.lwjgl.opengl.*;
 import org.lwjgl.system.*;
 
 import static org.lwjgl.glfw.GLFW.*;
-import static org.lwjgl.opengl.GL11.*;
 import static org.lwjgl.system.MemoryUtil.*;
 
-/**
- * Test program to check OpenGL limits and maximum window size support.
- * Run this to diagnose viewport/texture/renderbuffer size limitations.
- */
 public class GLCheck {
-
     public static void main(String[] args) {
-        System.out.println("=== OpenGL Limits Check ===\n");
+        System.out.println("=== GLFW Window Size Test ===\n");
 
-        // Initialize GLFW
         if (!glfwInit()) {
             System.err.println("Failed to initialize GLFW");
             return;
         }
 
-        // Get OpenGL limits
-        IntBuffer maxViewport = memAllocInt(1);
-        IntBuffer maxTextureSize = memAllocInt(1);
-
-        try {
-            glGetIntegerv(GL_MAX_VIEWPORT_DIMS, maxViewport);
-            glGetIntegerv(GL_MAX_TEXTURE_SIZE, maxTextureSize);
-
-            System.out.println("GL_MAX_VIEWPORT_DIMS: " + maxViewport.get(0));
-            System.out.println("GL_MAX_TEXTURE_SIZE: " + maxTextureSize.get(0));
-        } finally {
-            memFree(maxViewport);
-            memFree(maxTextureSize);
+        System.out.println("=== Monitor Info ===");
+        long monitor1 = glfwGetPrimaryMonitor();
+        if (monitor1 != NULL) {
+            GLFWVidMode mode1 = glfwGetVideoMode(monitor1);
+            if (mode1 != null) {
+                System.out.println("Monitor 1 (primary): " + mode1.width() + "x" + mode1.height());
+            }
         }
 
-        // Try to create a large window
+        // Try to get all monitors
+        PointerBuffer monitors = glfwGetMonitors();
+        int monitorCount = monitors.remaining();
+        System.out.println("Total monitors: " + monitorCount);
+
+        for (int i = 0; i < monitorCount; i++) {
+            monitors.position(i);
+            long monitor = monitors.get();
+            GLFWVidMode mode = glfwGetVideoMode(monitor);
+            if (mode != null) {
+                String name = glfwGetMonitorName(monitor);
+                System.out.println("Monitor " + (i+1) + " (" + name + "): " + mode.width() + "x" + mode.height());
+            }
+        }
+
         System.out.println("\n=== Window Size Test ===");
-        int testWidth = 24000; // Triple 8K width
-        int testHeight = 8000; // 8K height
+        int testWidth = 24000;
+        int testHeight = 8000;
 
         System.out.println("Attempting to create window: " + testWidth + "x" + testHeight);
 
@@ -67,23 +63,23 @@ public class GLCheck {
             memFree(wBuf);
             memFree(hBuf);
 
-            // Try to make context current and check viewport
-            glfwMakeContextCurrent(testWindow);
-            GL.createCapabilities();
-
-            IntBuffer viewport = memAllocInt(4);
-            glGetIntegerv(GL_VIEWPORT, viewport);
-            System.out.println("Viewport: x=" + viewport.get(0) + " y=" + viewport.get(1) +
-                             " w=" + viewport.get(2) + " h=" + viewport.get(3));
-            memFree(viewport);
-
-            // Try to set a large viewport
-            System.out.println("\n=== Viewport Test ===");
-            System.out.println("Attempting to set viewport: " + testWidth + "x" + testHeight);
-            glViewport(0, 0, testWidth, testHeight);
-            glGetIntegerv(GL_VIEWPORT, viewport);
-            System.out.println("Actual viewport: w=" + viewport.get(2) + " h=" + viewport.get(3));
-            memFree(viewport);
+            // Try smaller sizes
+            System.out.println("\n=== Smaller Window Tests ===");
+            int[][] sizes = {{16384, 8000}, {16385, 8000}, {16000, 8000}, {20000, 8000}};
+            for (int[] size : sizes) {
+                long win = glfwCreateWindow(size[0], size[1], "Test " + size[0] + "x" + size[1], NULL, NULL);
+                if (win == NULL) {
+                    System.err.println("FAILED: " + size[0] + "x" + size[1]);
+                } else {
+                    IntBuffer wb = memAllocInt(1);
+                    IntBuffer hb = memAllocInt(1);
+                    glfwGetWindowSize(win, wb, hb);
+                    System.out.println("SUCCESS: " + size[0] + "x" + size[1] + " -> actual: " + wb.get(0) + "x" + hb.get(0));
+                    memFree(wb);
+                    memFree(hb);
+                    glfwDestroyWindow(win);
+                }
+            }
 
             glfwDestroyWindow(testWindow);
         }

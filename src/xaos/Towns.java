@@ -41,6 +41,14 @@ public final class Towns {
     }
 
     public static void main(String[] args) {
+        // Check for --glcheck flag
+        for (String arg : args) {
+            if ("--glcheck".equals(arg)) {
+                xaos.utils.GLCheck.main(new String[0]);
+                return;
+            }
+        }
+
 //		if (true) System.exit (0);
         // Steam
         if (!loadSteamAPI("steam_api")) {
