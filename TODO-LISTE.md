@@ -327,3 +327,40 @@ Voici une liste des forks pertinents, classés par ordre de pertinence et d'avan
 - **Statut** : ✅ Fonctionnalités ajoutées et documentées
 
 ## Modifications à Venir
+
+### Investigation Triple Écran 8K (En Attente)
+
+- **Contexte** : L'utilisateur dispose d'une configuration triple écran 8K (23000+ px de large, ~4000 px de haut) avec deux GPU : NVIDIA 2060OC (écrans 1 & 3) + AMD 7900XTX (écran 2).
+- **Problème** : La fenêtre semble limitée à 16000 px de large.
+- **Tests effectués** : Programme `GLCheck.java` créé et testé sur machine de développement (non-cible).
+  - GLFW peut créer des fenêtres de n'importe quelle taille demandée (24000x8000 testé).
+  - Sur la machine de test, la taille réelle est clampée à 1924x1061 (monitor principal).
+  - GLFW ne détecte qu'un seul monitor sur la machine de test.
+- **Conclusion provisoire** : Les résultats sont **spécifiques à la machine de test** et ne reflètent pas nécessairement le comportement sur la configuration cible réelle.
+- **Statut** : ⏳ **En attente de tests sur l'environnement cible réel (triple 8K)**.
+- **Prochaines étapes** :
+  1. Exécuter `GLCheck.java` sur la configuration triple 8K cible.
+  2. Reporter les résultats (tailles de fenêtres créées, tailles réelles, nombre de monitors détectés).
+  3. Décider de l'approche à adopter (multi-fenêtres, Vulkan, acceptation de la limitation, etc.).
+
+---
+
+## Rapport de Test sur Environnement Cible
+
+Pour rapporter les informations extraites de l'environnement cible, veuillez fournir les éléments suivants :
+
+1. **Commande exécutée** :
+   ```
+   cd C:\Temp
+   javac -cp "C:\Perso\tools\lwjgl\*" GLCheck.java
+   java -cp ".;C:\Perso\tools\lwjgl\lwjgl.jar;C:\Perso\tools\lwjgl\lwjgl-glfw.jar;C:\Perso\tools\lwjgl\lwjgl-opengl.jar;C:\Perso\tools\lwjgl\lwjgl-natives-windows;C:\Perso\tools\lwjgl\natives-*" GLCheck
+   ```
+
+2. **Informations à reporter** :
+   - Nombre de monitors détectés par GLFW
+   - Résolution de chaque monitor
+   - Taille de fenêtre demandée vs taille réelle obtenue (tester avec 16000, 19200, 24000 de large)
+   - Messages de log GLFW (warnings, erreurs)
+   - Tout comportement inattendu (freeze, crash, artefacts)
+
+3. **Format de rapport** : Copier-coller la sortie console complète dans cette conversation.
