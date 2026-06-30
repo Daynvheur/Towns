@@ -367,3 +367,95 @@ Pour rapporter les informations extraites de l'environnement cible, veuillez fou
    - Tout comportement inattendu (freeze, crash, artefacts)
 
 3. **Format de rapport** : Copier-coller la sortie console complète dans cette conversation.
+
+---
+
+## Migration OpenGL → Vulkan (Analyse Préliminaire)
+
+### État actuel du rendu
+
+**Pipeline graphique :**
+- OpenGL 2.1 legacy — Fixed-function pipeline uniquement
+- Aucun shader — Tout est en immediate mode (`glBegin`/`glEnd`)
+- Pas de VAO/VBO — Coordonnées vertex passées frame par frame
+- Pas de FBO — Pas de post-processing
+- Pas de depth test (sauf rendu 3D occasionnel)
+
+**Architecture de rendu :**
+```
+Game.java (boucle principale)
+└── MainPanel.java (rendu terrain + entités)
+    └── UIPanel.java (interface utilisateur)
+        └── UtilFont.java (texte bitmap)
+```
+
+**Dépendances LWJGL utilisées :**
+| Module | Usage |
+|--------|-------|
+| `lwjgl-opengl` | Rendu principal |
+| `lwjgl-glfw` | Fenêtre + input |
+| `lwjgl-stb` | Chargement images |
+| `lwjgl-openal` | Audio |
+
+### Complexité du code OpenGL
+
+| Fichier | Lignes OpenGL | Complexité migration |
+|---------|---------------|---------------------|
+| `UtilsGL.java` | ~200 | Haute (textures, dessin) |
+| `MainPanel.java` | ~150 | Haute (rendu terrain/entités) |
+| `UIPanel.java` | ~100 | Moyenne (UI) |
+| `GLFWWindow.java` | ~50 | Basse (fenêtre/input) |
+| `UtilFont.java` | ~80 | Moyenne (texte) |
+| `UtilsAL.java` | ~50 | N/A (OpenAL, pas Vulkan) |
+| **Total** | **~630** | |
+
+### Points de complexité particulière
+
+**À éliminer :**
+- **Immediate Mode** (`glBegin`/`glEnd`) — ~100 appels de dessin/frame → à convertir en vertex buffers
+- **Lighting par texture** (`GL_COMBINE`) → à recoder en fragment shader
+- **Alpha testing** (`glAlphaFunc`) → à remplacer par `discard` dans shader
+
+**À adapter :**
+- **Cache de textures** (HashMap) → texture cache Vulkan avec staging buffers
+- **Font rendering** (chaque caractère = quad séparé) → optimisable avec instancing/atlas
+
+**À conserver (pas de migration Vulkan) :**
+- **GLFW** — Fenêtre + input (reste inchangé)
+- **STB** — Chargement images (reste inchangé)
+- **OpenAL** — Audio (reste inchangé)
+
+### Estimation de la migration
+
+| Phase | Travail | Durée estimée |
+|-------|---------|---------------|
+| **Préparation** | Init Vulkan (instance, device, queue, swapchain), PSO de base, command buffer management | 2-3 semaines |
+| **Shaders** | Vertex shader, fragment shader (texture + alpha + lighting), font shader | 1-2 semaines |
+| **Textures** | Migration ImageData → VulkanTexture, staging buffers, memory management | 2-3 semaines |
+| **Rendu principal** | Conversion immediate mode → vertex buffers, batch rendering | 4-6 semaines |
+| **UI** | Migration UIPanel, text rendering | 2-3 semaines |
+| **Optimisation** | Instancing, texture atlas, command buffer pooling | 2-3 semaines |
+| **Tests** | Multi-configuration, debugging | 1-2 semaines |
+| **Total** | | **14-22 semaines** |
+
+### Risques
+
+1. **Verbeuxité Vulkan** — Le code Vulkan est 3-5x plus verbeux qu'OpenGL
+2. **Performance** — Risque de régression si le batching n'est pas bien fait
+3. **Multi-GPU** — Vulkan gère mieux le multi-GPU, mais la configuration est complexe
+4. **Maintenance** — Code plus complexe à maintenir à long terme
+
+### Alternative intermédiaire
+
+**Migration OpenGL 2.1 → OpenGL 3.3+ :**
+- Suppression de l'immediate mode
+- Ajout de shaders basiques (vertex + fragment)
+- Utilisation de VBO/VAO
+- **Durée estimée : 4-6 semaines** (vs 14-22 pour Vulkan)
+- **Résultat :** Code moderne, plus performant, mais toujours limité par la contrainte GLFW/OpenGL de taille de fenêtre
+
+### Conclusion
+
+La migration Vulkan est faisable mais représente **3-6 mois de travail**. L'alternative OpenGL 3.3+ serait plus rapide mais ne résoudrait pas le problème de limitation de taille de fenêtre.
+
+**Statut** : ⏳ En attente — à revoir ultérieurement.
