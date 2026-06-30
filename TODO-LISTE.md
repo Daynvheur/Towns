@@ -328,20 +328,23 @@ Voici une liste des forks pertinents, classés par ordre de pertinence et d'avan
 
 ## Modifications à Venir
 
-### Investigation Triple Écran 8K (En Attente)
+### Investigation Triple Écran 8K ✅ TERMINÉ
 
 - **Contexte** : L'utilisateur dispose d'une configuration triple écran 8K (23000+ px de large, ~4000 px de haut) avec deux GPU : NVIDIA 2060OC (écrans 1 & 3) + AMD 7900XTX (écran 2).
 - **Problème** : La fenêtre semble limitée à 16000 px de large.
-- **Tests effectués** : Programme `GLCheck.java` créé et testé sur machine de développement (non-cible).
+- **Tests effectués sur machine de développement** : Programme `GLCheck.java` créé et testé.
   - GLFW peut créer des fenêtres de n'importe quelle taille demandée (24000x8000 testé).
   - Sur la machine de test, la taille réelle est clampée à 1924x1061 (monitor principal).
   - GLFW ne détecte qu'un seul monitor sur la machine de test.
-- **Conclusion provisoire** : Les résultats sont **spécifiques à la machine de test** et ne reflètent pas nécessairement le comportement sur la configuration cible réelle.
-- **Statut** : ⏳ **En attente de tests sur l'environnement cible réel (triple 8K)**.
+- **Tests effectués sur configuration cible réelle (3x 8K)** :
+  - ✅ 3x 4K : fonctionne sans problème
+  - ❌ 3x 8K (24000x8000) : `GLFW_FEATURE_UNAVAILABLE` (code 65544)
+- **Conclusion** : La limitation de taille de fenêtre est **réelle** sur la configuration triple 8K. GLFW/OpenGL ne peut pas créer une fenêtre de 24000x8000 pixels sur cette configuration multi-GPU. Le code `GLFW_FEATURE_UNAVAILABLE` indique que la plateforme ne supporte pas cette taille de fenêtre.
+- **Statut** : ✅ Tests complétés, limitation confirmée.
 - **Prochaines étapes** :
-  1. Exécuter `GLCheck.java` sur la configuration triple 8K cible.
-  2. Reporter les résultats (tailles de fenêtres créées, tailles réelles, nombre de monitors détectés).
-  3. Décider de l'approche à adopter (multi-fenêtres, Vulkan, acceptation de la limitation, etc.).
+  1. Explorer une approche multi-fenêtres synchronisées (une fenêtre par écran).
+  2. Ou envisager Vulkan pour un meilleur support multi-GPU.
+  3. Ou accepter la limitation et limiter le rendu à un seul écran haute résolution.
 
 ---
 
